@@ -19,5 +19,5 @@ fs.writeFileSync('/tmp/balto-workflow.sha256', crypto.createHash('sha256').updat
 const key = process.env.VET_API_KEY;
 if (!key || key.length < 32) throw new Error('Falta configurar VET_API_KEY.');
 const credentials = [{ id: 'baltoDrupalApi', name: 'BALTO API interna', type: 'httpHeaderAuth', data: { name: 'X-API-KEY', value: key } }];
-if (geminiEnabled) credentials.push({id: 'baltoGeminiApi', name: 'BALTO Gemini', type: 'httpHeaderAuth', data: {name: 'x-goog-api-key', value: geminiKey}});
+credentials.push({id: 'baltoGeminiApi', name: 'BALTO Gemini', type: 'httpHeaderAuth', data: {name: 'x-goog-api-key', value: geminiEnabled ? geminiKey : 'disabled'}});
 fs.writeFileSync('/tmp/balto-credentials.json', JSON.stringify(credentials), {mode: 0o600});
