@@ -122,11 +122,10 @@ Los reinicios conservan los datos y no cambian la contraseña del administrador.
 
 El repositorio local se inicializa con commits pequeños por fase. El repositorio privado está en [GitHub](https://github.com/devmijaelflores-boop/balto-veterinaria). `.env`, bases de datos y claves privadas quedan excluidos.
 
-Para publicar cuando tengas un repositorio vacío, reemplaza el marcador por su URL real:
+El remoto `origin` ya está configurado. Después de crear un nuevo commit, sincroniza los cambios con:
 
 ```bash
-git remote add origin URL_REAL_DEL_REPOSITORIO
-git push -u origin main
+git push
 ```
 
 **Resultado esperado:** el código aparece en GitHub; `.env`, dependencias descargadas, bases de datos y backups quedan fuera del repositorio.
