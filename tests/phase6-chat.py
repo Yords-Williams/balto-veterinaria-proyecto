@@ -45,7 +45,7 @@ samples = [
     ('categorías', 'categories', ['Alimentos', 'Accesorios', 'Juguetes']),
     ('juguetes', 'category', ['Pelota', 'S/']),
     ('servicios', 'services', ['Rayos X', 'Ecografías', 'Cirugías', 'Laboratorio', '24 horas']),
-    ('horarios', 'schedule', ['24 horas', '09:00', '20:00']),
+    ('horarios', 'schedule', ['24 horas', '9:00', '8:00']),
     ('direcciones', 'schedule', ['220', 'Centro Comercial']),
     ('quiero separar una cita', 'schedule', ['WhatsApp', '986']),
     ('asdfgh zxcv', 'unknown', ['No entendí', 'WhatsApp']),
