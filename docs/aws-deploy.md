@@ -1,6 +1,6 @@
 # Desplegar BALTO en una EC2
 
-**Estado: preparación terminada y comprobada localmente; instancia AWS pendiente.** No se han creado EC2, discos ni Elastic IP en tu cuenta y no se ha consumido crédito AWS desde este entorno. La URL pública sigue **pendiente**; no existe una dirección de despliegue confirmada. La fase 8 continúa aplazada por decisión del usuario. Se usará el crédito proporcionado por el profesor y una instancia nueva exclusiva para BALTO: la instancia `roma-drupal-n8n` del hotel pertenece a otro equipo y no se modifica.
+**Estado: BALTO desplegado en EC2 y demo completa comprobada.** Se utiliza una EC2 nueva `t3.medium`, Ubuntu 24.04 y disco raíz de 30 GiB. La dirección actual es **http://54.236.251.160**, comprobada y todavía provisional. No tiene una Elastic IP asociada: podría cambiar al detener y volver a iniciar EC2. La fase 8 sigue aplazada. La instancia `roma-drupal-n8n` del hotel pertenece a otro equipo y no se modifica.
 
 ## Diseño y costo mínimo
 
@@ -282,7 +282,7 @@ Prepara Ubuntu, acceso GitHub y el backup como en las secciones anteriores. `RUT
 
 ## Validar en la instancia: demo de cinco minutos
 
-Esta comprobación en AWS está **pendiente**, no se sustituye con los resultados locales.
+Esta comprobación se ejecutó en **AWS EC2**, en http://54.236.251.160: **17 comprobaciones correctas** en 52 segundos. Pedido **1**, stock de la pelota de **25 a 24**, edición de precio desde el panel y restauración comprobadas. [Informe de la demo EC2](verificacion-fase-9-ec2.json).
 
 1. **Minuto 0–1:** abre la URL pública y pregunta por un producto con stock; comprueba que diga que el inventario es de ejemplo.
 2. **Minuto 1–2:** abre el enlace del producto y agrégalo al carrito.
@@ -317,19 +317,26 @@ Docker y los servicios con política de reinicio se recuperan al arrancar, pero 
 
 - [ ] Cuenta o laboratorio confirmado y crédito vigente revisado.
 - [ ] Presupuesto y alertas configurados, si el tipo de cuenta lo permite.
-- [ ] Una EC2, un disco gp3 y una Elastic IP; sin servicios adicionales.
-- [ ] SSH solo desde tu IP; únicamente 80/443 abiertos para el público.
+- [x] Una EC2 BALTO y un disco gp3 de 30 GiB; sin servicios administrados adicionales.
+- [ ] Elastic IP asignada y asociada a BALTO.
+- [x] SSH solo desde tu IP; 80/443 públicos, según la configuración revisada en consola.
 - [ ] CPU Standard y monitoreo detallado desactivado.
-- [ ] Clave privada fuera de Git; deploy key de GitHub de solo lectura.
-- [ ] `.env` de servidor generado con secretos nuevos y permisos `0600`.
-- [ ] n8n por túnel SSH; MariaDB y Apache sin publicación de puertos.
+- [x] Clave privada fuera de Git; deploy key de GitHub de solo lectura.
+- [x] `.env` de servidor generado con secretos nuevos y permisos `0600`.
+- [x] n8n limitado a loopback; MariaDB y Apache sin publicación de puertos.
 - [ ] HTTPS comprobado si se utiliza un dominio; datos ficticios mientras sea HTTP.
-- [ ] Backup descargado y checksums verificados.
-- [ ] Demo completa ejecutada en la URL pública real.
+- [x] Backup descargado y checksums verificados.
+- [x] Demo completa ejecutada en la URL pública real.
 - [ ] Instancia detenida al finalizar cada sesión.
 
 ## Lo que se verificó sin gastar crédito AWS
 
 Se ejecutaron [10 comprobaciones de configuración](verificacion-fase-9-config.json) y [9 comprobaciones locales de despliegue/backup](verificacion-fase-9-local.json), con secretos nuevos y volúmenes aislados. Caddy sirvió Drupal y el webhook bajo el mismo origen. El backup incluyó SQL, archivos, SQLite y entorno privado; se verificaron checksums y se restauró el SQL en una base temporal con 15 productos y 15 variaciones. La demo local principal no fue modificada por estas pruebas.
 
-No se ha ejecutado `aws-setup.sh` sobre Ubuntu EC2, ni emitido un certificado real, ni repetido la compra desde una IP AWS. Esas verificaciones requieren la instancia y su acceso SSH. Los costes sí se verificaron en la calculadora oficial; el importe es una estimación y no una factura ni una reserva de crédito.
+`aws-setup.sh` se ejecutó correctamente en Ubuntu 24.04 de la instancia BALTO. Se repitió la compra completa desde su IP pública con resultados en el informe EC2 anterior. Siguen pendientes la Elastic IP, confirmar CPU Standard y configurar alertas si el laboratorio lo permite. No se ha emitido un certificado real porque no se utiliza un dominio. El importe de la calculadora es una estimación, no una factura ni una reserva de crédito.
+
+![Pedido de la demo en EC2](capturas/fase-9-ec2-confirmacion.png)
+
+![Chat en celular contra EC2](capturas/fase-9-ec2-chat-movil.png)
+
+También se realizó un [backup en EC2 y se comprobó la recuperación del servicio](verificacion-fase-9-backup.json). Los checksums fueron correctos y estaban presentes SQL, archivos Drupal y SQLite n8n. Se verificó que los secretos del servidor eran distintos de los locales y que `.env` tenía permisos `0600`. La copia permanece privada en `/opt/balto-veterinaria/backups/`; se descargó también una copia privada fuera de EC2, en `.local/share/balto-dev/aws-backups/` de esta computadora.

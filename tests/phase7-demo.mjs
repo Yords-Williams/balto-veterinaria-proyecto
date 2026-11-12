@@ -2,12 +2,27 @@
 import puppeteer from 'npm:puppeteer-core@25.10.0';
 const root = new URL('../', import.meta.url).pathname;
 const base = Deno.env.get('BALTO_TEST_URL') || 'http://localhost:8080';
-const env = Object.fromEntries((await Deno.readTextFile(root+'.env')).split('\n').filter(l=>l&&!l.startsWith('#')&&l.includes('=')).map(l=>[l.slice(0,l.indexOf('=')),l.slice(l.indexOf('=')+1)]));
+const sshHost = Deno.env.get('BALTO_SSH_HOST');
+const sshKey = Deno.env.get('BALTO_SSH_KEY');
+const reportPrefix = Deno.env.get('BALTO_REPORT_PREFIX') || 'fase-7-demo';
+if (!/^[a-z0-9-]+$/.test(reportPrefix)) throw new Error('Nombre de informe inválido');
+const quote = value => "'" + value.replace(/'/g, "'\\''") + "'";
+const sshArgs = sshHost ? ['-i', sshKey, '-o', 'BatchMode=yes', '-o', 'IdentitiesOnly=yes', sshHost] : [];
+if (sshHost && !sshKey) throw new Error('Falta BALTO_SSH_KEY');
+let envText;
+if (sshHost) {
+  const result = await new Deno.Command('ssh', {args:[...sshArgs, 'cat /opt/balto-veterinaria/.env'],stdout:'piped',stderr:'piped'}).output();
+  if (!result.success) throw new Error('No se pudo leer el entorno remoto');
+  envText = new TextDecoder().decode(result.stdout);
+} else envText = await Deno.readTextFile(Deno.env.get('BALTO_TEST_ENV_FILE') || root+'.env');
+const env = Object.fromEntries(envText.split('\n').filter(l=>l&&!l.startsWith('#')&&l.includes('=')).map(l=>[l.slice(0,l.indexOf('=')),l.slice(l.indexOf('=')+1)]));
 const docker = ['compose'];
 if (Deno.env.get('DOCKER_HOST')) docker.unshift('--host='+Deno.env.get('DOCKER_HOST'));
 else if (await Deno.stat('/run/user/1000/balto-docker.sock').then(()=>true).catch(()=>false)) docker.unshift('--host=unix:///run/user/1000/balto-docker.sock');
 async function php(code) {
-  const out=await new Deno.Command('docker',{cwd:root,args:[...docker,'exec','-T','drupal','drush','php:eval',code],stdout:'piped',stderr:'piped'}).output();
+  const command = sshHost ? 'ssh' : 'docker';
+  const args = sshHost ? [...sshArgs, 'sudo docker compose --project-directory /opt/balto-veterinaria -f /opt/balto-veterinaria/docker-compose.yml -f /opt/balto-veterinaria/docker-compose.override.yml exec -T drupal drush php:eval ' + quote(code)] : [...docker,'exec','-T','drupal','drush','php:eval',code];
+  const out=await new Deno.Command(command,{cwd:root,args,stdout:'piped',stderr:'piped'}).output();
   if(!out.success) throw new Error('No se pudo verificar el estado de Drupal.');
   return JSON.parse(new TextDecoder().decode(out.stdout));
 }
@@ -55,7 +70,7 @@ try{
   check(new URL(guest.url()).pathname.endsWith('/complete'),'Compra desde el chat termina con pedido registrado');
   orderId=Number(new URL(guest.url()).pathname.split('/')[2]);
   if(!Number.isSafeInteger(orderId))throw new Error('ID de pedido inválido');
-  await guest.screenshot({path:root+'docs/capturas/fase-7-demo-confirmacion.png',fullPage:true});
+  await guest.screenshot({path:root+'docs/capturas/'+reportPrefix+'-confirmacion.png',fullPage:true});
   order=await php('$o=\\Drupal::entityTypeManager()->getStorage("commerce_order")->load('+orderId+');$p=\\Drupal::entityTypeManager()->getStorage("commerce_payment")->loadMultipleByOrder($o);echo json_encode(["id"=>(int)$o->id(),"number"=>$o->getOrderNumber(),"state"=>$o->getState()->getId(),"paid"=>$o->isPaid(),"currency"=>$o->getTotalPrice()->getCurrencyCode(),"total"=>$o->getTotalPrice()->getNumber(),"payments"=>count($p),"simulated"=>(bool)$o->getData("vet_simulated")]);');
   check(order.state==='validation'&&order.paid&&order.simulated&&order.payments===1,'Pedido persistido con un solo pago local ficticio');
   check(order.currency==='PEN'&&Number(order.total)===Number(before.price),'Total del pedido correcto en soles');
@@ -65,7 +80,7 @@ try{
   await manager.type('#edit-name',env.DRUPAL_STORE_MANAGER_USER);await manager.type('#edit-pass',env.DRUPAL_STORE_MANAGER_PASSWORD);await submit(manager,'#edit-submit');
   const adminPage=await visit(manager,'/admin/commerce/orders/'+orderId);
   check(adminPage.status()===200&&(await manager.$eval('body',e=>e.textContent)).includes('Demo integrada BALTO'),'Administrador de tienda consulta el pedido de esta demo');
-  await manager.screenshot({path:root+'docs/capturas/fase-7-demo-administracion.png',fullPage:true});
+  await manager.screenshot({path:root+'docs/capturas/'+reportPrefix+'-administracion.png',fullPage:true});
   await visit(guest,'/tienda');
   const afterPurchase=await chat('stock de BAL-JUG-001');
   check(afterPurchase.includes(String(after.stock)+' unidades'),'Chat refleja el stock tras comprar sin reiniciar servicios');
@@ -79,7 +94,7 @@ try{
   check(afterEdit.includes('S/ '+updated),'Precio editado desde administración aparece inmediatamente en el chat');
   await guest.setViewport({width:390,height:844,isMobile:true,hasTouch:true});
   check(await guest.$eval('.chat-panel',e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight;}),'Demo del chat usable dentro de la pantalla móvil');
-  await guest.screenshot({path:root+'docs/capturas/fase-7-demo-chat-movil.png',fullPage:false});
+  await guest.screenshot({path:root+'docs/capturas/'+reportPrefix+'-chat-movil.png',fullPage:false});
   await visit(manager,'/product/'+before.product_id+'/edit');
   await manager.$eval(priceSelector,(el,value)=>{el.value=value;},originalPrice);
   await submit(manager,'#edit-actions-submit');
@@ -88,7 +103,7 @@ try{
   const restored=await chat('precio de BAL-JUG-001');
   check(restored.includes('S/ '+Number(originalPrice).toFixed(2)),'Chat vuelve a mostrar el precio original');
   check(errors.length===0,'Recorrido completo sin errores JavaScript ni respuestas Drupal HTTP 500');
-  await Deno.writeTextFile(root+'docs/verificacion-fase-7.json',JSON.stringify({date:new Date().toISOString(),elapsed_seconds:Math.round((Date.now()-started)/1000),results,errors,order,stock:{before:before.stock,after:after.stock},price_restored:true},null,2)+'\n');
+  await Deno.writeTextFile(root+'docs/verificacion-'+(sshHost ? reportPrefix : 'fase-7')+'.json',JSON.stringify({date:new Date().toISOString(),environment:sshHost ? 'AWS EC2' : 'Docker local',url:base,elapsed_seconds:Math.round((Date.now()-started)/1000),results,errors,order,stock:{before:before.stock,after:after.stock},price_restored:true},null,2)+'\n');
 }finally{
   if(changedPrice&&originalPrice&&/^\d+(\.\d+)?$/.test(originalPrice)){
     await php(lookup+'$v->setPrice(new \\Drupal\\commerce_price\\Price("'+originalPrice+'","PEN"));$v->save();echo "true";');

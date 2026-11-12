@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-12T16:25:18.101195+00:00",
+  "environment": "AWS EC2",
+  "url": "http://54.236.251.160",
+  "results": [
+    "aws-setup.sh completado en Ubuntu 24.04 x86_64",
+    "Secretos nuevos distintos de desarrollo y .env con permisos 0600",
+    "Backup SQL, archivos Drupal y SQLite n8n completado en EC2",
+    "Checksums del backup verificados y archivos esperados presentes",
+    "Sitio y webhook disponibles después del backup",
+    "Backup descargado fuera de EC2 con permisos 0600; marcador COMPLETE presente"
+  ],
+  "errors": [],
+  "elastic_ip_associated": false,
+  "https_configured": false,
+  "cpu_credit_mode_verified": false,
+  "budget_alerts_verified": false
+}

@@ -165,7 +165,7 @@ docker compose up -d
 | 6 | Workflow por reglas y widget | Implementada; 58 comprobaciones del webhook y 23 del widget correctas |
 | 7 | Pruebas funcionales y móvil | Demo integrada verificada; 17 comprobaciones correctas |
 | 8 | Documentación, capturas y guion de cinco minutos | Aplazada por decisión del usuario |
-| 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Scripts y guía preparados; lanzamiento de una instancia BALTO pendiente |
+| 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Desplegada y demo verificada en EC2; Elastic IP pendiente |
 
 AWS queda dentro del alcance por tu ampliación del proyecto. No hay recursos creados ni consumo de créditos. La [guía de despliegue AWS](docs/aws-deploy.md) incluye la estimación verificada en la calculadora oficial y las instrucciones de consola. No se usarán RDS, ALB ni NAT Gateway.
 
@@ -207,4 +207,4 @@ La [fase 7](docs/fase-7.md) reúne las evidencias existentes y prueba un recorri
 
 Se utilizará el crédito del profesor y una instancia nueva exclusiva para BALTO; la instancia del hotel pertenece a otro equipo y no se modifica. [Guía de despliegue](docs/aws-deploy.md): Ubuntu 24.04, t3.medium, EBS gp3 de 30 GB, Elastic IP, proxy, secretos nuevos y backups. [Estimación oficial guardada](https://calculator.aws/#/estimate?id=47d3105a56bad506b85e1e50cbc84d4a5c2808d2): USD 36.42 por 730 horas, antes de impuestos y tráfico adicional. Conviene detener EC2 al acabar cada sesión.
 
-**URL pública BALTO: pendiente de crear y configurar la instancia.** Las verificaciones actuales de proxy y backup son locales; no se presenta todavía una prueba EC2. La fase 8 sigue aplazada.
+**URL pública actual BALTO: http://54.236.251.160**. La demo completa ya pasó en EC2: [informe](docs/verificacion-fase-9-ec2.json). La dirección es provisional hasta asociar una Elastic IP y puede cambiar al detener y reiniciar la instancia. La fase 8 sigue aplazada.
