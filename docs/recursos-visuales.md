@@ -48,9 +48,8 @@ La dirección principal sigue siendo Jr. Ignacio Miranda N.º 220, según los da
 
 La selección está publicada en la instancia AWS con HTTPS. [Comprobación visual en AWS](verificacion-galeria-balto-aws.json): fotos, logo, escritorio y móvil, chat funcionando y datos comerciales conservados.
 
-La diapositiva de hospitalización utiliza tres detalles del afiche que compartió
-el usuario (`balto-clinic-banner.png`): atención de un paciente, laboratorio y
-diagnóstico por imagen. Las ventanas SVG muestran esas fotografías originales;
-no se han generado instalaciones ni se ha reutilizado la foto de formación como
-si correspondiera a la sede. Las imágenes del inventario siguen siendo
-ilustraciones referenciales hasta recibir fotografías reales de los productos.
+La diapositiva de hospitalización utiliza una sola foto original de un paciente,
+publicada en Drupal. Se retiraron los recortes del afiche por su baja resolución.
+No se presenta esa fotografía como una imagen de las instalaciones. Las fotos
+reales del inventario siguen pendientes; el catálogo conserva sus ilustraciones
+referenciales identificadas.
