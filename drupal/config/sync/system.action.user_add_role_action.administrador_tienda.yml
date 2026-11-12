@@ -1,0 +1,14 @@
+uuid: 57b3d15c-c302-45db-baf4-ef1d2ddabc7a
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.administrador_tienda
+  module:
+    - user
+id: user_add_role_action.administrador_tienda
+label: 'Añade el rol Administrador de tienda al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: administrador_tienda

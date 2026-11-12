@@ -2,7 +2,7 @@
 
 Proyecto académico de tienda virtual con Drupal Commerce, MariaDB y chatbot mediante n8n. Marca: **BALTO Veterinaria — Medicina para tu mascota**, Juliaca, Puno, Perú. Moneda: soles (PEN).
 
-**Estado:** Fases 1, 2 y 3 implementadas y comprobadas con Drupal, MariaDB y n8n reales. La portada está en <http://localhost:8080> y el catálogo en <http://localhost:8080/tienda>. Pasaron 48 comprobaciones del sitio y 49 del catálogo, incluidas ediciones administrativas y validación de stock en servidor. El checkout configurado, el pago simulado, los endpoints JSON y el chatbot corresponden a las siguientes fases.
+**Estado:** Fases 1 a 4 implementadas y comprobadas con contenedores reales. Portada: <http://localhost:8080>; catálogo: <http://localhost:8080/tienda>; carrito: <http://localhost:8080/cart>. Pasaron 48 comprobaciones del sitio, 49 del catálogo y 41 del checkout, pedidos y roles. La API protegida y el chatbot corresponden a las fases siguientes.
 
 En esta computadora se utiliza un motor Docker Rootless separado: consulta [cómo retomarlo sin contraseña de administrador](docs/docker-local.md).
 
@@ -111,9 +111,10 @@ La imagen recibida se usa como referencia visual. El logo provisional se reempla
 4. Crea la tienda en PEN y carga servicios, categorías y configuración del negocio.
 5. Habilita el módulo de BALTO, configura los íconos editables y activa el tema propio.
 6. Crea quince productos con imágenes, categorías, especies y existencias de ejemplo, usando Commerce Stock.
-7. Importa las traducciones al español empaquetadas y reconstruye cachés antes de iniciar Apache.
+7. Configura el checkout, la pasarela manual simulada y las cuentas de tienda y cliente.
+8. Importa las traducciones al español empaquetadas y reconstruye cachés antes de iniciar Apache.
 
-Los reinicios conservan los datos y no cambian la contraseña del administrador. Las semillas tienen marcas de versión y no reponen inventario ni restauran precios editados. La validación de existencias ya está habilitada; el pago simulado y la compra completa se incorporarán en Fase 4.
+Los reinicios conservan los datos y no cambian la contraseña del administrador. Las semillas tienen marcas de versión y no reponen inventario ni restauran precios editados. La compra completa con pago simulado descuenta existencias y deja el pedido disponible para revisión administrativa.
 
 `drupal/config/sync/` contiene la exportación de configuración de esta instancia de demo. La instalación automática usa las semillas y no importa esa exportación de referencia. Los contenidos y los datos de clientes no forman parte de la exportación.
 
@@ -160,7 +161,7 @@ docker compose up -d
 | 1 | Compose, dependencias, instalador y semilla inicial | Implementada y verificada con contenedores |
 | 2 | Tema Twig, portada BALTO, servicios, horarios editables, mapa y WhatsApp | Implementada; 48 comprobaciones de navegador correctas |
 | 3 | Quince productos de ejemplo, imágenes, catálogo, filtros y stock | Implementada; 49 comprobaciones de navegador correctas |
-| 4 | Carrito, pago simulado, pedidos y roles | Pendiente |
+| 4 | Carrito, pago simulado, pedidos y roles | Implementada; 41 comprobaciones de navegador correctas |
 | 5 | API protegida para n8n | Pendiente |
 | 6 | Workflow por reglas y widget | Pendiente |
 | 7 | Pruebas funcionales y móvil | Pendiente |
@@ -178,3 +179,11 @@ Más capturas: [página completa](docs/capturas/fase-2-escritorio.png), [vista m
 ![Catálogo de BALTO](docs/capturas/fase-3-portada-tienda.png)
 
 Catálogo: [página completa](docs/capturas/fase-3-catalogo.png), [vista móvil](docs/capturas/fase-3-catalogo-movil.png), [detalle de producto](docs/capturas/fase-3-producto.png) y [detalle móvil](docs/capturas/fase-3-producto-movil.png).
+
+## Compra simulada y administración de tienda
+
+Consulta la [guía de compra y pedidos de fase 4](docs/fase-4.md), con credenciales por rol, pasos de la demo, capturas y limitaciones. El usuario `tienda_balto` usa `DRUPAL_STORE_MANAGER_PASSWORD` de `.env`; `cliente_balto` usa `DRUPAL_CLIENT_PASSWORD`. Al actualizar una instalación anterior, ejecuta `python3 scripts/init-env.py` y reconstruye los servicios.
+
+[Informe de las 41 pruebas de compra y permisos](docs/verificacion-fase-4.json).
+
+![Pedido de demostración registrado](docs/capturas/fase-4-confirmacion.png)

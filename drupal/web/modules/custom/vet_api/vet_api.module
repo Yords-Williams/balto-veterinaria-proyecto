@@ -30,6 +30,79 @@ function vet_api_form_commerce_order_item_add_to_cart_form_alter(array &$form, \
   }
 }
 
+/** Aviso de demostración visible en cada paso de compra y en el carrito. */
+function vet_api_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, string $form_id): void {
+  $object = $form_state->getFormObject();
+  $checkout = $object instanceof \Drupal\commerce_checkout\Plugin\Commerce\CheckoutFlow\CheckoutFlowInterface;
+  $cart = FALSE;
+  if ($object instanceof \Drupal\views\Form\ViewsForm) {
+    $args = $form_state->getBuildInfo()['args'] ?? [];
+    $view = reset($args);
+    $cart = $view instanceof \Drupal\views\ViewExecutable && in_array('commerce_cart_form', \Drupal\Component\Utility\Tags::explode($view->storage->get('tag')), TRUE);
+  }
+  if ($checkout || $cart) {
+    $form['vet_demo_notice'] = [
+      '#type' => 'container', '#weight' => -100,
+      '#attributes' => ['class' => ['checkout-demo-notice']],
+      'title' => ['#type' => 'html_tag', '#tag' => 'strong', '#value' => t('Pago simulado – No se realiza ningún cobro real')],
+      'description' => ['#type' => 'html_tag', '#tag' => 'p', '#value' => t('Compra de demostración con retiro en tienda. No se solicitan datos de tarjeta ni se realiza ninguna transferencia.')],
+    ];
+  }
+  if ($cart) {
+    $form['#attributes']['class'][] = 'balto-cart-form';
+    $form['output']['#prefix'] = '<div class="cart-table-scroll" tabindex="0" role="region" aria-label="Productos del carrito">';
+    $form['output']['#suffix'] = '</div>';
+    if (isset($form['actions']['submit'])) {
+      $form['actions']['submit']['#value'] = t('Actualizar carrito');
+    }
+    if (isset($form['actions']['checkout'])) {
+      $form['actions']['checkout']['#value'] = t('Finalizar compra');
+    }
+  }
+}
+
+/** Datos del pedido visibles solo después del control de acceso de Commerce. */
+function vet_api_commerce_order_view(array &$build, \Drupal\commerce_order\Entity\OrderInterface $order): void {
+  if ($order->getData('vet_simulated')) {
+    $build['vet_demo'] = ['#type' => 'container', '#weight' => -100, '#attributes' => ['class' => ['checkout-demo-notice']],
+      'notice' => ['#type' => 'html_tag', '#tag' => 'strong', '#value' => t('Pago simulado – No se realiza ningún cobro real')],
+      'customer' => ['#type' => 'item', '#title' => t('Datos para el retiro'), 'value' => ['#plain_text' => $order->getData('vet_customer_name', '') . ' · ' . $order->getData('vet_customer_phone', '')]],
+    ];
+  }
+}
+
+/** Asigna el rol de cliente a cuentas nuevas; nunca concede administración. */
+function vet_api_user_presave(\Drupal\user\UserInterface $account): void {
+  if ($account->isNew() && \Drupal\user\Entity\Role::load('cliente') && !$account->hasRole('administrador_tienda')) {
+    $account->addRole('cliente');
+  }
+}
+
+/** Conserva la validación numérica nativa y evita ajustes de saldo negativo. */
+function vet_api_field_widget_single_element_form_alter(array &$element, \Drupal\Core\Form\FormStateInterface $form_state, array $context): void {
+  $items = $context['items'];
+  $entity = $items->getEntity();
+  if ($items->getName() === 'field_stock_level' && $entity->getEntityTypeId() === 'commerce_product_variation' && $entity->bundle() === 'vet_variation' && isset($element['adjustment'])) {
+    $element['adjustment']['#vet_variation_id'] = $entity->id();
+    $element['adjustment']['#element_validate'] = [
+      [\Drupal\Core\Render\Element\Number::class, 'validateNumber'],
+      'vet_api_stock_adjustment_validate',
+    ];
+  }
+}
+
+function vet_api_stock_adjustment_validate(array &$element, \Drupal\Core\Form\FormStateInterface $form_state): void {
+  $value = $form_state->getValue($element['#parents']);
+  if ($value === '' || !is_numeric($value)) {
+    return;
+  }
+  $variation = $element['#vet_variation_id'] ? \Drupal::entityTypeManager()->getStorage('commerce_product_variation')->load($element['#vet_variation_id']) : NULL;
+  $stock = $variation ? \Drupal::service('vet_api.catalog')->stock($variation) : 0;
+  if ($stock + (float) $value < 0) {
+    $form_state->setError($element, t('El ajuste dejaría existencias negativas. El saldo actual es @stock.', ['@stock' => $stock]));
+  }
+}
+
 /** Implements hook_page_attachments(). */
 function vet_api_page_attachments(array &$attachments): void {
   // El contacto también aparece en cabecera y pie: invalidar toda página cacheada.

@@ -3,7 +3,7 @@
 set -euo pipefail
 cd /opt/drupal
 
-for name in DB_PASSWORD DRUPAL_HASH_SALT DRUPAL_ADMIN_PASSWORD VET_API_KEY; do
+for name in DB_PASSWORD DRUPAL_HASH_SALT DRUPAL_ADMIN_PASSWORD VET_API_KEY DRUPAL_STORE_MANAGER_PASSWORD DRUPAL_CLIENT_PASSWORD; do
   if [[ -z "${!name:-}" || "${!name}" == CAMBIAR ]]; then
     printf 'Falta configurar %s en .env.\n' "$name" >&2
     exit 1
@@ -35,6 +35,8 @@ drush --yes en vet_api
 drush php:script /opt/balto/scripts/seed-phase2.php
 drush --yes en commerce_stock_field commerce_stock_enforcement
 drush php:script /opt/balto/scripts/seed-phase3.php
+drush cache:rebuild
+drush php:script /opt/balto/scripts/seed-phase4.php
 if [[ "$(drush state:get balto.translations.v1 --format=string 2>/dev/null || true)" != 1 ]]; then
   mkdir -p /tmp/balto-translations
   for archive in /opt/balto/translations/*.po.gz; do

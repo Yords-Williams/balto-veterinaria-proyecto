@@ -1,0 +1,37 @@
+uuid: aa64d4cf-1ab0-428e-9526-ed46b22e6a47
+langcode: es
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.vet_variation
+    - core.entity_view_mode.commerce_product_variation.summary
+    - field.field.commerce_product_variation.vet_variation.field_stock_level
+id: commerce_product_variation.vet_variation.summary
+targetEntityType: commerce_product_variation
+bundle: vet_variation
+mode: summary
+content:
+  product_id:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  changed: true
+  commerce_stock_always_in_stock: true
+  created: true
+  default_langcode: true
+  field_stock_level: true
+  langcode: true
+  list_price: true
+  price: true
+  sku: true
+  status: true
+  title: true
+  type: true
+  uid: true
+  uuid: true
+  variation_id: true

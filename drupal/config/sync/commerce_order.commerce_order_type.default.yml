@@ -8,11 +8,11 @@ id: default
 label: 'Por defecto'
 traits: {  }
 locked: false
-workflow: order_default
+workflow: order_default_validation
 showOrderEditLinks: false
 numberPattern: order_default
 refresh_mode: customer
 refresh_frequency: 300
-sendReceipt: true
+sendReceipt: false
 receiptBcc: ''
 receiptSubject: ''

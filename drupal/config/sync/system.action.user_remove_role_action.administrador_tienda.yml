@@ -1,0 +1,14 @@
+uuid: a0676b5e-7c9b-4356-b497-79cfa9244039
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.administrador_tienda
+  module:
+    - user
+id: user_remove_role_action.administrador_tienda
+label: 'Elimina el rol Administrador de tienda al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: administrador_tienda

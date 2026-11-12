@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-12T14:39:22.159Z",
+  "results": [
+    "Hay existencias suficientes para las compras de prueba",
+    "El carrito muestra el nombre del producto",
+    "Carrito rotulado como pago simulado",
+    "Modificar la cantidad guarda el carrito",
+    "Total del carrito recalculado desde Commerce",
+    "Se pueden agregar productos distintos",
+    "Eliminar un producto actualiza el carrito",
+    "Carrito con productos sin desbordamiento en celular",
+    "Un visitante puede iniciar checkout sin crear una cuenta",
+    "Checkout informa que no hay cobro real",
+    "No se solicitan datos de tarjeta",
+    "Resumen del checkout muestra el producto",
+    "Checkout adaptable al celular",
+    "El servidor valida los datos de contacto",
+    "Datos válidos llevan a revisión del pedido",
+    "La confirmación final indica explícitamente que es simulada",
+    "Compra completa llega a pedido registrado",
+    "Se muestra confirmación y número de pedido",
+    "El pedido queda registrado para revisión en MariaDB",
+    "Un único pago ficticio completado, sin proveedor externo",
+    "Importe y pago local consistentes en soles",
+    "La compra descuenta exactamente dos unidades",
+    "Recargar la confirmación no duplica pago ni descuento",
+    "El carrito queda vacío después del pedido",
+    "Otra sesión no puede ver la confirmación privada",
+    "Administrador de tienda ve el pedido en el panel",
+    "El panel muestra el detalle y contacto del pedido",
+    "Administrador de tienda accede a productos",
+    "Administrador de tienda puede abrir creación de productos con imágenes",
+    "Administrador de tienda puede controlar las existencias",
+    "El servidor rechaza ajustes que dejarían stock negativo",
+    "Administrador de tienda sin acceso a /admin/people",
+    "Administrador de tienda sin acceso a /admin/commerce/config/payment-gateways",
+    "Administrador de tienda sin acceso a /admin/modules",
+    "Cliente sin acceso a /admin/commerce/orders",
+    "Cliente sin acceso a /admin/commerce/products",
+    "Cliente sin acceso a /admin/config/balto/negocio",
+    "Un cliente autenticado también puede completar la compra",
+    "Pedido vinculado al cliente y stock actualizado",
+    "El cliente puede consultar su historial de pedidos",
+    "Sin errores JavaScript ni respuestas locales HTTP 500"
+  ],
+  "errors": [],
+  "orders": [
+    {
+      "stock": 23,
+      "unit": "12.900000",
+      "id": 6,
+      "number": "1",
+      "state": "validation",
+      "customer": 0,
+      "total": "25.800000",
+      "currency": "PEN",
+      "paid": true,
+      "simulated": true,
+      "payments": [
+        {
+          "state": "completed",
+          "gateway": "pago_simulado",
+          "amount": "25.800000"
+        }
+      ]
+    },
+    {
+      "stock": 22,
+      "unit": "12.900000",
+      "id": 7,
+      "number": "2",
+      "state": "validation",
+      "customer": 3,
+      "total": "12.900000",
+      "currency": "PEN",
+      "paid": true,
+      "simulated": true,
+      "payments": [
+        {
+          "state": "completed",
+          "gateway": "pago_simulado",
+          "amount": "12.900000"
+        }
+      ]
+    }
+  ]
+}

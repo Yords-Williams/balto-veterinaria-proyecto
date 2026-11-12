@@ -1,0 +1,21 @@
+uuid: 84031530-0f81-48be-a38a-c4003cc856e8
+langcode: es
+status: true
+dependencies:
+  module:
+    - vet_api
+id: pago_simulado
+label: 'Pago simulado – No se realiza ningún cobro real'
+weight: 0
+plugin: vet_simulated_manual
+configuration:
+  display_label: 'Pago simulado – No se realiza ningún cobro real'
+  mode: n/a
+  payment_method_types:
+    - credit_card
+  collect_billing_information: false
+  instructions:
+    value: 'Pago ficticio registrado para la demostración académica. No se realizó ningún cobro ni transferencia. Coordina cualquier consulta real por WhatsApp.'
+    format: plain_text
+conditions: {  }
+conditionOperator: AND

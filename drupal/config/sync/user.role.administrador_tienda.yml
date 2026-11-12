@@ -1,0 +1,39 @@
+uuid: 5aae4662-86ef-460e-88ce-f35d92a331f5
+langcode: es
+status: true
+dependencies:
+  module:
+    - commerce
+    - commerce_checkout
+    - commerce_order
+    - commerce_payment
+    - commerce_product
+    - commerce_store
+    - navigation
+    - system
+    - vet_api
+id: administrador_tienda
+label: 'Administrador de tienda'
+weight: 4
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access checkout'
+  - 'access commerce administration pages'
+  - 'access commerce_order overview'
+  - 'access commerce_product overview'
+  - 'access content'
+  - 'access navigation'
+  - 'administer balto business'
+  - 'administer commerce_payment'
+  - 'create vet_product commerce_product'
+  - 'manage vet_variation commerce_product_variation'
+  - 'update any vet_product commerce_product'
+  - 'update default commerce_order'
+  - 'view commerce_order'
+  - 'view commerce_product'
+  - 'view commerce_store'
+  - 'view default commerce_order'
+  - 'view own commerce_order'
+  - 'view own unpublished commerce_product'
+  - 'view the administration theme'

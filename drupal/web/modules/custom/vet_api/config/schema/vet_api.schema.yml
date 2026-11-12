@@ -52,3 +52,15 @@ vet_api.business:
     about_text:
       type: text
       label: 'Presentación'
+
+commerce_payment.commerce_payment_gateway.plugin.vet_simulated_manual:
+  type: commerce_payment.commerce_payment_gateway.plugin.manual
+  label: 'Pasarela manual de demostración BALTO'
+
+commerce_checkout.commerce_checkout_flow.plugin.vet_checkout:
+  type: commerce_checkout.commerce_checkout_flow.plugin.multistep_default
+  label: 'Checkout de demostración BALTO'
+
+commerce_checkout.commerce_checkout_pane.vet_customer:
+  type: commerce_checkout_pane_configuration
+  label: 'Datos para retiro en tienda'

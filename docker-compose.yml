@@ -52,6 +52,10 @@ services:
       DRUPAL_ADMIN_USER: ${DRUPAL_ADMIN_USER:-admin_balto}
       DRUPAL_ADMIN_PASSWORD: ${DRUPAL_ADMIN_PASSWORD:?Falta DRUPAL_ADMIN_PASSWORD}
       DRUPAL_ADMIN_EMAIL: ${DRUPAL_ADMIN_EMAIL:-admin@example.invalid}
+      DRUPAL_STORE_MANAGER_USER: ${DRUPAL_STORE_MANAGER_USER:-tienda_balto}
+      DRUPAL_STORE_MANAGER_PASSWORD: ${DRUPAL_STORE_MANAGER_PASSWORD:?Ejecuta python3 scripts/init-env.py}
+      DRUPAL_CLIENT_USER: ${DRUPAL_CLIENT_USER:-cliente_balto}
+      DRUPAL_CLIENT_PASSWORD: ${DRUPAL_CLIENT_PASSWORD:?Ejecuta python3 scripts/init-env.py}
     volumes:
       - drupal_files:/opt/drupal/web/sites/default/files
     networks: [backend]

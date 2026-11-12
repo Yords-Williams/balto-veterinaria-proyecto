@@ -12,3 +12,7 @@ services:
     arguments: ['@commerce_stock.service_manager']
     tags:
       - { name: commerce_order.availability_checker, priority: 100 }
+
+  vet_api.checkout_stock_guard:
+    class: Drupal\vet_api\Service\CheckoutStockGuard
+    arguments: ['@lock', '@database', '@entity_type.manager', '@vet_api.catalog', '@messenger']

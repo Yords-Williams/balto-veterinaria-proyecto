@@ -1,0 +1,5 @@
+<div class="layout-checkout-form balto-checkout-grid">
+  <div class="layout-region layout-region-checkout-main">{{ form|without('sidebar', 'actions') }}</div>
+  <aside class="layout-region layout-region-checkout-secondary checkout-summary" aria-label="Resumen de tu pedido"><h2>Tu pedido</h2>{{ form.sidebar }}</aside>
+  <div class="layout-region layout-region-checkout-footer">{{ form.actions }}</div>
+</div>
