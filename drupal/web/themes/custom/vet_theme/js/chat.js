@@ -77,7 +77,7 @@
           form.querySelector('button').disabled = true;
           widget.querySelectorAll('.chat-prompts button').forEach(b => { b.disabled = true; });
           const controller = new AbortController();
-          const timer = window.setTimeout(() => controller.abort(), 35000);
+          const timer = window.setTimeout(() => controller.abort(), 50000);
           try {
             const url = new URL(drupalSettings.baltoChat?.webhookUrl);
             if (!['http:', 'https:'].includes(url.protocol)) throw new Error('Configuración no válida');

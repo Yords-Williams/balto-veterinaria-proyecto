@@ -34,7 +34,7 @@ else if (context.intent === 'product' || context.intent === 'category') {
     links = products.slice(0, 5).map(p => ({ label: 'Ver ' + p.name, url: cleanUrl(p.url) })).filter(l => l.url);
   }
 }
-else reply = `No entendí tu consulta. Prueba con «precio de Dog Chow», «juguetes», «servicios» u «horarios». ${contact}`;
+else reply = `Puedo ayudarte con productos, precios, disponibilidad, servicios y horarios. No tengo promociones registradas para confirmar. ¿Buscas algo para perro, gato u otra mascota? ${contact}`;
 if (business && status === 200) {
   const url = cleanUrl(business.appointment_url || business.whatsapp_url, true);
   if (url) links.push({ label: 'Consultar por WhatsApp', url });

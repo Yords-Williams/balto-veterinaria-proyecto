@@ -26,8 +26,18 @@ http('Leer categorías', 'http://drupal/api/vet/categories')
 node('Preparar consulta', 'code', {'jsCode': (ROOT/'n8n/code/plan.js').read_text()}, 2)
 http('Consultar Drupal', "={{ 'http://drupal' + $json.path }}")
 node('Responder en español', 'code', {'jsCode': (ROOT/'n8n/code/format.js').read_text()}, 2)
+node('Redactar con Gemini', 'if', {'conditions': {'options': {'caseSensitive': True, 'typeValidation': 'strict', 'version': 2}, 'conditions': [{'id': 'grounded-reply', 'leftValue': '={{ $json.status === 200 && $json.body.engine === "gemini" }}', 'rightValue': True, 'operator': {'type': 'boolean', 'operation': 'true', 'singleValue': True}}], 'combinator': 'and'}, 'options': {}}, 2.2)
+node('Preparar redacción', 'code', {'jsCode': (ROOT/'n8n/code/reply-request.js').read_text()}, 2)
+node('Crear respuesta Gemini', 'httpRequest', {
+    'method': 'POST', 'url': 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent',
+    'authentication': 'genericCredentialType', 'genericAuthType': 'httpHeaderAuth',
+    'sendBody': True, 'specifyBody': 'json', 'jsonBody': '={{ $json.geminiRequest }}',
+    'options': {'timeout': 10000, 'response': {'response': {'responseFormat': 'json'}}}
+}, 4.2, credentials={'httpHeaderAuth': {'id': 'baltoGeminiApi', 'name': 'BALTO Gemini'}}, onError='continueRegularOutput')
+node('Validar respuesta', 'code', {'jsCode': (ROOT/'n8n/code/reply-validate.js').read_text()}, 2)
 node('Enviar respuesta', 'respondToWebhook', {'respondWith': 'json', 'responseBody': '={{ $json.body }}', 'options': {'responseCode': '={{ $json.status }}', 'responseHeaders': {'entries': [{'name': 'Cache-Control', 'value': 'no-store'}, {'name': 'X-Content-Type-Options', 'value': 'nosniff'}]}}}, 1.4)
 connections = {a['name']: {'main': [[{'node': b['name'], 'type': 'main', 'index': 0}]]} for a,b in zip(nodes,nodes[1:])}
 connections['Usar Gemini'] = {'main': [[{'node': 'Interpretar con Gemini', 'type': 'main', 'index': 0}], [{'node': 'Validar interpretación', 'type': 'main', 'index': 0}]]}
-workflow = {'id': 'baltoChatbot', 'name': 'BALTO · Asistente con Gemini y respaldo por reglas', 'active': False, 'nodes': nodes, 'connections': connections, 'settings': {'executionOrder': 'v1', 'saveDataSuccessExecution': 'none', 'saveDataErrorExecution': 'none', 'saveManualExecutions': False, 'executionTimeout': 45}, 'tags': []}
+connections['Redactar con Gemini'] = {'main': [[{'node': 'Preparar redacción', 'type': 'main', 'index': 0}], [{'node': 'Enviar respuesta', 'type': 'main', 'index': 0}]]}
+workflow = {'id': 'baltoChatbot', 'name': 'BALTO · Asistente con Gemini y respaldo por reglas', 'active': False, 'nodes': nodes, 'connections': connections, 'settings': {'executionOrder': 'v1', 'saveDataSuccessExecution': 'none', 'saveDataErrorExecution': 'none', 'saveManualExecutions': False, 'executionTimeout': 55}, 'tags': []}
 (ROOT/'n8n/workflows/chatbot.json').write_text(json.dumps(workflow, ensure_ascii=False, indent=2)+'\n')

@@ -12,7 +12,7 @@ const geminiEnabled = process.env.GEMINI_ENABLED === 'true' && !!geminiKey;
 const model = process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
 if (!/^[a-z0-9.-]+$/.test(model)) throw new Error('GEMINI_MODEL inválido');
 if (!geminiEnabled) workflow.nodes.find(n => n.name === 'Usar Gemini').parameters.conditions.conditions[0].leftValue = '={{ false }}';
-workflow.nodes.find(n => n.name === 'Interpretar con Gemini').parameters.url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+for (const name of ['Interpretar con Gemini', 'Crear respuesta Gemini']) workflow.nodes.find(n => n.name === name).parameters.url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 const serialized = JSON.stringify(workflow);
 fs.writeFileSync('/tmp/balto-chatbot.json', serialized, { mode: 0o600 });
 fs.writeFileSync('/tmp/balto-workflow.sha256', crypto.createHash('sha256').update(serialized).digest('hex'));
