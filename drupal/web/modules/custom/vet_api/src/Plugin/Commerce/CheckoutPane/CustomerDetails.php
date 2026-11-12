@@ -15,7 +15,7 @@ final class CustomerDetails extends CheckoutPaneBase {
   public function buildPaneForm(array $pane_form, FormStateInterface $form_state, array &$complete_form) {
     $pane_form['name'] = ['#type' => 'textfield', '#title' => $this->t('Nombre y apellidos'), '#default_value' => $this->order->getData('vet_customer_name', ''), '#required' => TRUE, '#maxlength' => 120, '#attributes' => ['autocomplete' => 'name']];
     $pane_form['phone'] = ['#type' => 'tel', '#title' => $this->t('Celular de contacto'), '#default_value' => $this->order->getData('vet_customer_phone', ''), '#required' => TRUE, '#maxlength' => 20, '#description' => $this->t('Celular peruano de nueve dígitos.'), '#attributes' => ['autocomplete' => 'tel']];
-    $pane_form['pickup'] = ['#type' => 'item', '#markup' => $this->t('Esta demo utiliza retiro en tienda. No se cobra envío.')];
+    $pane_form['pickup'] = ['#type' => 'item', '#markup' => $this->t('Retiro en el local de BALTO. Coordina disponibilidad y hora por WhatsApp; no se realiza envío.')];
     return $pane_form;
   }
 
@@ -33,7 +33,7 @@ final class CustomerDetails extends CheckoutPaneBase {
     $values = $form_state->getValue($pane_form['#parents']);
     $this->order->setData('vet_customer_name', trim($values['name']));
     $this->order->setData('vet_customer_phone', preg_replace('/\D/', '', $values['phone']));
-    $this->order->setData('vet_simulated', TRUE);
+
   }
 
   public function buildPaneSummary() {

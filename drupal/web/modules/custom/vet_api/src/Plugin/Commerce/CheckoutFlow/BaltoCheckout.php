@@ -9,7 +9,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\commerce_checkout\Attribute\CommerceCheckoutFlow;
 use Drupal\commerce_checkout\Plugin\Commerce\CheckoutFlow\MultistepDefault;
 
-#[CommerceCheckoutFlow(id: 'vet_checkout', label: new TranslatableMarkup('Compra de demostración BALTO'))]
+#[CommerceCheckoutFlow(id: 'vet_checkout', label: new TranslatableMarkup('Pedidos BALTO con retiro en tienda'))]
 final class BaltoCheckout extends MultistepDefault {
 
   public function getSteps() {
@@ -17,7 +17,8 @@ final class BaltoCheckout extends MultistepDefault {
     $steps['order_information']['label'] = $this->t('Tus datos');
     $steps['review']['label'] = $this->t('Revisa tu pedido');
     $steps['review']['next_label'] = $this->t('Revisar pedido');
-    $steps['payment']['next_label'] = $this->t('Confirmar pedido simulado');
+    $steps['payment']['next_label'] = $this->getOrder()->get('payment_gateway')->target_id === 'pago_simulado'
+      ? $this->t('Confirmar pedido simulado') : $this->t('Confirmar pedido y coordinar retiro');
     $steps['complete']['label'] = $this->t('Pedido registrado');
     return $steps;
   }

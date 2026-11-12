@@ -30,7 +30,7 @@ function vet_api_form_commerce_order_item_add_to_cart_form_alter(array &$form, \
   }
 }
 
-/** Aviso de demostración visible en cada paso de compra y en el carrito. */
+/** Explica la coordinación del pedido y distingue la opción académica. */
 function vet_api_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, string $form_id): void {
   $object = $form_state->getFormObject();
   $checkout = $object instanceof \Drupal\commerce_checkout\Plugin\Commerce\CheckoutFlow\CheckoutFlowInterface;
@@ -44,8 +44,8 @@ function vet_api_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $
     $form['vet_demo_notice'] = [
       '#type' => 'container', '#weight' => -100,
       '#attributes' => ['class' => ['checkout-demo-notice']],
-      'title' => ['#type' => 'html_tag', '#tag' => 'strong', '#value' => t('Pago simulado – No se realiza ningún cobro real')],
-      'description' => ['#type' => 'html_tag', '#tag' => 'p', '#value' => t('Compra de demostración con retiro en tienda. No se solicitan datos de tarjeta ni se realiza ninguna transferencia.')],
+      'title' => ['#type' => 'html_tag', '#tag' => 'strong', '#value' => t('Retiro en BALTO · Pago al recoger o Yape coordinado')],
+      'description' => ['#type' => 'html_tag', '#tag' => 'p', '#value' => t('BALTO confirmará disponibilidad y total por WhatsApp antes del pago. La opción «Pago simulado» es solo para demostraciones y no genera cobros.')],
     ];
   }
   if ($cart) {
@@ -63,6 +63,13 @@ function vet_api_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $
 
 /** Datos del pedido visibles solo después del control de acceso de Commerce. */
 function vet_api_commerce_order_view(array &$build, \Drupal\commerce_order\Entity\OrderInterface $order): void {
+  if (in_array($order->get('payment_gateway')->target_id, ['pagar_al_recoger', 'yape_coordinado'], TRUE)) {
+    $build['vet_manual'] = ['#type' => 'container', '#weight' => -100, '#cache' => ['max-age' => 0], '#attributes' => ['class' => ['checkout-demo-notice']],
+      'status' => ['#type' => 'html_tag', '#tag' => 'strong', '#value' => $order->getState()->getId() === 'canceled' ? t('Pedido cancelado — no solicitar pagos') : ($order->isPaid() ? t('Pago registrado por BALTO') : t('Pago pendiente de verificación del establecimiento'))],
+      'customer' => ['#type' => 'item', '#title' => t('Datos para coordinar el retiro'), 'value' => ['#plain_text' => $order->getData('vet_customer_name', '') . ' · ' . $order->getData('vet_customer_phone', '')]],
+      'instructions' => ['#type' => 'html_tag', '#tag' => 'p', '#value' => t('Verifica el dinero recibido antes de registrar el pago. Las unidades quedan apartadas al registrar el pedido y se devuelven al stock al cancelarlo. No se descuentan otra vez al recibir el pago.')],
+    ];
+  }
   if ($order->getData('vet_simulated')) {
     $build['vet_demo'] = ['#type' => 'container', '#weight' => -100, '#attributes' => ['class' => ['checkout-demo-notice']],
       'notice' => ['#type' => 'html_tag', '#tag' => 'strong', '#value' => t('Pago simulado – No se realiza ningún cobro real')],
@@ -111,4 +118,20 @@ function vet_api_page_attachments(array &$attachments): void {
   $attachments['#attached']['drupalSettings']['baltoChat'] = [
     'webhookUrl' => \Drupal\Core\Site\Settings::get('vet_chat_webhook_url', ''),
   ];
+}
+
+/** Identifica el medio en el pedido, conservando el historial de las demos previas. */
+function vet_api_commerce_order_presave(\Drupal\commerce_order\Entity\OrderInterface $order): void {
+  $gateway = $order->get('payment_gateway')->target_id;
+  if ($gateway && in_array($gateway, ['pago_simulado', 'pagar_al_recoger', 'yape_coordinado'], TRUE)) {
+    $order->setData('vet_simulated', $gateway === 'pago_simulado');
+  }
+}
+
+/** Un pago cancelado no puede confirmarse como recibido por accidente. */
+function vet_api_commerce_payment_presave(\Drupal\commerce_payment\Entity\PaymentInterface $payment): void {
+  $order = $payment->getOrder();
+  if ($order && $order->getState()->getId() === 'canceled' && $payment->getState()->getId() === 'completed') {
+    throw new \Drupal\commerce_payment\Exception\PaymentGatewayException('El pedido está cancelado. No se puede registrar un pago recibido.');
+  }
 }
