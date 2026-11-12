@@ -9,12 +9,13 @@ def node(name, kind, parameters, version=1, **extra):
 node('Recibir chat', 'webhook', {'httpMethod': 'POST', 'path': 'chat', 'responseMode': 'responseNode', 'options': {'allowedOrigins': 'http://localhost:8080'}}, 2.1, webhookId='balto-chat-webhook')
 node('Detectar intención', 'code', {'jsCode': (ROOT/'n8n/code/detect.js').read_text()}, 2)
 # Gemini interpreta la pregunta; Drupal conserva la autoridad sobre los datos.
+node('Preparar Gemini', 'code', {'jsCode': 'return [{json: {...$input.first().json, geminiRequest: ' + (ROOT/'n8n/code/gemini-request.js').read_text().strip() + '}}];'}, 2)
 node('Usar Gemini', 'if', {'conditions': {'options': {'caseSensitive': True, 'typeValidation': 'strict', 'version': 2}, 'conditions': [{'id': 'valid-message', 'leftValue': '={{ $json.status === 200 }}', 'rightValue': True, 'operator': {'type': 'boolean', 'operation': 'true', 'singleValue': True}}], 'combinator': 'and'}, 'options': {}}, 2.2)
 node('Interpretar con Gemini', 'httpRequest', {
     'method': 'POST', 'url': 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent',
     'authentication': 'genericCredentialType', 'genericAuthType': 'httpHeaderAuth',
     'sendBody': True, 'specifyBody': 'json',
-    'jsonBody': '={{ ' + (ROOT/'n8n/code/gemini-request.js').read_text().strip() + ' }}',
+    'jsonBody': '={{ $json.geminiRequest }}',
     'options': {'timeout': 10000, 'response': {'response': {'responseFormat': 'json'}}}
 }, 4.2, credentials={'httpHeaderAuth': {'id': 'baltoGeminiApi', 'name': 'BALTO Gemini'}}, onError='continueRegularOutput')
 node('Validar interpretación', 'code', {'jsCode': (ROOT/'n8n/code/gemini-validate.js').read_text()}, 2)
