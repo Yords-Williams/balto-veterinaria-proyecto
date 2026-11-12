@@ -213,10 +213,11 @@ El nombre gratuito y HTTPS ya se configuraron con sslip.io: [verificación de DN
 
 ### Gemini opcional en el chat
 
-El workflow admite Gemini para interpretar preguntas en lenguaje natural. Los
+El workflow admite Gemini para interpretar preguntas y redactar respuestas cercanas con los datos consultados en Drupal. Los
 precios, existencias, servicios y contactos se consultan en Drupal; Gemini no
-escribe pedidos ni modifica el inventario. Solo se envía el mensaje actual a
-Google, sin historial, credenciales ni datos de pedidos. Si no hay clave o la
+escribe pedidos ni modifica el inventario. Se envían a Google el mensaje actual y los datos públicos consultados en Drupal,
+sin historial, credenciales ni datos de pedidos. Las respuestas conservan los botones
+y se rechazan si añaden cifras ausentes en los datos de referencia. Si no hay clave o la
 API falla, se usan las reglas originales.
 
 En el servidor, desde el repositorio, ejecuta
