@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-12T17:07:37.835Z",
+  "url": "https://balto-veterinaria.54-236-251-160.sslip.io",
+  "results": [
+    "Portada con paciente real y derivado WebP",
+    "Logo proporcionado por el usuario activo",
+    "Foto del propietario con contexto de formación, sin títulos inventados",
+    "Tres historias seleccionadas desde Drupal",
+    "Publicaciones históricas identificadas con su contexto temporal",
+    "Fotografías con texto alternativo",
+    "Sin desbordamiento horizontal a 1100 px",
+    "Sin desbordamiento horizontal a 390 px",
+    "El chat sigue consultando n8n después del cambio visual",
+    "Sin errores JavaScript ni respuestas locales HTTP 500",
+    "Pedidos, productos, precio y stock iguales antes y después del despliegue"
+  ],
+  "errors": []
+}
