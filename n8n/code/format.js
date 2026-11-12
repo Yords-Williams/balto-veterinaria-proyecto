@@ -1,4 +1,4 @@
-const context = $('Detectar intención').first().json;
+const context = $('Validar interpretación').first().json;
 const business = $('Leer contacto').first().json.data;
 const response = $input.first().json;
 const publicBase = 'http://localhost:8080'; // El instalador adapta esta URL.
@@ -39,4 +39,4 @@ if (business && status === 200) {
   const url = cleanUrl(business.appointment_url || business.whatsapp_url, true);
   if (url) links.push({ label: 'Consultar por WhatsApp', url });
 }
-return [{ json: { status, body: { reply, intent: context.intent, links } } }];
+return [{ json: { status, body: { reply, intent: context.intent, engine: context.engine, links } } }];

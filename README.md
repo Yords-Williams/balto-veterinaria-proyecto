@@ -210,3 +210,25 @@ Se utilizará el crédito del profesor y una instancia nueva exclusiva para BALT
 **URL pública actual BALTO: https://balto-veterinaria.54-236-251-160.sslip.io**. La demo completa ya pasó en EC2: [informe](docs/verificacion-fase-9-ec2.json). El subdominio gratuito de sslip.io incluye la IP de EC2. Si la IP cambia al detener y reiniciar, habrá que actualizar el nombre y la configuración; sigue pendiente asociar una Elastic IP. La fase 8 sigue aplazada.
 
 El nombre gratuito y HTTPS ya se configuraron con sslip.io: [verificación de DNS, certificado y chat](docs/verificacion-dominio-https.json). No requiere cuenta de DNS ni compra de dominio.
+
+### Gemini opcional en el chat
+
+El workflow admite Gemini para interpretar preguntas en lenguaje natural. Los
+precios, existencias, servicios y contactos se consultan en Drupal; Gemini no
+escribe pedidos ni modifica el inventario. Solo se envía el mensaje actual a
+Google, sin historial, credenciales ni datos de pedidos. Si no hay clave o la
+API falla, se usan las reglas originales.
+
+En el servidor, desde el repositorio, ejecuta
+`python3 scripts/configure-gemini.py --env .env` y pega la clave en el prompt
+oculto. Después ejecuta `sudo docker compose up -d --force-recreate n8n`.
+El modelo predeterminado es `gemini-3.5-flash-lite`; se puede cambiar con
+`--model`. Para desactivarlo, configura `GEMINI_ENABLED=false` y recrea n8n.
+La respuesta JSON del webhook incluye `engine: gemini` cuando la clasificación
+fue validada y `engine: rules` cuando se utilizó el respaldo. Una llamada real
+con `engine: gemini` es necesaria para dar por comprobada la conexión.
+
+Crea tu clave en [Google AI Studio](https://aistudio.google.com/api-keys).
+Las cuotas y la facturación de Google son independientes del crédito de AWS;
+consulta los [precios oficiales](https://ai.google.dev/gemini-api/docs/pricing).
+No guardes la clave en Git ni en el workflow exportado.

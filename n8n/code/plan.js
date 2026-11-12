@@ -1,4 +1,4 @@
-const context = $('Detectar intención').first().json;
+const context = $('Validar interpretación').first().json;
 const categories = Array.isArray($input.first().json.data) ? $input.first().json.data : [];
 const normalize = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 let path = '/api/vet/schedule';
