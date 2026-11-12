@@ -4,6 +4,7 @@ global:
       css/style.css: {}
   js:
     js/site.js: {}
+    js/carousel.js: {}
     js/chat.js: {}
   dependencies:
     - core/drupal

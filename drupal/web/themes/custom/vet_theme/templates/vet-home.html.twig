@@ -1,6 +1,7 @@
 {% set assets = vet_assets %}
-<section class="hero" aria-labelledby="hero-title">
-  <div class="container hero-grid">
+<section class="hero hero-carousel" data-hero-carousel role="region" aria-roledescription="carrusel" aria-label="Destacados de BALTO Veterinaria">
+  <div class="hero-slides">
+  <div class="container hero-grid hero-slide" data-hero-slide role="group" aria-roledescription="diapositiva" aria-label="1 de 3: Medicina para tu mascota" aria-hidden="false">
     <div class="hero-copy">
       <span class="eyebrow"><span class="small-line"></span> CON ELLOS, EN CADA ETAPA</span>
       <h1 id="hero-title">{% if business.slogan == 'Medicina para tu mascota' %}Medicina para<br />tu <em>mascota.</em>{% else %}{{ business.slogan }}{% endif %}<span class="heading-paw" aria-hidden="true">{% include '@vet_theme/templates/icon.html.twig' with {icon: 'paw'} only %}</span></h1>
@@ -14,6 +15,13 @@
       <div class="care-badge"><span class="care-badge-icon">{% include '@vet_theme/templates/icon.html.twig' with {icon: 'cross'} only %}</span><span><strong>Hospitalización {{ business.hospitalization }}</strong><small>Su cuidado no se detiene.</small></span></div>
       <div class="hero-tag">{% if clinic_gallery.portada %}Una mirada. Todo nuestro compromiso.{% else %}Un vínculo que merece cuidado{% endif %} <span aria-hidden="true">✳</span></div>
     </div>
+  </div>
+    {% include '@vet_theme/templates/hero-slides.html.twig' %}
+  </div>
+  <div class="container carousel-controls" data-carousel-controls hidden>
+    <div class="carousel-navigation"><button class="carousel-arrow" type="button" data-carousel-prev aria-label="Diapositiva anterior">←</button><div class="carousel-dots" role="group" aria-label="Elegir diapositiva"><button type="button" data-carousel-dot="0" aria-label="Ver presentación de BALTO" aria-current="true"></button><button type="button" data-carousel-dot="1" aria-label="Ver hospitalización 24 horas"></button><button type="button" data-carousel-dot="2" aria-label="Ver tienda para mascotas"></button></div><button class="carousel-arrow" type="button" data-carousel-next aria-label="Siguiente diapositiva">→</button></div>
+    <button class="carousel-pause" type="button" data-carousel-pause aria-label="Pausar carrusel">Ⅱ <span>Pausar</span></button>
+    <span class="visually-hidden" data-carousel-status aria-live="polite" aria-atomic="true"></span>
   </div>
 </section>
 
