@@ -1,0 +1,22 @@
+{
+  "fecha": "2026-11-12T13:52:37.860903+00:00",
+  "navegador": {
+    "comprobaciones": 49,
+    "errores": 0,
+    "informe": "verificacion-fase-3.json"
+  },
+  "verificacion_php_y_servicios": 65,
+  "instalacion_desde_base_vacia": {
+    "proyecto": "balto-phase3-fresh",
+    "correcta": true,
+    "advertencias": 0,
+    "comprobaciones": 63
+  },
+  "repeticion_instalador_conserva_precio_stock_y_productos": true,
+  "exportacion_configuracion_sin_secretos": true,
+  "productos": 15,
+  "agotados_iniciales": 2,
+  "moneda": "PEN",
+  "stock": "Commerce Stock 3.0.0: movimientos en MariaDB",
+  "pendiente": "Fase 4: checkout, pago simulado y pedidos completos"
+}

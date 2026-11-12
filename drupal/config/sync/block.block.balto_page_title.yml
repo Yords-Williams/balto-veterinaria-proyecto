@@ -24,3 +24,4 @@ visibility:
     pages: |-
       <front>
       /tienda
+      /product/*

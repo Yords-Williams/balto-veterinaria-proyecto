@@ -2,7 +2,7 @@
 
 Proyecto académico de tienda virtual con Drupal Commerce, MariaDB y chatbot mediante n8n. Marca: **BALTO Veterinaria — Medicina para tu mascota**, Juliaca, Puno, Perú. Moneda: soles (PEN).
 
-**Estado:** Fases 1 y 2 implementadas y comprobadas con Drupal, MariaDB y n8n reales. La portada de BALTO está disponible en <http://localhost:8080>. Se verificaron 48 comprobaciones de navegador, incluida la edición de horarios y servicios desde administración. El catálogo, el checkout configurado, los endpoints JSON y el chatbot corresponden a las siguientes fases.
+**Estado:** Fases 1, 2 y 3 implementadas y comprobadas con Drupal, MariaDB y n8n reales. La portada está en <http://localhost:8080> y el catálogo en <http://localhost:8080/tienda>. Pasaron 48 comprobaciones del sitio y 49 del catálogo, incluidas ediciones administrativas y validación de stock en servidor. El checkout configurado, el pago simulado, los endpoints JSON y el chatbot corresponden a las siguientes fases.
 
 En esta computadora se utiliza un motor Docker Rootless separado: consulta [cómo retomarlo sin contraseña de administrador](docs/docker-local.md).
 
@@ -97,7 +97,7 @@ En n8n, crea la cuenta propietaria desde la pantalla inicial. Se conserva en su 
 | Correo del negocio | Pendiente; no se publica uno inventado |
 | Hospitalización | 24 horas |
 | Consultorio / tienda | **Ejemplo:** lunes a sábado de 09:00 a 19:00; pendiente de confirmar |
-| Inventario | Productos y precios de ejemplo se incorporarán en Fase 3 |
+| Inventario | Quince productos con precios y existencias de ejemplo; no es el inventario real de BALTO |
 
 La semilla guarda los siete servicios indicados por el negocio como contenido `Servicio`; guarda horarios, direcciones y contacto en configuración Drupal dentro de MariaDB. No confunde hospitalización continua con atención de consultorio continua. El correo `admin@example.invalid` es únicamente una dirección técnica de demostración.
 
@@ -110,9 +110,10 @@ La imagen recibida se usa como referencia visual. El logo provisional se reempla
 3. Habilita idioma, Commerce, carrito, checkout, pagos y Commerce Stock.
 4. Crea la tienda en PEN y carga servicios, categorías y configuración del negocio.
 5. Habilita el módulo de BALTO, configura los íconos editables y activa el tema propio.
-6. Importa las traducciones al español empaquetadas y reconstruye cachés antes de iniciar Apache.
+6. Crea quince productos con imágenes, categorías, especies y existencias de ejemplo, usando Commerce Stock.
+7. Importa las traducciones al español empaquetadas y reconstruye cachés antes de iniciar Apache.
 
-Los reinicios conservan los datos y no cambian la contraseña del administrador. Las semillas tienen marcas de versión y no pisan cambios posteriores. No se habilita todavía la validación de existencias ni se configura el pago simulado: corresponden a Fases 3 y 4.
+Los reinicios conservan los datos y no cambian la contraseña del administrador. Las semillas tienen marcas de versión y no reponen inventario ni restauran precios editados. La validación de existencias ya está habilitada; el pago simulado y la compra completa se incorporarán en Fase 4.
 
 `drupal/config/sync/` contiene la exportación de configuración de esta instancia de demo. La instalación automática usa las semillas y no importa esa exportación de referencia. Los contenidos y los datos de clientes no forman parte de la exportación.
 
@@ -158,7 +159,7 @@ docker compose up -d
 | --- | --- | --- |
 | 1 | Compose, dependencias, instalador y semilla inicial | Implementada y verificada con contenedores |
 | 2 | Tema Twig, portada BALTO, servicios, horarios editables, mapa y WhatsApp | Implementada; 48 comprobaciones de navegador correctas |
-| 3 | Quince productos de ejemplo, imágenes, catálogo, filtros y stock | Pendiente |
+| 3 | Quince productos de ejemplo, imágenes, catálogo, filtros y stock | Implementada; 49 comprobaciones de navegador correctas |
 | 4 | Carrito, pago simulado, pedidos y roles | Pendiente |
 | 5 | API protegida para n8n | Pendiente |
 | 6 | Workflow por reglas y widget | Pendiente |
@@ -168,8 +169,12 @@ docker compose up -d
 
 AWS queda dentro del alcance por tu ampliación del proyecto. No hay recursos creados ni consumo de créditos. La guía detallada y la tabla de costos se verificarán contra fuentes oficiales al trabajar Fase 9. No se usarán RDS, ALB ni NAT Gateway.
 
-Consulta [las decisiones y pruebas de Fase 1](docs/fase-1.md), [la guía de Fase 2](docs/fase-2.md) y [el informe del navegador](docs/verificacion-fase-2.json).
+Consulta [las decisiones de Fase 1](docs/fase-1.md), [la guía de Fase 2](docs/fase-2.md), [la guía del catálogo](docs/fase-3.md) y [los productos iniciales de ejemplo](docs/productos-ejemplo.md). Informes de navegador: [sitio](docs/verificacion-fase-2.json) y [catálogo](docs/verificacion-fase-3.json).
 
 ![Portada de BALTO en escritorio](docs/capturas/fase-2-portada.png)
 
 Más capturas: [página completa](docs/capturas/fase-2-escritorio.png), [vista móvil](docs/capturas/fase-2-movil-portada.png) y [página móvil completa](docs/capturas/fase-2-movil.png).
+
+![Catálogo de BALTO](docs/capturas/fase-3-portada-tienda.png)
+
+Catálogo: [página completa](docs/capturas/fase-3-catalogo.png), [vista móvil](docs/capturas/fase-3-catalogo-movil.png), [detalle de producto](docs/capturas/fase-3-producto.png) y [detalle móvil](docs/capturas/fase-3-producto-movil.png).

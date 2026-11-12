@@ -2,3 +2,13 @@ services:
   vet_api.business:
     class: Drupal\vet_api\Service\BusinessData
     arguments: ['@config.factory', '@entity_type.manager']
+
+  vet_api.catalog:
+    class: Drupal\vet_api\Service\ProductCatalog
+    arguments: ['@entity_type.manager', '@commerce_stock.service_manager', '@file_url_generator']
+
+  vet_api.stock_availability:
+    class: Drupal\vet_api\Stock\StockAvailabilityChecker
+    arguments: ['@commerce_stock.service_manager']
+    tags:
+      - { name: commerce_order.availability_checker, priority: 100 }

@@ -1,0 +1,25 @@
+uuid: 06f23dae-fae2-401c-abd8-e5f938f7cdb8
+langcode: es
+status: true
+dependencies:
+  module:
+    - commerce_product
+    - file
+    - image
+id: commerce_product.field_photo
+field_name: field_photo
+entity_type: commerce_product
+type: image
+settings:
+  target_type: file
+  display_field: false
+  display_default: true
+  uri_scheme: public
+  default_image: {  }
+module: image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

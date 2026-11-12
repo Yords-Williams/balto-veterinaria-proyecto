@@ -19,3 +19,11 @@ function vet_theme_preprocess_page(array &$variables): void {
 function vet_theme_preprocess_vet_home(array &$variables): void {
   $variables['vet_assets'] = base_path() . \Drupal::service('extension.list.theme')->getPath('vet_theme');
 }
+
+/** Datos de detalle desde las entidades de Commerce y su saldo de stock. */
+function vet_theme_preprocess_commerce_product(array &$variables): void {
+  if ($variables['product_entity']->bundle() === 'vet_product') {
+    $variables['balto_product'] = \Drupal::service('vet_api.catalog')->present($variables['product_entity']);
+    $variables['business'] = \Drupal::service('vet_api.business')->getBusiness();
+  }
+}

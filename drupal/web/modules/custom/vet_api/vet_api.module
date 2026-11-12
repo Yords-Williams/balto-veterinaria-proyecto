@@ -9,8 +9,25 @@
 function vet_api_theme(): array {
   return [
     'vet_home' => ['variables' => ['business' => [], 'services' => []]],
-    'vet_store_preview' => ['variables' => ['business' => []]],
+    'vet_catalog' => ['variables' => ['business' => [], 'products' => [], 'total' => 0, 'categories' => [], 'species_options' => [], 'filters' => [], 'pager' => []]],
   ];
+}
+
+/** Implements hook_ENTITY_TYPE_view(). */
+function vet_api_commerce_product_view(array &$build, \Drupal\commerce_product\Entity\ProductInterface $product): void {
+  if ($product->bundle() === 'vet_product') {
+    $build['#cache']['tags'][] = 'config:vet_api.business';
+    foreach ($product->getVariations() as $variation) {
+      $build['#cache']['tags'] = \Drupal\Core\Cache\Cache::mergeTags($build['#cache']['tags'], $variation->getCacheTags());
+    }
+  }
+}
+
+/** Unifica la terminología de la tienda sin reemplazar el formulario Commerce. */
+function vet_api_form_commerce_order_item_add_to_cart_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
+  if (isset($form['actions']['submit']) && empty($form['actions']['submit']['#disabled'])) {
+    $form['actions']['submit']['#value'] = t('Agregar al carrito');
+  }
 }
 
 /** Implements hook_page_attachments(). */

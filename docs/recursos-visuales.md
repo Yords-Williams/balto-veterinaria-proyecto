@@ -18,3 +18,9 @@ Los íconos lineales son SVG propios del tema. Cada servicio guarda la elección
 ## Mapa
 
 El iframe consulta Google Maps con la dirección central almacenada en Drupal. Necesita conexión a internet. La dirección textual y el enlace para abrir Maps permanecen disponibles aunque no cargue el iframe.
+
+## Productos de ejemplo
+
+Los quince productos usan ilustraciones SVG originales del proyecto, con su PNG correspondiente en `drupal/assets/products/`. Se generan con `scripts/generate-product-placeholders.py` y `rsvg-convert`, y se cargan como archivos permanentes de Drupal al instalar el catálogo.
+
+Son representaciones genéricas de bolsas, accesorios y recipientes; no reproducen empaques ni logotipos de fabricantes. Cada ilustración lleva el texto **IMAGEN REFERENCIAL · DEMO**. El catálogo y el detalle informan que los productos, precios y existencias son de ejemplo. No se usó una fotografía de otro artículo para presentarla como el producto real.

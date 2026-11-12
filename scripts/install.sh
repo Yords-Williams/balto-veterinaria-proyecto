@@ -33,6 +33,8 @@ drush --yes en language locale commerce_product commerce_cart commerce_checkout 
 drush php:script /opt/balto/scripts/seed.php
 drush --yes en vet_api
 drush php:script /opt/balto/scripts/seed-phase2.php
+drush --yes en commerce_stock_field commerce_stock_enforcement
+drush php:script /opt/balto/scripts/seed-phase3.php
 if [[ "$(drush state:get balto.translations.v1 --format=string 2>/dev/null || true)" != 1 ]]; then
   mkdir -p /tmp/balto-translations
   for archive in /opt/balto/translations/*.po.gz; do
@@ -40,6 +42,10 @@ if [[ "$(drush state:get balto.translations.v1 --format=string 2>/dev/null || tr
   done
   drush locale:import-all /tmp/balto-translations --type=not-customized --override=not-customized
   drush state:set balto.translations.v1 1
+fi
+if [[ "$(drush state:get balto.translations.stock.v1 --format=string 2>/dev/null || true)" != 1 ]]; then
+  drush locale:import-all /opt/balto/scripts/data --type=not-customized --override=not-customized
+  drush state:set balto.translations.stock.v1 1
 fi
 drush cache:rebuild
 chown -R www-data:www-data /opt/drupal/web/sites/default/files

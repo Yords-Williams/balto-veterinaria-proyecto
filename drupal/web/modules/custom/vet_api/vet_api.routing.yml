@@ -14,10 +14,10 @@ vet_api.business_settings:
   requirements:
     _permission: 'administer balto business'
 
-vet_api.store_preview:
+vet_api.catalog:
   path: '/tienda'
   defaults:
-    _controller: '\Drupal\vet_api\Controller\HomeController::store'
+    _controller: '\Drupal\vet_api\Controller\CatalogController::catalog'
     _title: 'Tienda BALTO'
   requirements:
     _permission: 'access content'

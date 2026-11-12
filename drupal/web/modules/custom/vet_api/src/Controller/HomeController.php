@@ -29,12 +29,4 @@ final class HomeController extends ControllerBase {
     ];
   }
 
-  public function store(): array {
-    return [
-      '#theme' => 'vet_store_preview',
-      '#business' => $this->business->getBusiness(),
-      '#cache' => ['tags' => ['config:vet_api.business']],
-    ];
-  }
-
 }

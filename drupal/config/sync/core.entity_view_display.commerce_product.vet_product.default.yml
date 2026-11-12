@@ -1,0 +1,43 @@
+uuid: ec46f79a-6995-4225-a4d7-6aca7bb22187
+langcode: es
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.vet_product
+    - field.field.commerce_product.vet_product.field_category
+    - field.field.commerce_product.vet_product.field_description
+    - field.field.commerce_product.vet_product.field_photo
+    - field.field.commerce_product.vet_product.field_species
+  module:
+    - commerce_product
+id: commerce_product.vet_product.default
+targetEntityType: commerce_product
+bundle: vet_product
+mode: default
+content:
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: -5
+    region: content
+  variations:
+    type: commerce_add_to_cart
+    label: hidden
+    settings:
+      combine: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+hidden:
+  created: true
+  field_category: true
+  field_description: true
+  field_photo: true
+  field_species: true
+  langcode: true
+  stores: true
+  uid: true

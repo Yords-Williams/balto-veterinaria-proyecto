@@ -1,0 +1,21 @@
+uuid: f02dcff7-7e7d-40b4-804f-68e245086cd9
+langcode: es
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.vet_variation
+    - field.storage.commerce_product_variation.field_stock_level
+  module:
+    - commerce_stock_field
+id: commerce_product_variation.vet_variation.field_stock_level
+field_name: field_stock_level
+entity_type: commerce_product_variation
+bundle: vet_variation
+label: 'Existencias (movimientos)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: commerce_stock_level

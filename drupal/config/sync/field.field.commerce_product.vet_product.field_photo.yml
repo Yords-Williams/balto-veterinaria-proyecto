@@ -1,0 +1,33 @@
+uuid: dd355f2c-42ea-433c-a59b-c20a61260a61
+langcode: es
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.vet_product
+    - field.storage.commerce_product.field_photo
+  module:
+    - image
+id: commerce_product.vet_product.field_photo
+field_name: field_photo
+entity_type: commerce_product
+bundle: vet_product
+label: 'Imagen del producto'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: products
+  file_extensions: 'png jpg jpeg webp'
+  max_filesize: '2 MB'
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image: {  }
+field_type: image

@@ -8,3 +8,7 @@ dependencies:
   - drupal:options
   - drupal:telephone
   - commerce:commerce_cart
+  - drupal:image
+  - commerce_stock:commerce_stock_local
+  - commerce_stock:commerce_stock_field
+  - commerce_stock:commerce_stock_enforcement

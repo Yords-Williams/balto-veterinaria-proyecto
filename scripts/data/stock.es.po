@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BALTO\n"
+"Language: es\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Out of stock"
+msgstr "Agotado"
+
+msgid "Stock level adjustment"
+msgstr "Ajuste de existencias"
+
+msgid "A positive number will add stock, a negative number will remove stock."
+msgstr "Un número positivo suma existencias y uno negativo las resta."
+
+msgid "Current stock level: @stock_level"
+msgstr "Existencias actuales: @stock_level"
+
+msgid "Transaction note"
+msgstr "Nota del movimiento"
+
+msgid "Default note for transactions. Configurable in the field widget settings."
+msgstr "Nota predeterminada para los movimientos de existencias."
+
+msgid "Add a note to this transaction."
+msgstr "Agrega una nota para este movimiento."
+
+msgid "Product information"
+msgstr "Información del producto"

@@ -1,0 +1,10 @@
+uuid: a2f33055-98af-4576-b441-f4a04ea5ea8f
+langcode: es
+status: true
+dependencies: {  }
+id: vet_variation
+label: 'Producto BALTO'
+traits: {  }
+locked: false
+orderItemType: default
+generateTitle: false

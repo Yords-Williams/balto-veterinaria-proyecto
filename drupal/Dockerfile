@@ -17,6 +17,7 @@ COPY drupal/web/modules/custom/ web/modules/custom/
 COPY drupal/web/themes/custom/ web/themes/custom/
 COPY drupal/config/ config/
 COPY drupal/translations/ /opt/balto/translations/
+COPY drupal/assets/ /opt/balto/assets/
 COPY drupal/settings.php web/sites/default/settings.php
 COPY scripts/ /opt/balto/scripts/
 COPY drupal/php.ini /usr/local/etc/php/conf.d/balto.ini
