@@ -40,3 +40,7 @@
 # Caché local de las pruebas Python.
 __pycache__/
 *.pyc
+# Configuración de despliegue y claves locales.
+/docker-compose.override.yml
+*.pem
+*.key

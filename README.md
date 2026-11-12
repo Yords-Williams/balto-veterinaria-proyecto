@@ -120,7 +120,7 @@ Los reinicios conservan los datos y no cambian la contraseña del administrador.
 
 ## Guardar los cambios con Git
 
-El repositorio local se inicializa con commits pequeños por fase. GitHub necesita tu cuenta y un repositorio remoto; todavía no se ha publicado nada.
+El repositorio local se inicializa con commits pequeños por fase. El repositorio privado está en [GitHub](https://github.com/devmijaelflores-boop/balto-veterinaria). `.env`, bases de datos y claves privadas quedan excluidos.
 
 Para publicar cuando tengas un repositorio vacío, reemplaza el marcador por su URL real:
 
@@ -165,10 +165,10 @@ docker compose up -d
 | 5 | API protegida para n8n | Implementada; 123 comprobaciones HTTP correctas |
 | 6 | Workflow por reglas y widget | Implementada; 58 comprobaciones del webhook y 23 del widget correctas |
 | 7 | Pruebas funcionales y móvil | Demo integrada verificada; 17 comprobaciones correctas |
-| 8 | Documentación, capturas y guion de cinco minutos | Pendiente |
-| 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Pendiente |
+| 8 | Documentación, capturas y guion de cinco minutos | Aplazada por decisión del usuario |
+| 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Scripts y guía preparados; lanzamiento de una instancia BALTO pendiente |
 
-AWS queda dentro del alcance por tu ampliación del proyecto. No hay recursos creados ni consumo de créditos. La guía detallada y la tabla de costos se verificarán contra fuentes oficiales al trabajar Fase 9. No se usarán RDS, ALB ni NAT Gateway.
+AWS queda dentro del alcance por tu ampliación del proyecto. No hay recursos creados ni consumo de créditos. La [guía de despliegue AWS](docs/aws-deploy.md) incluye la estimación verificada en la calculadora oficial y las instrucciones de consola. No se usarán RDS, ALB ni NAT Gateway.
 
 Consulta [las decisiones de Fase 1](docs/fase-1.md), [la guía de Fase 2](docs/fase-2.md), [la guía del catálogo](docs/fase-3.md) y [los productos iniciales de ejemplo](docs/productos-ejemplo.md). Informes de navegador: [sitio](docs/verificacion-fase-2.json) y [catálogo](docs/verificacion-fase-3.json).
 
@@ -203,3 +203,9 @@ Abre <http://localhost:8080> y pulsa **Conversemos**. Prueba «precio de Dog Cho
 ## Verificar la demo de punta a punta
 
 La [fase 7](docs/fase-7.md) reúne las evidencias existentes y prueba un recorrido completo nuevo: chat → producto → carrito → pago simulado → pedido administrativo → stock actualizado en el chat. También verifica una edición real de precio desde el panel y la restaura. [Informe integrado](docs/verificacion-fase-7.json). La ejecución registra un pedido de demostración y consume una unidad de stock.
+
+## AWS para la tarea
+
+Se utilizará el crédito del profesor y una instancia nueva exclusiva para BALTO; la instancia del hotel pertenece a otro equipo y no se modifica. [Guía de despliegue](docs/aws-deploy.md): Ubuntu 24.04, t3.medium, EBS gp3 de 30 GB, Elastic IP, proxy, secretos nuevos y backups. [Estimación oficial guardada](https://calculator.aws/#/estimate?id=47d3105a56bad506b85e1e50cbc84d4a5c2808d2): USD 36.42 por 730 horas, antes de impuestos y tráfico adicional. Conviene detener EC2 al acabar cada sesión.
+
+**URL pública BALTO: pendiente de crear y configurar la instancia.** Las verificaciones actuales de proxy y backup son locales; no se presenta todavía una prueba EC2. La fase 8 sigue aplazada.

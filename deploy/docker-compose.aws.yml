@@ -1,0 +1,50 @@
+# Requiere Docker Compose >= 2.24.4 por !override.
+# Copiar como docker-compose.override.yml en EC2; Compose lo aplica por defecto.
+services:
+  drupal:
+    ports: !override []
+    environment:
+      DRUPAL_REVERSE_PROXY: '1'
+
+  n8n:
+    # El editor solo se accede mediante un túnel SSH.
+    ports: !override
+      - '127.0.0.1:5678:5678'
+    environment:
+      N8N_PROXY_HOPS: '1'
+
+  proxy:
+    image: caddy:2.11.9-alpine
+    restart: unless-stopped
+    environment:
+      BALTO_SITE_ADDRESS: ${BALTO_SITE_ADDRESS:?Configura el host público con configure-aws-env.py}
+    ports:
+      - '${AWS_HTTP_PORT:-80}:80'
+      - '${AWS_HTTPS_PORT:-443}:443'
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      backend:
+        ipv4_address: 172.29.240.10
+    depends_on:
+      drupal:
+        condition: service_healthy
+      n8n:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 172.29.240.0/24
+
+volumes:
+  caddy_data:
+  caddy_config:

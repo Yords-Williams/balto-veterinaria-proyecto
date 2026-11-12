@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-12T15:39:05.548111+00:00",
+  "results": [
+    "IP pública y webhook bajo el mismo origen",
+    "Dominio configurado para HTTPS automático",
+    "Cambiar URL conserva los secretos de la instalación",
+    "Una instalación nueva genera secretos distintos de desarrollo",
+    "Archivo .env privado con permisos 0600",
+    "Host inválido rechazado sin modificar el entorno",
+    "Drupal y MariaDB sin puertos publicados",
+    "Editor n8n limitado al loopback",
+    "Solo Caddy publica HTTP y HTTPS",
+    "Drupal preparado para confiar en el proxy específico"
+  ],
+  "errors": [],
+  "aws_instance_tested": false
+}

@@ -28,3 +28,16 @@ $settings['trusted_host_patterns'] = array_map(
 $settings['vet_api_key'] = getenv('VET_API_KEY');
 $settings['vet_chat_webhook_url'] = getenv('CHAT_WEBHOOK_URL');
 $settings['vet_chat_allowed_origin'] = getenv('CHAT_ALLOWED_ORIGIN');
+
+// Solo el proxy Caddy de la red AWS puede indicar el esquema HTTPS del cliente.
+// La dirección coincide con deploy/docker-compose.aws.yml; no confiar en toda
+// la red privada ni en cabeceras recibidas directamente desde internet.
+if (getenv('DRUPAL_REVERSE_PROXY') === '1') {
+  $settings['reverse_proxy'] = TRUE;
+  $settings['reverse_proxy_addresses'] = ['172.29.240.10'];
+  $settings['reverse_proxy_trusted_headers'] =
+    \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_FOR |
+    \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_HOST |
+    \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PORT |
+    \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PROTO;
+}

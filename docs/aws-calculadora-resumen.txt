@@ -1,0 +1,93 @@
+Successfully added Amazon Virtual Private Cloud (VPC)estimate.
+
+AWS Pricing Calculator
+My Estimate
+AWS Pricing Calculator
+My Estimate
+My EstimateEdit
+Export
+Share
+Estimate summary
+ 
+Info
+Upfront cost
+0.00 USD
+Monthly cost
+36.42 USD
+Total 12 months cost
+437.04 USD
+Includes upfront cost
+Getting Started with AWS
+Get started for free
+Contact Sales
+My Estimate
+Duplicate
+Delete
+Move to
+Create group
+Add support
+Add service
+1
+	
+Service Name
+	
+Status
+	
+Upfront cost
+	
+Monthly cost
+	
+Description
+	
+Region
+	
+Config Summary
+
+
+	
+Amazon EC2
+	
+-
+	
+0.00 USD
+	
+
+32.77 USD
+
+	
+-
+	
+US East (N. Virginia)
+	
+
+Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 1), Advance EC2 instance (t3.medium), Pricing strategy (On-Demand Utilization: 100 %Utilized/Month), Enable monitoring (disabled), EBS Storage amount (30 GB), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)
+
+
+
+	
+Amazon Virtual Private Cloud (VPC)
+	
+-
+	
+0.00 USD
+	
+
+3.65 USD
+
+	
+-
+	
+US East (N. Virginia)
+	
+
+Number of In-use public IPv4 addresses (1)
+
+Acknowledgement
+AWS Pricing Calculator provides only an estimate of your AWS fees and doesn't include any taxes that might apply. Your actual fees depend on a variety of factors, including your actual usage of AWS services.Learn more 
+
+
+
+Privacy
+Site terms
+Cookie preferences
+© 2026, Amazon Web Services, Inc. or its affiliates. All rights reserved.

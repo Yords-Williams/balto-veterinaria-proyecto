@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-12T15:43:31.358793+00:00",
+  "environment": "Docker local aislado, configuración AWS con puertos de prueba 18080/18443",
+  "aws_instance_tested": false,
+  "results": [
+    "Instalación nueva completa con proxy Caddy y secretos nuevos",
+    "Drupal sin puertos públicos y n8n sin puerto publicado en la prueba aislada",
+    "Portada y acceso Drupal responden por Caddy",
+    "Webhook del chat responde por el mismo origen y genera enlaces públicos correctos",
+    "Backup contiene SQL, archivos Drupal, SQLite n8n y archivo de entorno correcto",
+    "Permisos privados del backup y del entorno verificados",
+    "Checksums de todos los archivos del backup correctos",
+    "SQL restaurado en una base temporal con 15 productos y 15 variaciones",
+    "Portada y chat disponibles después del backup"
+  ],
+  "errors": []
+}

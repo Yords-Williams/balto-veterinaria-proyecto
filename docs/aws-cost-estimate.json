@@ -1,0 +1,40 @@
+{
+  "verified_at": "2026-11-12T15:43:52.273213+00:00",
+  "calculator_share_url": "https://calculator.aws/#/estimate?id=47d3105a56bad506b85e1e50cbc84d4a5c2808d2",
+  "region": "us-east-1",
+  "currency": "USD",
+  "period_hours": 730,
+  "ec2": {
+    "instance_type": "t3.medium",
+    "operating_system": "Linux",
+    "tenancy": "Shared",
+    "purchase": "On-Demand",
+    "count": 1,
+    "utilization_percent": 100,
+    "hourly_rate": 0.0416,
+    "monthly_compute": 30.368
+  },
+  "ebs": {
+    "type": "gp3",
+    "size_gb": 30,
+    "monthly": 2.4,
+    "extra_iops": 0,
+    "extra_throughput": 0,
+    "snapshots": false
+  },
+  "ipv4": {
+    "in_use": 1,
+    "hourly_rate": 0.005,
+    "monthly": 3.65
+  },
+  "calculator_monthly_total": 36.42,
+  "upfront": 0,
+  "excluded": [
+    "Impuestos",
+    "Tráfico no seleccionado: 0 TB en la calculadora",
+    "Dominio o DNS de pago",
+    "Consumo de CPU Unlimited: configurar Standard",
+    "Servicios no descritos"
+  ],
+  "aws_resources_created": false
+}
