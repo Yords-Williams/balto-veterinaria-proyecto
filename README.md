@@ -179,7 +179,28 @@ Más capturas: [página completa](docs/capturas/fase-2-escritorio.png), [vista m
 
 Catálogo: [página completa](docs/capturas/fase-3-catalogo.png), [vista móvil](docs/capturas/fase-3-catalogo-movil.png), [detalle de producto](docs/capturas/fase-3-producto.png) y [detalle móvil](docs/capturas/fase-3-producto-movil.png).
 
-## Compra simulada y administración de tienda
+## Pedidos con pago coordinado y administración
+
+El checkout ofrece **Pagar al recoger**, **Yape coordinado por WhatsApp** y
+**Pago simulado** para la demostración académica. Los dos primeros crean un
+pago manual pendiente: la web no transfiere dinero ni confirma capturas.
+El pedido queda pendiente de revisión del establecimiento y muestra un botón de
+WhatsApp con su número, productos y total. El mensaje se abre para que el
+cliente lo revise y envíe; no se envía automáticamente.
+
+Las unidades se apartan al registrar el pedido. Recibir el pago no descuenta
+stock nuevamente y cancelar el pedido devuelve sus unidades. La tienda debe
+revisar y cancelar solicitudes abandonadas; no hay vencimiento automático.
+El administrador registra la recepción en los pagos del pedido después de
+verificar el efectivo o el movimiento en Yape. No se habilita transferencia
+hasta contar con los datos bancarios confirmados del negocio.
+
+El catálogo aún es de ejemplo: antes de cualquier pago, BALTO debe confirmar
+el inventario y el importe real. El método simulado permanece identificado y
+solo crea un pago ficticio. Las pruebas técnicas se registran en
+[verificacion-pagos-manuales.json](docs/verificacion-pagos-manuales.json).
+
+### Demostración académica y roles
 
 Consulta la [guía de compra y pedidos de fase 4](docs/fase-4.md), con credenciales por rol, pasos de la demo, capturas y limitaciones. El usuario `tienda_balto` usa `DRUPAL_STORE_MANAGER_PASSWORD` de `.env`; `cliente_balto` usa `DRUPAL_CLIENT_PASSWORD`. Al actualizar una instalación anterior, ejecuta `python3 scripts/init-env.py` y reconstruye los servicios.
 

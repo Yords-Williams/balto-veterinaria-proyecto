@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-12T21:06:31.784Z",
+  "url": "https://balto-veterinaria.3-211-103-160.sslip.io",
+  "results": [
+    "yape_coordinado: opción disponible",
+    "yape_coordinado: revisión accesible",
+    "yape_coordinado: pedido registrado",
+    "yape_coordinado: un solo pago del medio elegido",
+    "yape_coordinado: pedido pendiente de confirmación del negocio",
+    "yape_coordinado: indicador de demostración correcto",
+    "yape_coordinado: estado de pago correcto",
+    "yape_coordinado: reserva exactamente una unidad",
+    "yape_coordinado: recarga no duplica pago ni reserva",
+    "yape_coordinado: WhatsApp con pedido, productos y total; no enviado",
+    "yape_coordinado: mensaje sin correo ni teléfono del cliente",
+    "yape_coordinado: otra sesión no accede al pedido",
+    "Administrador de tienda registra recepción del pago de prueba",
+    "Recibir pago no descuenta stock por segunda vez",
+    "pagar_al_recoger: opción disponible",
+    "pagar_al_recoger: revisión accesible",
+    "pagar_al_recoger: pedido registrado",
+    "pagar_al_recoger: un solo pago del medio elegido",
+    "pagar_al_recoger: pedido pendiente de confirmación del negocio",
+    "pagar_al_recoger: indicador de demostración correcto",
+    "pagar_al_recoger: estado de pago correcto",
+    "pagar_al_recoger: reserva exactamente una unidad",
+    "pagar_al_recoger: recarga no duplica pago ni reserva",
+    "pagar_al_recoger: WhatsApp con pedido, productos y total; no enviado",
+    "pagar_al_recoger: mensaje sin correo ni teléfono del cliente",
+    "pagar_al_recoger: otra sesión no accede al pedido",
+    "pago_simulado: opción disponible",
+    "pago_simulado: revisión accesible",
+    "pago_simulado: pedido registrado",
+    "pago_simulado: un solo pago del medio elegido",
+    "pago_simulado: pedido pendiente de confirmación del negocio",
+    "pago_simulado: indicador de demostración correcto",
+    "pago_simulado: estado de pago correcto",
+    "pago_simulado: reserva exactamente una unidad",
+    "pago_simulado: recarga no duplica pago ni reserva",
+    "No se puede recibir pago de un pedido cancelado",
+    "El panel oculta la operación de recibir en pedidos cancelados",
+    "Cancelar pedido pendiente devuelve su unidad al stock",
+    "Sin errores de JavaScript en checkout",
+    "Stock de los pedidos técnicos restaurado al cancelar las pruebas"
+  ],
+  "orders": [
+    {
+      "id": 12,
+      "gateway": "yape_coordinado"
+    },
+    {
+      "id": 13,
+      "gateway": "pagar_al_recoger"
+    },
+    {
+      "id": 14,
+      "gateway": "pago_simulado"
+    }
+  ],
+  "stock_before": 24,
+  "stock_after": 24,
+  "error": null,
+  "note": "No se enviaron mensajes ni dinero. Los pagos recibidos de prueba fueron revertidos contablemente y los pedidos técnicos cancelados."
+}

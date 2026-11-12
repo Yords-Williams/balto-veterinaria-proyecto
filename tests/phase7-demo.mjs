@@ -64,7 +64,7 @@ try{
   await guest.type('[name="vet_customer[name]"]','Demo integrada BALTO');
   await guest.type('[name="vet_customer[phone]"]','900000002');
   await guest.type('[name="contact_information[email]"]','demo-fase7@example.invalid');
-  await guest.$eval('input[name="payment_information[payment_option]"][value*="pago_simulado"]', e=>e.click());
+  await guest.$eval('input[name="payment_information[payment_method]"][value*="pago_simulado"]', e=>e.click());
   await submit(guest,'#edit-actions-next');
   check((await guest.$eval('main',e=>e.textContent)).includes('No se realiza ningún cobro real'),'Revisión indica que el pago es simulado');
   await submit(guest,'#edit-actions-next');

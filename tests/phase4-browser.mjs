@@ -40,7 +40,7 @@ async function fillCheckout(p, name) {
   await p.$eval('[name="vet_customer[name]"]', (el, value) => { el.value = value; }, name);
   await p.$eval('[name="vet_customer[phone]"]', el => { el.value = '900000001'; });
   await p.$eval('[name="contact_information[email]"]', el => { el.value = 'demo-fase4@example.invalid'; });
-  await p.$eval('input[name="payment_information[payment_option]"][value*="pago_simulado"]', el => el.click());
+  await p.$eval('input[name="payment_information[payment_method]"][value*="pago_simulado"]', el => el.click());
   await submit(p, '#edit-actions-next');
 }
 try {

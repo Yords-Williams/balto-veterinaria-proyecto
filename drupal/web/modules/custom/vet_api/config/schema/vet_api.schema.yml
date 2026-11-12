@@ -69,6 +69,10 @@ commerce_payment.commerce_payment_gateway.plugin.vet_simulated_manual:
   type: commerce_payment.commerce_payment_gateway.plugin.manual
   label: 'Pasarela manual de demostración BALTO'
 
+commerce_payment.commerce_payment_gateway.plugin.vet_coordinated_manual:
+  type: commerce_payment.commerce_payment_gateway.plugin.manual
+  label: 'Pago coordinado con BALTO'
+
 commerce_checkout.commerce_checkout_flow.plugin.vet_checkout:
   type: commerce_checkout.commerce_checkout_flow.plugin.multistep_default
   label: 'Checkout de demostración BALTO'
