@@ -24,3 +24,24 @@ El iframe consulta Google Maps con la dirección central almacenada en Drupal. N
 Los quince productos usan ilustraciones SVG originales del proyecto, con su PNG correspondiente en `drupal/assets/products/`. Se generan con `scripts/generate-product-placeholders.py` y `rsvg-convert`, y se cargan como archivos permanentes de Drupal al instalar el catálogo.
 
 Son representaciones genéricas de bolsas, accesorios y recipientes; no reproducen empaques ni logotipos de fabricantes. Cada ilustración lleva el texto **IMAGEN REFERENCIAL · DEMO**. El catálogo y el detalle informan que los productos, precios y existencias son de ejemplo. No se usó una fotografía de otro artículo para presentarla como el producto real.
+
+## Fotografías reales aportadas por el usuario
+
+Se seleccionaron seis de las imágenes enviadas en la conversación. Los originales se conservan sin retoques en `drupal/assets/clinic/`; no se presentan como recursos de licencia libre. Se usan como material de BALTO proporcionado por el usuario para esta web.
+
+| Archivo | Origen aportado | Uso |
+| --- | --- | --- |
+| `paciente-felino.png` | Fotografía del gato, imagen 12 | Portada |
+| `encuentro-profesional.png` | Fotografía del encuentro profesional, imagen 17 | Quiénes somos; el usuario identifica al propietario en el centro |
+| `bethoven.png` | Fotografía limpia, imagen 11, con contexto de publicación en imagen 10 | Historia publicada por BALTO en julio de 2023 |
+| `recuperacion.png` | Fotografía del cachorro con cartel de recuperación, imagen 13 | Historia compartida, sin añadir nombre o fecha no proporcionados |
+| `adopcion.png` | Fotografía limpia, imagen 20, con contexto de publicación en imagen 19 | Seguimiento posterior a una adopción, publicado en abril de 2021 |
+| `identidad-balto.png` | Imagen de marca, imagen 18 | Logo de BALTO como avatar de marca |
+
+Las capturas con comentarios y controles de Facebook no se incorporaron: se eligieron sus fotografías limpias. Tampoco se publican los afiches que muestran direcciones distintas o números de contacto pendientes de confirmar. No se añadieron nombres de personas, especialidades, premios ni grados académicos a partir de las fotografías. Las publicaciones de recuperación se presentan como historias históricas de BALTO, sin prometer resultados futuros.
+
+Las fotos y sus pies están en Drupal, tipo de contenido **Historia y foto de BALTO**. Un administrador o encargado de tienda puede editarlos desde `/admin/content`; las semillas se ejecutan una sola vez y conservan las ediciones posteriores. El logo limpio de `images/logo.png`, si se proporciona, tiene prioridad sobre el avatar de la galería.
+
+Los estilos de imagen nativos generan versiones WebP de hasta 1000, 640 y 160 píxeles para la web. Los archivos originales siguen disponibles completos al pulsar las fotos de las historias. Se revisaron escritorio, pantalla móvil, carga de imágenes y funcionamiento del chat; no se volvieron a ejecutar las compras por tratarse de esta actualización visual.
+
+La dirección principal sigue siendo Jr. Ignacio Miranda N.º 220, según los datos confirmados previamente por el usuario. El horario del afiche de lunes a domingo de 9:00 a 20:00 continúa pendiente de confirmación; no se reemplaza automáticamente el horario marcado como ejemplo.

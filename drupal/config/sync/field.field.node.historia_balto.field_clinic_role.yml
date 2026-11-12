@@ -1,0 +1,21 @@
+uuid: 20240f66-a4d8-4ab5-be30-393a01f9ac0e
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_clinic_role
+    - node.type.historia_balto
+  module:
+    - options
+id: node.historia_balto.field_clinic_role
+field_name: field_clinic_role
+entity_type: node
+bundle: historia_balto
+label: 'Ubicación en la página'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

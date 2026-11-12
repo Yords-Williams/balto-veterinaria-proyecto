@@ -8,7 +8,7 @@
 /** Implements hook_theme(). */
 function vet_api_theme(): array {
   return [
-    'vet_home' => ['variables' => ['business' => [], 'services' => []]],
+    'vet_home' => ['variables' => ['business' => [], 'services' => [], 'clinic_gallery' => []]],
     'vet_catalog' => ['variables' => ['business' => [], 'products' => [], 'total' => 0, 'categories' => [], 'species_options' => [], 'filters' => [], 'pager' => []]],
   ];
 }
@@ -107,6 +107,7 @@ function vet_api_stock_adjustment_validate(array &$element, \Drupal\Core\Form\Fo
 function vet_api_page_attachments(array &$attachments): void {
   // El contacto también aparece en cabecera y pie: invalidar toda página cacheada.
   $attachments['#cache']['tags'][] = 'config:vet_api.business';
+  $attachments['#cache']['tags'] = array_merge($attachments['#cache']['tags'], \Drupal::service('vet_api.clinic_gallery')->get()['cache_tags']);
   $attachments['#attached']['drupalSettings']['baltoChat'] = [
     'webhookUrl' => \Drupal\Core\Site\Settings::get('vet_chat_webhook_url', ''),
   ];

@@ -1,0 +1,11 @@
+uuid: e6624726-fb6c-4523-b301-1e65ea1a20b3
+langcode: es
+status: true
+dependencies: {  }
+name: 'Historia y foto de BALTO'
+type: historia_balto
+description: 'Fotografías de portada, presentación y momentos compartidos por la veterinaria.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

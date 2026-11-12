@@ -21,3 +21,7 @@ services:
     class: Drupal\vet_api\EventSubscriber\ApiSubscriber
     tags:
       - { name: event_subscriber }
+
+  vet_api.clinic_gallery:
+    class: Drupal\vet_api\Service\ClinicGallery
+    arguments: ['@entity_type.manager', '@file_url_generator']

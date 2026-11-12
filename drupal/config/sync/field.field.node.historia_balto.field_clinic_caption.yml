@@ -1,0 +1,19 @@
+uuid: f7bdfb8b-9925-43d5-9293-e1628b38f12b
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_clinic_caption
+    - node.type.historia_balto
+id: node.historia_balto.field_clinic_caption
+field_name: field_clinic_caption
+entity_type: node
+bundle: historia_balto
+label: 'Texto de la fotografía'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

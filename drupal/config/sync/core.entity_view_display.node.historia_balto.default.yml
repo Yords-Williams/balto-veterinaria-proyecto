@@ -1,0 +1,46 @@
+uuid: 95302fb3-3ea7-444e-b5b2-6eaad2d0d91b
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.historia_balto.field_clinic_caption
+    - field.field.node.historia_balto.field_clinic_order
+    - field.field.node.historia_balto.field_clinic_photo
+    - field.field.node.historia_balto.field_clinic_role
+    - image.style.balto_photo_wide
+    - node.type.historia_balto
+  module:
+    - image
+    - user
+id: node.historia_balto.default
+targetEntityType: node
+bundle: historia_balto
+mode: default
+content:
+  field_clinic_caption:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_clinic_photo:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: balto_photo_wide
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_clinic_order: true
+  field_clinic_role: true
+  langcode: true

@@ -1,0 +1,21 @@
+uuid: 7bb5a122-d72c-4b24-b423-ae566d6b991e
+langcode: es
+status: true
+dependencies: {  }
+name: balto_brand
+label: 'BALTO · 160 px WebP'
+effects:
+  50003e47-d02a-46fc-a0ae-889b517b700d:
+    uuid: 50003e47-d02a-46fc-a0ae-889b517b700d
+    id: image_scale
+    weight: 0
+    data:
+      width: 160
+      height: null
+      upscale: false
+  9eaecaf3-9895-482d-a24a-14024504581b:
+    uuid: 9eaecaf3-9895-482d-a24a-14024504581b
+    id: image_convert
+    weight: 1
+    data:
+      extension: webp

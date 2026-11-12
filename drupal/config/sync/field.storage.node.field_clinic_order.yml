@@ -1,0 +1,20 @@
+uuid: 4a4e0519-b2ab-444f-9def-96514db99732
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_clinic_order
+field_name: field_clinic_order
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: 5235e1e5-64fe-4557-ae2e-446ac41daeb3
+langcode: es
+status: true
+dependencies: {  }
+name: balto_photo_card
+label: 'BALTO · 640 px WebP'
+effects:
+  7ec9e15b-eebd-4772-ad4f-6405ab8e844d:
+    uuid: 7ec9e15b-eebd-4772-ad4f-6405ab8e844d
+    id: image_scale
+    weight: 0
+    data:
+      width: 640
+      height: null
+      upscale: false
+  886f4157-adad-494e-bee8-652bd9d7f8cd:
+    uuid: 886f4157-adad-494e-bee8-652bd9d7f8cd
+    id: image_convert
+    weight: 1
+    data:
+      extension: webp

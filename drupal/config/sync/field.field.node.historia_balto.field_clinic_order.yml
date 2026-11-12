@@ -1,0 +1,23 @@
+uuid: fe44d243-1864-4858-93a2-4bb79b07ea69
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_clinic_order
+    - node.type.historia_balto
+id: node.historia_balto.field_clinic_order
+field_name: field_clinic_order
+entity_type: node
+bundle: historia_balto
+label: 'Orden de presentación'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -2,6 +2,8 @@ uuid: 5aae4662-86ef-460e-88ce-f35d92a331f5
 langcode: es
 status: true
 dependencies:
+  config:
+    - node.type.historia_balto
   module:
     - commerce
     - commerce_checkout
@@ -10,6 +12,7 @@ dependencies:
     - commerce_product
     - commerce_store
     - navigation
+    - node
     - system
     - vet_api
 id: administrador_tienda
@@ -23,10 +26,13 @@ permissions:
   - 'access commerce_order overview'
   - 'access commerce_product overview'
   - 'access content'
+  - 'access content overview'
   - 'access navigation'
   - 'administer balto business'
   - 'administer commerce_payment'
+  - 'create historia_balto content'
   - 'create vet_product commerce_product'
+  - 'edit any historia_balto content'
   - 'manage vet_variation commerce_product_variation'
   - 'update any vet_product commerce_product'
   - 'update default commerce_order'

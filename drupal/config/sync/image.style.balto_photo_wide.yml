@@ -1,0 +1,21 @@
+uuid: c534cedf-2a54-49d5-b104-5e549e609026
+langcode: es
+status: true
+dependencies: {  }
+name: balto_photo_wide
+label: 'BALTO · 1000 px WebP'
+effects:
+  78950711-8f16-40f3-8861-6312b69dd56f:
+    uuid: 78950711-8f16-40f3-8861-6312b69dd56f
+    id: image_scale
+    weight: 0
+    data:
+      width: 1000
+      height: null
+      upscale: false
+  e25644a4-1cfa-4fbf-9000-e761c707ca60:
+    uuid: e25644a4-1cfa-4fbf-9000-e761c707ca60
+    id: image_convert
+    weight: 1
+    data:
+      extension: webp
