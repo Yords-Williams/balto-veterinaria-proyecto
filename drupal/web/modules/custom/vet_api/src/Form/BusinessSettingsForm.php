@@ -39,6 +39,10 @@ final class BusinessSettingsForm extends ConfigFormBase {
     $form['schedule']['hospitalization'] = ['#type' => 'textfield', '#title' => $this->t('Horario de hospitalización'), '#default_value' => $config->get('hospitalization'), '#required' => TRUE, '#maxlength' => 100];
     $form['schedule']['consultation_schedule'] = ['#type' => 'textarea', '#title' => $this->t('Horario de tienda y consultorio'), '#default_value' => $config->get('consultation_schedule'), '#required' => TRUE, '#maxlength' => 1000];
     $form['schedule']['schedule_is_example'] = ['#type' => 'checkbox', '#title' => $this->t('Este horario de tienda/consultorio es de ejemplo'), '#default_value' => $config->get('schedule_is_example'), '#description' => $this->t('Desmarca únicamente después de confirmar el horario real con BALTO.')];
+    $form['payments'] = ['#type' => 'details', '#title' => $this->t('Pagos en el local y cotizaciones'), '#open' => TRUE];
+    $form['payments']['payment_methods'] = ['#type' => 'textfield', '#title' => $this->t('Medios de pago en el local'), '#default_value' => $config->get('payment_methods'), '#maxlength' => 250];
+    $form['payments']['yape_number'] = ['#type' => 'tel', '#title' => $this->t('Número de Yape'), '#default_value' => $config->get('yape_number'), '#maxlength' => 9, '#description' => $this->t('Este número no reemplaza al WhatsApp de atención.')];
+    $form['payments']['service_pricing_note'] = ['#type' => 'textarea', '#title' => $this->t('Información sobre precios de servicios'), '#default_value' => $config->get('service_pricing_note'), '#maxlength' => 1000];
     $form['catalog_is_example'] = ['#type' => 'checkbox', '#title' => $this->t('El inventario y los precios del catálogo son de ejemplo'), '#default_value' => $config->get('catalog_is_example')];
     return parent::buildForm($form, $form_state);
   }
@@ -48,6 +52,10 @@ final class BusinessSettingsForm extends ConfigFormBase {
     $cid = trim((string) $form_state->getValue('maps_cid'));
     if ($cid !== '' && !preg_match('/^[0-9]{1,22}$/', $cid)) {
       $form_state->setErrorByName('maps_cid', $this->t('El CID solo admite números.'));
+    }
+    $yape = trim((string) $form_state->getValue('yape_number'));
+    if ($yape !== '' && !preg_match('/^9[0-9]{8}$/', $yape)) {
+      $form_state->setErrorByName('yape_number', $this->t('Ingresa nueve dígitos que comiencen con 9.'));
     }
     $phone = preg_replace('/\D/', '', $form_state->getValue('whatsapp') ?? '');
     if (!preg_match('/^9\d{8}$/', $phone)) {
@@ -64,7 +72,7 @@ final class BusinessSettingsForm extends ConfigFormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $config = $this->config('vet_api.business');
-    foreach (['name', 'slogan', 'city', 'about_title', 'about_text', 'maps_cid', 'whatsapp', 'email', 'facebook_name', 'facebook_url', 'hospitalization', 'consultation_schedule'] as $key) {
+    foreach (['name', 'slogan', 'city', 'about_title', 'about_text', 'maps_cid', 'payment_methods', 'yape_number', 'service_pricing_note', 'whatsapp', 'email', 'facebook_name', 'facebook_url', 'hospitalization', 'consultation_schedule'] as $key) {
       $config->set($key, trim((string) $form_state->getValue($key)));
     }
     $config->set('addresses', [trim($form_state->getValue('address_0')), trim($form_state->getValue('address_1'))]);

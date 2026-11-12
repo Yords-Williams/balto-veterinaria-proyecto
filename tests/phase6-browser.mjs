@@ -45,7 +45,7 @@ try {
   await page.setViewport({width:390,height:844,isMobile:true,hasTouch:true});
   await page.click('.chat-launcher');
   await page.click('.chat-prompts button:last-child');
-  await page.waitForFunction(()=>document.querySelector('.chat-history').textContent.includes('8:00') && document.querySelector('.chat-typing').hidden);
+  await page.waitForFunction(()=>document.querySelector('.chat-history').textContent.includes('7:00') && document.querySelector('.chat-typing').hidden);
   check(await page.$eval('.chat-panel',e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight;}), 'Ventana de chat dentro de la pantalla móvil');
   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth), 'Página móvil sin desbordamiento horizontal');
   check((await page.$eval('.chat-history',e=>e.textContent)).includes('24 horas'), 'Consulta sugerida de horarios obtiene hospitalización real');

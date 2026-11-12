@@ -22,7 +22,9 @@ else if (context.intent === 'greeting') reply = `¡Hola! Soy el asistente de ${b
 else if (context.intent === 'schedule') {
   reply = `Hospitalización: ${business.hospitalization}.\nAtención en tienda/consultorio: ${business.consultation_schedule}${business.schedule_is_example && !/ejemplo/i.test(business.consultation_schedule) ? ' (horario de ejemplo, pendiente de confirmar)' : ''}\nSedes:\n${(business.addresses || []).map(a => '• ' + a).join('\n')}\n${contact}`;
 }
-else if (context.intent === 'services') reply = `Nuestros servicios:\n${response.data.map(s => '• ' + s.title).join('\n')}\n${contact}`;
+else if (context.intent === 'services') reply = `Nuestros servicios:\n${response.data.map(s => '• ' + s.title + ': ' + s.description).join('\n')}\n${business.service_pricing_note || ''}\n${contact}`;
+else if (context.intent === 'payments') reply = `Medios de pago en el local: ${business.payment_methods || 'Consulta los medios disponibles por WhatsApp'}.${business.yape_number ? '\nYape del establecimiento: ' + business.yape_number + '.' : ''}\nEl WhatsApp de atención es ${business.whatsapp}.\nLas compras de esta demo usan pago simulado; no se realiza ningún cobro real.`;
+else if (context.intent === 'service_prices') reply = `${business.service_pricing_note || 'Solicita una cotización de servicios por WhatsApp.'}\n${contact}`;
 else if (context.intent === 'categories') reply = `Categorías de la tienda:\n${response.data.map(c => '• ' + c.name).join('\n')}\nDime el nombre de una categoría o de un producto para consultar precios y existencias.`;
 else if (context.intent === 'product' || context.intent === 'category') {
   const products = response.data;

@@ -53,3 +53,10 @@ publicada en Drupal. Se retiraron los recortes del afiche por su baja resolució
 No se presenta esa fotografía como una imagen de las instalaciones. Las fotos
 reales del inventario siguen pendientes; el catálogo conserva sus ilustraciones
 referenciales identificadas.
+
+El propietario confirmó el nombre «Veterinaria BALTO Juliaca», atención de
+9:00 a. m. a 7:00 p. m. (días pendientes), internamiento 24 horas y la lista de
+servicios. La información se aplica una sola vez mediante
+`update-owner-business.php` y luego se administra desde Drupal. Los medios de
+pago del local son tarjeta, Yape, transferencia y efectivo; Yape 982183032 es
+independiente del WhatsApp de atención 986866036. La demo conserva pago simulado.

@@ -46,6 +46,15 @@ vet_api.business:
     schedule_is_example:
       type: boolean
       label: 'Horario de ejemplo'
+    payment_methods:
+      type: string
+      label: 'Medios de pago del local'
+    yape_number:
+      type: string
+      label: 'Número de Yape'
+    service_pricing_note:
+      type: text
+      label: 'Información de precios de servicios'
     catalog_is_example:
       type: boolean
       label: 'Inventario de ejemplo'

@@ -94,7 +94,7 @@ final class ApiController extends ControllerBase {
     return ApiSubscriber::response(['data' => array_intersect_key($data, array_flip([
       'name', 'city', 'addresses', 'whatsapp', 'whatsapp_url', 'appointment_url', 'phone_url',
       'facebook_name', 'facebook_url', 'email', 'hospitalization', 'consultation_schedule',
-      'schedule_is_example', 'map_url', 'maps_link',
+      'payment_methods', 'yape_number', 'service_pricing_note', 'schedule_is_example', 'map_url', 'maps_link',
     ]))]);
   }
 

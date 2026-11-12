@@ -21,7 +21,7 @@ final class BusinessData {
     $public = array_intersect_key($data, array_flip([
       'name', 'slogan', 'city', 'currency', 'addresses', 'whatsapp',
       'whatsapp_url', 'facebook_name', 'facebook_url', 'email',
-      'hospitalization', 'consultation_schedule', 'schedule_is_example',
+      'hospitalization', 'consultation_schedule', 'payment_methods', 'yape_number', 'service_pricing_note', 'schedule_is_example',
       'catalog_is_example', 'about_title', 'about_text',
     ]));
     $public['appointment_url'] = ($public['whatsapp_url'] ?? 'https://wa.me/51986866036')

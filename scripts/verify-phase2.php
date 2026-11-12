@@ -13,7 +13,7 @@ $check(\Drupal::moduleHandler()->moduleExists('vet_api'), 'Módulo de datos del 
 $business = \Drupal::service('vet_api.business');
 $data = $business->getBusiness();
 $check(!array_key_exists('vet_api_key', $data), 'La fuente pública no expone la API key.');
-$check(count($business->getServices()) === 7, 'La portada obtiene siete servicios de entidades Drupal.');
+$check(count($business->getServices()) === 9, 'La portada obtiene nueve servicios de entidades Drupal.');
 $check(!empty($data['about_title']) && !empty($data['about_text']), 'Presentación almacenada en configuración.');
 $check(\Drupal\field\Entity\FieldConfig::loadByName('node', 'servicio', 'field_service_icon') !== NULL, 'Íconos editables en cada servicio.');
 $check(\Drupal::moduleHandler()->moduleExists('locale'), 'Módulo de traducción de interfaz habilitado.');
