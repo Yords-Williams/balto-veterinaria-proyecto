@@ -2,7 +2,7 @@
 
 Proyecto académico de tienda virtual con Drupal Commerce, MariaDB y chatbot mediante n8n. Marca: **BALTO Veterinaria — Medicina para tu mascota**, Juliaca, Puno, Perú. Moneda: soles (PEN).
 
-**Estado:** Fases 1 a 6 implementadas y comprobadas con contenedores reales. Portada: <http://localhost:8080>; catálogo: <http://localhost:8080/tienda>; carrito: <http://localhost:8080/cart>. Pasaron 48 comprobaciones del sitio, 49 del catálogo y 41 del checkout, pedidos y roles; además, 123 de la API, 58 del webhook y 23 del widget. La API protegida y el chatbot por reglas consultan los datos en tiempo real. El chat flotante permite abrir productos y pasar al carrito.
+**Estado:** Fases 1 a 7 implementadas y comprobadas con contenedores reales. Portada: <http://localhost:8080>; catálogo: <http://localhost:8080/tienda>; carrito: <http://localhost:8080/cart>. Pasaron 48 comprobaciones del sitio, 49 del catálogo y 41 del checkout, pedidos y roles; además, 123 de la API, 58 del webhook y 23 del widget. La API protegida y el chatbot por reglas consultan los datos en tiempo real. El chat flotante permite abrir productos y pasar al carrito.
 
 En esta computadora se utiliza un motor Docker Rootless separado: consulta [cómo retomarlo sin contraseña de administrador](docs/docker-local.md).
 
@@ -164,7 +164,7 @@ docker compose up -d
 | 4 | Carrito, pago simulado, pedidos y roles | Implementada; 41 comprobaciones de navegador correctas |
 | 5 | API protegida para n8n | Implementada; 123 comprobaciones HTTP correctas |
 | 6 | Workflow por reglas y widget | Implementada; 58 comprobaciones del webhook y 23 del widget correctas |
-| 7 | Pruebas funcionales y móvil | Pendiente |
+| 7 | Pruebas funcionales y móvil | Demo integrada verificada; 17 comprobaciones correctas |
 | 8 | Documentación, capturas y guion de cinco minutos | Pendiente |
 | 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Pendiente |
 
@@ -199,3 +199,7 @@ Ejecuta `python3 tests/phase5-api.py` para comprobarla; la prueba edita temporal
 Abre <http://localhost:8080> y pulsa **Conversemos**. Prueba «precio de Dog Chow», «disponibilidad de BAL-ALI-004», «servicios» u «horarios». Funciona sin IA externa y señala los productos y horarios de ejemplo. [Guía, importación, URL, privacidad y capturas de fase 6](docs/fase-6.md).
 
 ![Chat de BALTO](docs/capturas/fase-6-chat-escritorio.png)
+
+## Verificar la demo de punta a punta
+
+La [fase 7](docs/fase-7.md) reúne las evidencias existentes y prueba un recorrido completo nuevo: chat → producto → carrito → pago simulado → pedido administrativo → stock actualizado en el chat. También verifica una edición real de precio desde el panel y la restaura. [Informe integrado](docs/verificacion-fase-7.json). La ejecución registra un pedido de demostración y consume una unidad de stock.

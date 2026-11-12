@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-12T15:27:59.220Z",
+  "elapsed_seconds": 36,
+  "results": [
+    "Producto de la demo con existencias disponibles",
+    "Chat informa precio y stock reales antes de comprar",
+    "Enlace del chat abre el producto consultado",
+    "Carrito contiene el producto elegido desde el chat",
+    "Revisión indica que el pago es simulado",
+    "Compra desde el chat termina con pedido registrado",
+    "Pedido persistido con un solo pago local ficticio",
+    "Total del pedido correcto en soles",
+    "Compra descuenta exactamente una unidad",
+    "Administrador de tienda consulta el pedido de esta demo",
+    "Chat refleja el stock tras comprar sin reiniciar servicios",
+    "Administrador de tienda guarda un precio nuevo desde el formulario",
+    "Precio editado desde administración aparece inmediatamente en el chat",
+    "Demo del chat usable dentro de la pantalla móvil",
+    "Precio original restaurado desde administración",
+    "Chat vuelve a mostrar el precio original",
+    "Recorrido completo sin errores JavaScript ni respuestas Drupal HTTP 500"
+  ],
+  "errors": [],
+  "order": {
+    "id": 10,
+    "number": "3",
+    "state": "validation",
+    "paid": true,
+    "currency": "PEN",
+    "total": "12.900000",
+    "payments": 1,
+    "simulated": true
+  },
+  "stock": {
+    "before": 22,
+    "after": 21
+  },
+  "price_restored": true
+}
