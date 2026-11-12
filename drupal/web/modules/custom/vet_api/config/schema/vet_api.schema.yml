@@ -14,6 +14,9 @@ vet_api.business:
     currency:
       type: string
       label: 'Moneda'
+    maps_cid:
+      type: string
+      label: 'Identificador de la ficha de Google Maps'
     addresses:
       type: sequence
       label: 'Sedes'

@@ -30,6 +30,7 @@ final class BusinessSettingsForm extends ConfigFormBase {
     foreach ([0 => 'Dirección de la sede central', 1 => 'Dirección de la segunda sede'] as $index => $label) {
       $form['contact']['address_' . $index] = ['#type' => 'textfield', '#title' => $this->t($label), '#default_value' => $addresses[$index] ?? '', '#required' => TRUE, '#maxlength' => 250];
     }
+    $form['contact']['maps_cid'] = ['#type' => 'textfield', '#title' => $this->t('Identificador CID de la ficha de Google Maps'), '#default_value' => $config->get('maps_cid'), '#maxlength' => 22, '#description' => $this->t('Identifica el punto exacto del negocio. Déjalo vacío para buscar por dirección.')];
     $form['contact']['whatsapp'] = ['#type' => 'tel', '#title' => $this->t('WhatsApp de Perú (9 dígitos)'), '#default_value' => $config->get('whatsapp'), '#required' => TRUE, '#maxlength' => 20];
     $form['contact']['email'] = ['#type' => 'email', '#title' => $this->t('Correo del negocio'), '#default_value' => $config->get('email'), '#description' => $this->t('Déjalo vacío hasta tener el correo real; no se mostrará un correo de ejemplo.')];
     $form['contact']['facebook_name'] = ['#type' => 'textfield', '#title' => $this->t('Nombre en Facebook'), '#default_value' => $config->get('facebook_name'), '#maxlength' => 150];
@@ -44,6 +45,10 @@ final class BusinessSettingsForm extends ConfigFormBase {
 
   public function validateForm(array &$form, FormStateInterface $form_state): void {
     parent::validateForm($form, $form_state);
+    $cid = trim((string) $form_state->getValue('maps_cid'));
+    if ($cid !== '' && !preg_match('/^[0-9]{1,22}$/', $cid)) {
+      $form_state->setErrorByName('maps_cid', $this->t('El CID solo admite números.'));
+    }
     $phone = preg_replace('/\D/', '', $form_state->getValue('whatsapp') ?? '');
     if (!preg_match('/^9\d{8}$/', $phone)) {
       $form_state->setErrorByName('whatsapp', $this->t('Ingresa un celular peruano de nueve dígitos que comience con 9.'));
@@ -59,7 +64,7 @@ final class BusinessSettingsForm extends ConfigFormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $config = $this->config('vet_api.business');
-    foreach (['name', 'slogan', 'city', 'about_title', 'about_text', 'whatsapp', 'email', 'facebook_name', 'facebook_url', 'hospitalization', 'consultation_schedule'] as $key) {
+    foreach (['name', 'slogan', 'city', 'about_title', 'about_text', 'maps_cid', 'whatsapp', 'email', 'facebook_name', 'facebook_url', 'hospitalization', 'consultation_schedule'] as $key) {
       $config->set($key, trim((string) $form_state->getValue($key)));
     }
     $config->set('addresses', [trim($form_state->getValue('address_0')), trim($form_state->getValue('address_1'))]);

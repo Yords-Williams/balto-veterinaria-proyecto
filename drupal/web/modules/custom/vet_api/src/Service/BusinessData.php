@@ -29,6 +29,12 @@ final class BusinessData {
     $public['phone_url'] = 'tel:+51' . preg_replace('/\D/', '', $public['whatsapp'] ?? '');
     $public['map_url'] = 'https://maps.google.com/maps?q=' . rawurlencode(($public['addresses'][0] ?? '') . ', Juliaca, Puno, Perú') . '&output=embed';
     $public['maps_link'] = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(($public['addresses'][0] ?? '') . ', Juliaca, Puno, Perú');
+    // CID identifica la ficha concreta y evita geocodificar una dirección ambigua.
+    $cid = (string) ($data['maps_cid'] ?? '');
+    if (preg_match('/^[0-9]{1,22}$/', $cid)) {
+      $public['map_url'] = 'https://maps.google.com/maps?cid=' . $cid . '&output=embed';
+      $public['maps_link'] = 'https://www.google.com/maps?cid=' . $cid;
+    }
     return $public;
   }
 
