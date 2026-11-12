@@ -38,7 +38,10 @@
         pause.addEventListener('click', () => { paused = !paused; updatePause(); schedule(); });
         root.addEventListener('mouseenter', () => { hovered = true; schedule(); });
         root.addEventListener('mouseleave', () => { hovered = false; schedule(); });
-        root.addEventListener('focusin', () => { paused = true; updatePause(); schedule(); });
+        root.addEventListener('focusin', (event) => {
+          if (event.target.closest('[data-carousel-pause]')) return;
+          paused = true; updatePause(); schedule();
+        });
         root.addEventListener('keydown', (event) => {
           if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
             event.preventDefault(); show(index + (event.key === 'ArrowRight' ? 1 : -1));
