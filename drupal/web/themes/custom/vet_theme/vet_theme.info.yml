@@ -1,0 +1,11 @@
+name: 'BALTO Veterinaria'
+type: theme
+description: 'Tema propio mobile-first de BALTO, con Twig, CSS y JavaScript.'
+core_version_requirement: ^11
+base theme: false
+libraries:
+  - vet_theme/global
+regions:
+  highlighted: 'Avisos'
+  content: 'Contenido principal'
+  footer: 'Pie de página'

@@ -1,0 +1,26 @@
+uuid: 064d5a20-944e-4090-a189-10d339efe58e
+langcode: es
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - vet_theme
+id: balto_page_title
+theme: vet_theme
+region: content
+weight: -10
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: ''
+  label_display: ''
+  provider: core
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: |-
+      <front>
+      /tienda

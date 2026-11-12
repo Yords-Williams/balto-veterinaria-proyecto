@@ -1,5 +1,7 @@
 # Archivos completos de Fase 1
 
+> Registro histórico del commit inicial `7f6c02b`. La Fase 2 corrige y amplía estos archivos; para ejecutar el proyecto usa los archivos actuales del repositorio y las instrucciones del [README](../README.md).
+
 Este documento reúne el código escrito para esta fase. No incluye `.env` ni secretos reales. El archivo completo de versiones resueltas está en [composer.lock](../drupal/composer.lock). Las carpetas futuras contienen solo `.gitkeep`.
 
 

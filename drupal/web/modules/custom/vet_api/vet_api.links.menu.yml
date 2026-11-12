@@ -1,0 +1,6 @@
+vet_api.business_settings:
+  title: 'Datos y horarios de BALTO'
+  description: 'Editar contacto, sedes y horarios públicos.'
+  route_name: vet_api.business_settings
+  parent: system.admin_config_system
+  weight: 20

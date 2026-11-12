@@ -6,13 +6,15 @@
  */
 use Drupal\commerce_price\Entity\Currency;
 use Drupal\commerce_store\Entity\Store;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 
 $state = \Drupal::state();
-if ($state->get('balto.seed.phase1.v1')) {
+if ($state->get('balto.seed.phase1.v2')) {
   echo "Los datos iniciales ya existen; se conservan los cambios del administrador.\n";
   return;
 }
@@ -63,7 +65,21 @@ if (!NodeType::load('servicio')) {
     'name' => 'Servicio',
     'description' => 'Servicios reales de BALTO Veterinaria.',
   ])->save();
-  node_add_body_field(NodeType::load('servicio'));
+}
+
+// No se presupone que el perfil estándar haya creado el almacenamiento body.
+// La creación explícita también permite reintentar una semilla interrumpida.
+if (!FieldStorageConfig::loadByName('node', 'body')) {
+  FieldStorageConfig::create([
+    'field_name' => 'body', 'entity_type' => 'node', 'type' => 'text_with_summary',
+    'cardinality' => 1,
+  ])->save();
+}
+if (!FieldConfig::loadByName('node', 'servicio', 'body')) {
+  FieldConfig::create([
+    'field_name' => 'body', 'entity_type' => 'node', 'bundle' => 'servicio',
+    'label' => 'Descripción', 'settings' => ['display_summary' => TRUE],
+  ])->save();
 }
 
 $services = [
@@ -85,6 +101,13 @@ foreach ($services as $title => $body) {
       'uid' => 1, 'status' => 1,
       'body' => ['value' => $body, 'format' => 'plain_text'],
     ])->save();
+  }
+  else {
+    // Recupera una instalación interrumpida que guardó títulos antes del campo.
+    $node = reset($existing);
+    if ($node->get('body')->isEmpty()) {
+      $node->set('body', ['value' => $body, 'format' => 'plain_text'])->save();
+    }
   }
 }
 
@@ -118,5 +141,5 @@ foreach (['Alimentos', 'Accesorios', 'Higiene y cuidado', 'Juguetes', 'Salud/Med
   ->set('catalog_is_example', TRUE)
   ->save();
 
-$state->set('balto.seed.phase1.v1', TRUE);
+$state->set('balto.seed.phase1.v2', TRUE);
 echo "Cargados: tienda PEN, siete servicios, cinco categorías y datos de BALTO.\n";

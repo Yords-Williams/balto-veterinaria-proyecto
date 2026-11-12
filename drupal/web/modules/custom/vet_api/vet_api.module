@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Integración de renderizado. Los endpoints JSON se incorporarán en Fase 5.
+ */
+
+/** Implements hook_theme(). */
+function vet_api_theme(): array {
+  return [
+    'vet_home' => ['variables' => ['business' => [], 'services' => []]],
+    'vet_store_preview' => ['variables' => ['business' => []]],
+  ];
+}
+
+/** Implements hook_page_attachments(). */
+function vet_api_page_attachments(array &$attachments): void {
+  // El contacto también aparece en cabecera y pie: invalidar toda página cacheada.
+  $attachments['#cache']['tags'][] = 'config:vet_api.business';
+}

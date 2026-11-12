@@ -1,0 +1,42 @@
+uuid: b705bd84-ba15-4602-a1ee-4931f344bb29
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_service_icon
+field_name: field_service_icon
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: stethoscope
+      label: 'Estetoscopio: medicina general'
+    -
+      value: xray
+      label: Radiografía
+    -
+      value: ultrasound
+      label: Ecografía
+    -
+      value: surgery
+      label: Cirugía
+    -
+      value: lab
+      label: Laboratorio
+    -
+      value: bed
+      label: Internamiento
+    -
+      value: moon
+      label: Hospitalización
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

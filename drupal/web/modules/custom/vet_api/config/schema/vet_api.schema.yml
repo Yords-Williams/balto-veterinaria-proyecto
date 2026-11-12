@@ -1,0 +1,54 @@
+vet_api.business:
+  type: config_object
+  label: 'Datos públicos de BALTO Veterinaria'
+  mapping:
+    name:
+      type: label
+      label: 'Nombre'
+    slogan:
+      type: label
+      label: 'Lema'
+    city:
+      type: string
+      label: 'Ciudad'
+    currency:
+      type: string
+      label: 'Moneda'
+    addresses:
+      type: sequence
+      label: 'Sedes'
+      sequence:
+        type: string
+    whatsapp:
+      type: string
+      label: 'WhatsApp'
+    whatsapp_url:
+      type: uri
+      label: 'Enlace de WhatsApp'
+    facebook_name:
+      type: string
+      label: 'Nombre de Facebook'
+    facebook_url:
+      type: string
+      label: 'Enlace de Facebook o vacío'
+    email:
+      type: string
+      label: 'Correo real o vacío'
+    hospitalization:
+      type: label
+      label: 'Horario de hospitalización'
+    consultation_schedule:
+      type: text
+      label: 'Horario de tienda y consultorio'
+    schedule_is_example:
+      type: boolean
+      label: 'Horario de ejemplo'
+    catalog_is_example:
+      type: boolean
+      label: 'Inventario de ejemplo'
+    about_title:
+      type: label
+      label: 'Título de presentación'
+    about_text:
+      type: text
+      label: 'Presentación'

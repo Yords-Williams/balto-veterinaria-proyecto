@@ -1,0 +1,10 @@
+name: 'BALTO: sitio y API'
+type: module
+description: 'Datos del negocio, portada y configuración de BALTO Veterinaria.'
+package: BALTO
+core_version_requirement: ^11
+dependencies:
+  - drupal:node
+  - drupal:options
+  - drupal:telephone
+  - commerce:commerce_cart

@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
+langcode: es
+uuid: 77aa4b2d-3c4a-4d5c-88a4-6f3026634ed2
+name: 'BALTO Veterinaria'
+mail: admin@example.invalid
+slogan: 'Medicina para tu mascota'
+page:
+  403: ''
+  404: ''
+  front: /inicio
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: es
+mail_notification: null

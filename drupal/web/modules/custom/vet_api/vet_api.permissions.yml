@@ -1,0 +1,4 @@
+administer balto business:
+  title: 'Administrar datos y horarios de BALTO'
+  description: 'Editar direcciones, contacto, presentación y horarios públicos.'
+  restrict access: true

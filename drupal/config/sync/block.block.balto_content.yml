@@ -1,0 +1,20 @@
+uuid: 3db98ce1-27ff-4c94-bd89-5f4724c39543
+langcode: es
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - vet_theme
+id: balto_content
+theme: vet_theme
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: ''
+  label_display: ''
+  provider: system
+visibility: {  }

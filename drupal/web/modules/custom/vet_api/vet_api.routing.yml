@@ -1,0 +1,23 @@
+vet_api.home:
+  path: '/inicio'
+  defaults:
+    _controller: '\Drupal\vet_api\Controller\HomeController::home'
+    _title: 'Medicina para tu mascota'
+  requirements:
+    _permission: 'access content'
+
+vet_api.business_settings:
+  path: '/admin/config/balto/negocio'
+  defaults:
+    _form: '\Drupal\vet_api\Form\BusinessSettingsForm'
+    _title: 'Datos y horarios de BALTO'
+  requirements:
+    _permission: 'administer balto business'
+
+vet_api.store_preview:
+  path: '/tienda'
+  defaults:
+    _controller: '\Drupal\vet_api\Controller\HomeController::store'
+    _title: 'Tienda BALTO'
+  requirements:
+    _permission: 'access content'

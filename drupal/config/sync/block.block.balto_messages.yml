@@ -1,0 +1,20 @@
+uuid: 3d314083-a033-4dbf-963b-30656025d5b3
+langcode: es
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - vet_theme
+id: balto_messages
+theme: vet_theme
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: ''
+  label_display: ''
+  provider: system
+visibility: {  }

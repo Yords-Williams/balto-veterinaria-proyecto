@@ -1,5 +1,7 @@
 # Fase 1: infraestructura y preparación de Drupal
 
+**Actualización durante Fase 2:** se resolvió el acceso a Docker usando un motor Rootless separado. La imagen se construyó, los tres servicios están saludables, el instalador terminó con código 0 y `scripts/verify.sh` pasó contra Drupal y MariaDB reales. La semilla también se ejecutó en una base vacía separada. Las limitaciones descritas más abajo corresponden a la primera entrega y ya están resueltas. Detalles del entorno: [Docker local](docker-local.md).
+
 ## Decisiones y compatibilidad
 
 - Imagen oficial `drupal:11.4.12-php8.4-apache-bookworm`. Se comprobó que la etiqueta figura en el [registro oficial de Docker](https://github.com/docker-library/official-images/blob/master/library/drupal) y que la [receta oficial](https://github.com/docker-library/drupal/blob/master/11.4/php8.4/apache-bookworm/Dockerfile) incluye GD, PDO MySQL, ZIP, Composer, Apache y rewrite. Nuestro Dockerfile añade Intl, BCMath y cliente MariaDB para Drush.
@@ -28,7 +30,7 @@ El motor Docker no está accesible: la comprobación inicial devolvió permiso d
 
 También se exploró una base MariaDB temporal separada de cualquier proyecto; no sustituye una prueba de la imagen fijada. No se afirma haber instalado Drupal ni ejecutado su semilla en una base viva.
 
-**Fase 1 todavía no está verificada de punta a punta.** No se pasa a Fase 2 hasta confirmar el arranque y recibir la confirmación solicitada por el usuario.
+Ese fue el bloqueo de la primera entrega. Tras la instrucción del usuario de continuar, se levantó Docker Rootless y se ejecutaron las comprobaciones reales; la Fase 1 ya está verificada.
 
 ## Prueba pendiente con Docker activo
 

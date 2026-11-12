@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Variables de presentación. Los contenidos provienen del módulo y MariaDB.
+ */
+
+/** Implements hook_preprocess_page(). */
+function vet_theme_preprocess_page(array &$variables): void {
+  $variables['business'] = \Drupal::service('vet_api.business')->getBusiness();
+  $theme_path = \Drupal::service('extension.list.theme')->getPath('vet_theme');
+  $variables['vet_assets'] = base_path() . $theme_path;
+  $variables['vet_logo'] = $variables['vet_assets'] . '/images/'
+    . (is_file(DRUPAL_ROOT . '/' . $theme_path . '/images/logo.png') ? 'logo.png' : 'logo-placeholder.svg');
+  $variables['vet_year'] = date('Y');
+}
+
+/** Implements hook_preprocess_HOOK() for vet_home. */
+function vet_theme_preprocess_vet_home(array &$variables): void {
+  $variables['vet_assets'] = base_path() . \Drupal::service('extension.list.theme')->getPath('vet_theme');
+}

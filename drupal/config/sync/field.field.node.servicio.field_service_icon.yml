@@ -1,0 +1,23 @@
+uuid: d5e8cb72-6018-4e9d-9483-9eb1a5620f1c
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_icon
+    - node.type.servicio
+  module:
+    - options
+id: node.servicio.field_service_icon
+field_name: field_service_icon
+entity_type: node
+bundle: servicio
+label: 'Ícono del servicio'
+description: ''
+required: true
+translatable: true
+default_value:
+  -
+    value: stethoscope
+default_value_callback: ''
+settings: {  }
+field_type: list_string

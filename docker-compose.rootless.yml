@@ -1,0 +1,10 @@
+# Opcional: mejora las descargas de construcción con Docker Rootless en Linux.
+# Uso: docker compose -f docker-compose.yml -f docker-compose.rootless.yml up -d --build
+# Solo afecta a la construcción; los servicios conservan su red privada backend.
+services:
+  drupal-init:
+    build:
+      network: host
+  drupal:
+    build:
+      network: host

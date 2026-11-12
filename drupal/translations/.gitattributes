@@ -1,0 +1,2 @@
+# Composer genera una regla diff para gzip en el directorio Drupal padre.
+*.gz -text -diff

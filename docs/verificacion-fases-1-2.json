@@ -1,0 +1,59 @@
+{
+  "fecha": "2026-11-12T13:01:01.859460+00:00",
+  "motor": "Docker Rootless 29.8.2, aislado del servicio del sistema",
+  "versiones": {
+    "drupal/core": "11.4.12",
+    "drupal/commerce": "3.3.14",
+    "drupal/commerce_stock": "3.0.0",
+    "drush/drush": "13.8.1"
+  },
+  "servicios": [
+    {
+      "nombre": "drupal",
+      "estado": "running",
+      "salud": "healthy",
+      "codigo_salida": 0
+    },
+    {
+      "nombre": "drupal-init",
+      "estado": "exited",
+      "salud": "",
+      "codigo_salida": 0
+    },
+    {
+      "nombre": "mariadb",
+      "estado": "running",
+      "salud": "healthy",
+      "codigo_salida": 0
+    },
+    {
+      "nombre": "n8n",
+      "estado": "running",
+      "salud": "healthy",
+      "codigo_salida": 0
+    }
+  ],
+  "verificacion_drupal_n8n": {
+    "correcta": true,
+    "comprobaciones": 27
+  },
+  "instalacion_desde_base_vacia": {
+    "correcta": true,
+    "proyecto_aislado": "balto-freshcheck",
+    "comprobaciones": 25
+  },
+  "repeticion_instalador_conserva_configuracion": true,
+  "navegador": {
+    "comprobaciones": 48,
+    "errores": 0,
+    "informe": "verificacion-fase-2.json"
+  },
+  "exportacion_sin_secretos": true,
+  "alcance_pendiente": [
+    "catálogo",
+    "checkout y pago simulado",
+    "API JSON",
+    "chatbot",
+    "AWS"
+  ]
+}

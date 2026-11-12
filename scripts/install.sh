@@ -28,9 +28,19 @@ else
   echo 'Drupal ya está instalado; se conservan los datos existentes.'
 fi
 
-drush --yes en language commerce_product commerce_cart commerce_checkout commerce_payment \
+drush --yes en language locale commerce_product commerce_cart commerce_checkout commerce_payment \
   commerce_order commerce_store commerce_stock commerce_stock_local
 drush php:script /opt/balto/scripts/seed.php
+drush --yes en vet_api
+drush php:script /opt/balto/scripts/seed-phase2.php
+if [[ "$(drush state:get balto.translations.v1 --format=string 2>/dev/null || true)" != 1 ]]; then
+  mkdir -p /tmp/balto-translations
+  for archive in /opt/balto/translations/*.po.gz; do
+    gzip -dc "$archive" > "/tmp/balto-translations/$(basename "$archive" .gz)"
+  done
+  drush locale:import-all /tmp/balto-translations --type=not-customized --override=not-customized
+  drush state:set balto.translations.v1 1
+fi
 drush cache:rebuild
 chown -R www-data:www-data /opt/drupal/web/sites/default/files
 echo 'BALTO: instalación base terminada. Apache puede iniciar.'

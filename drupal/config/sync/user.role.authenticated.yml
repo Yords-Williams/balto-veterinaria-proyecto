@@ -1,0 +1,28 @@
+uuid: 8dfdfc9b-d837-46d5-89db-ac89e843415a
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+  module:
+    - commerce_checkout
+    - commerce_order
+    - commerce_payment
+    - commerce_product
+    - file
+    - filter
+    - system
+_core:
+  default_config_hash: wkW7P5A53YhGmsgamrmTbfwpZrqdnPYiJdoAZQtdmJg
+id: authenticated
+label: 'Usuario autenticado'
+weight: 1
+is_admin: false
+permissions:
+  - 'access checkout'
+  - 'access content'
+  - 'delete own files'
+  - 'manage own commerce_payment_method'
+  - 'use text format basic_html'
+  - 'view commerce_product'
+  - 'view own commerce_order'

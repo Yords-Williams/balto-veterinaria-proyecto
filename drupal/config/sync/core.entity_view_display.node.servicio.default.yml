@@ -1,0 +1,31 @@
+uuid: 8af26fe6-0895-4c74-ba75-6605b42d117e
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.node.servicio.body
+    - field.field.node.servicio.field_service_icon
+    - node.type.servicio
+  module:
+    - text
+    - user
+id: node.servicio.default
+targetEntityType: node
+bundle: servicio
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_service_icon: true
+  langcode: true
