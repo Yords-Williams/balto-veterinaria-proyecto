@@ -32,8 +32,6 @@
           if (announce) status.textContent = slides[index].getAttribute('aria-label');
           schedule();
         };
-        root.querySelector('[data-carousel-prev]').addEventListener('click', () => show(index - 1));
-        root.querySelector('[data-carousel-next]').addEventListener('click', () => show(index + 1));
         dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
         pause.addEventListener('click', () => { paused = !paused; updatePause(); schedule(); });
         root.addEventListener('mouseenter', () => { hovered = true; schedule(); });
