@@ -1,6 +1,6 @@
 # Desplegar BALTO en una EC2
 
-**Estado: BALTO desplegado en EC2 y demo completa comprobada.** Se utiliza una EC2 nueva `t3.medium`, Ubuntu 24.04 y disco raíz de 30 GiB. La dirección actual es **https://balto-veterinaria.54-236-251-160.sslip.io**, con certificado público de HTTPS verificado. No tiene una Elastic IP asociada: podría cambiar al detener y volver a iniciar EC2, lo que obligaría a actualizar el nombre automático y la configuración. La fase 8 sigue aplazada. La instancia `roma-drupal-n8n` del hotel pertenece a otro equipo y no se modifica.
+**Estado: BALTO desplegado en EC2 y demo completa comprobada.** Se utiliza una EC2 nueva `t3.medium`, Ubuntu 24.04 y disco raíz de 30 GiB. La dirección actual es **https://balto-veterinaria.98-81-179-254.sslip.io**, con certificado público de HTTPS verificado. No tiene una Elastic IP asociada: podría cambiar al detener y volver a iniciar EC2, lo que obligaría a actualizar el nombre automático y la configuración. La fase 8 sigue aplazada. La instancia `roma-drupal-n8n` del hotel pertenece a otro equipo y no se modifica.
 
 ## Diseño y costo mínimo
 
@@ -343,12 +343,12 @@ También se realizó un [backup en EC2 y se comprobó la recuperación del servi
 
 ## Nombre gratuito y HTTPS activos
 
-URL actual: **https://balto-veterinaria.54-236-251-160.sslip.io**. Se usa el servicio de DNS automático [sslip.io / nip.io](https://sslip.io/): la IP está incluida en el nombre y el proveedor la resuelve sin registrar una cuenta. No se creó una cuenta DuckDNS ni se compró un dominio. Este método no demuestra cómo se configuró el proyecto del hotel; su enlace no se ha proporcionado.
+URL actual: **https://balto-veterinaria.98-81-179-254.sslip.io**. Se usa el servicio de DNS automático [sslip.io / nip.io](https://sslip.io/): la IP está incluida en el nombre y el proveedor la resuelve sin registrar una cuenta. No se creó una cuenta DuckDNS ni se compró un dominio. Este método no demuestra cómo se configuró el proyecto del hotel; su enlace no se ha proporcionado.
 
 Se adaptó el entorno existente sin cambiar secretos, pedidos ni inventario:
 
 ```bash
-python3 scripts/configure-aws-env.py --host balto-veterinaria.54-236-251-160.sslip.io --https
+python3 scripts/configure-aws-env.py --host balto-veterinaria.98-81-179-254.sslip.io --https
 sudo docker compose up -d
 ```
 
