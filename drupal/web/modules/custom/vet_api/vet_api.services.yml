@@ -16,3 +16,8 @@ services:
   vet_api.checkout_stock_guard:
     class: Drupal\vet_api\Service\CheckoutStockGuard
     arguments: ['@lock', '@database', '@entity_type.manager', '@vet_api.catalog', '@messenger']
+
+  vet_api.api_subscriber:
+    class: Drupal\vet_api\EventSubscriber\ApiSubscriber
+    tags:
+      - { name: event_subscriber }

@@ -36,3 +36,7 @@
 /drupal/web/sites/README.txt
 *.log
 .DS_Store
+
+# Caché local de las pruebas Python.
+__pycache__/
+*.pyc

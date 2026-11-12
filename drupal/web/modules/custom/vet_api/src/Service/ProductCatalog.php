@@ -66,8 +66,8 @@ final class ProductCatalog {
     return max(0, (int) floor((float) $this->stockManager->getStockLevel($variation)));
   }
 
-  public function present(ProductInterface $product): array {
-    $variation = $product->getDefaultVariation();
+  public function present(ProductInterface $product, ?ProductVariationInterface $variation = NULL): array {
+    $variation ??= $product->getDefaultVariation();
     $price = $variation?->getPrice();
     $photo = $product->get('field_photo')->first();
     $category = $product->get('field_category')->entity;

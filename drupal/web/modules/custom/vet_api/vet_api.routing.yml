@@ -21,3 +21,53 @@ vet_api.catalog:
     _title: 'Tienda BALTO'
   requirements:
     _permission: 'access content'
+
+vet_api.api_products:
+  path: '/api/vet/products'
+  defaults:
+    _controller: '\Drupal\vet_api\Controller\ApiController::products'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+vet_api.api_product:
+  path: '/api/vet/products/{sku}'
+  defaults:
+    _controller: '\Drupal\vet_api\Controller\ApiController::product'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+vet_api.api_categories:
+  path: '/api/vet/categories'
+  defaults:
+    _controller: '\Drupal\vet_api\Controller\ApiController::categories'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+vet_api.api_services:
+  path: '/api/vet/services'
+  defaults:
+    _controller: '\Drupal\vet_api\Controller\ApiController::services'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+vet_api.api_schedule:
+  path: '/api/vet/schedule'
+  defaults:
+    _controller: '\Drupal\vet_api\Controller\ApiController::schedule'
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    no_cache: TRUE
