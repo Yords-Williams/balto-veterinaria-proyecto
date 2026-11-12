@@ -1,0 +1,39 @@
+{
+  "name": "balto/veterinaria",
+  "description": "Tienda académica de BALTO Veterinaria con Drupal Commerce y n8n",
+  "type": "project",
+  "license": "GPL-2.0-or-later",
+  "repositories": [{"type": "composer", "url": "https://packages.drupal.org/8"}],
+  "require": {
+    "composer/installers": "^2.3",
+    "drupal/core-composer-scaffold": "11.4.12",
+    "drupal/core-project-message": "11.4.12",
+    "drupal/core-recommended": "11.4.12",
+    "drupal/commerce": "^3.3",
+    "drupal/commerce_stock": "^3.0",
+    "drush/drush": "^13.0"
+  },
+  "conflict": {"drupal/drupal": "*"},
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "platform": {"php": "8.4.0"},
+    "allow-plugins": {
+      "composer/installers": true,
+      "drupal/core-composer-scaffold": true,
+      "drupal/core-project-message": true,
+      "symfony/runtime": true
+    }
+  },
+  "extra": {
+    "drupal-scaffold": {"locations": {"web-root": "web/"}},
+    "installer-paths": {
+      "web/core": ["type:drupal-core"],
+      "web/libraries/{$name}": ["type:drupal-library"],
+      "web/modules/contrib/{$name}": ["type:drupal-module"],
+      "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+      "web/themes/contrib/{$name}": ["type:drupal-theme"]
+    }
+  }
+}
