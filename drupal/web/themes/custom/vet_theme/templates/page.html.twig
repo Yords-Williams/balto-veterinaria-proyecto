@@ -10,7 +10,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand{% if vet_real_logo %} brand-real{% endif %}" href="{{ root }}" aria-label="{{ business.name }}: inicio">
-        <img src="{{ vet_logo }}" width="48" height="52" alt="" />
+        <span class="brand-symbol{% if vet_logo_crop %} brand-symbol-wolf{% endif %}"><img src="{{ vet_logo }}" width="48" height="52" alt="" /></span>
         <span><strong>BALTO<span class="brand-dot">.</span></strong><small>VETERINARIA</small></span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" aria-label="Abrir menú">
@@ -37,7 +37,7 @@
   </main>
   <footer class="site-footer">
     <div class="container footer-top">
-      <div class="footer-brand"><a class="brand{% if vet_real_logo %} brand-real{% endif %}" href="{{ root }}"><img src="{{ vet_logo }}" width="48" height="52" alt="" /><span><strong>BALTO<span class="brand-dot">.</span></strong><small>VETERINARIA</small></span></a><p>{{ business.slogan }}.<br />Cerca de ti, en Juliaca.</p></div>
+      <div class="footer-brand"><a class="brand{% if vet_real_logo %} brand-real{% endif %}" href="{{ root }}"><span class="brand-symbol{% if vet_logo_crop %} brand-symbol-wolf{% endif %}"><img src="{{ vet_logo }}" width="48" height="52" alt="" /></span><span><strong>BALTO<span class="brand-dot">.</span></strong><small>VETERINARIA</small></span></a><p>{{ business.slogan }}.<br />Cerca de ti, en Juliaca.</p></div>
       <div><h2>Hablemos</h2><a href="{{ business.appointment_url }}" target="_blank" rel="noopener noreferrer">WhatsApp: {{ business.whatsapp }} ↗</a><a href="{{ business.phone_url }}">Llámanos</a>{% if business.email %}<a href="mailto:{{ business.email }}">{{ business.email }}</a>{% endif %}</div>
       <div><h2>Visítanos</h2>{% for address in business.addresses %}<p>{{ address }}</p>{% endfor %}</div>
       <div><h2>Sigamos cerca</h2>{% if business.facebook_url %}<a href="{{ business.facebook_url }}" target="_blank" rel="noopener noreferrer">{{ business.facebook_name }} en Facebook ↗</a>{% else %}<p>Encuéntranos en Facebook como<br /><strong>{{ business.facebook_name }}</strong>.</p>{% endif %}<a href="{{ path('user.login') }}">Acceso a mi cuenta ↗</a></div>

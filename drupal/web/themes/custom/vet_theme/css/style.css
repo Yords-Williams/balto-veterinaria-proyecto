@@ -354,3 +354,6 @@ em{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.
    las orejas y la cara queda completa en escritorio y celular. */
 .hero-image-clinic{aspect-ratio:0.9}
 .hero-image-clinic img{object-position:center top}
+
+/* Mostrar únicamente el lobo del material original, sin el texto del afiche. */
+.brand-symbol{display:block;flex-shrink:0}.brand-symbol-wolf{position:relative;width:57px;height:57px;overflow:hidden;border-radius:50%}.brand-real .brand-symbol-wolf img{position:absolute;width:120px;height:120px;max-width:none;left:-31px;top:0;border:0;border-radius:0;object-fit:fill}

@@ -12,11 +12,13 @@ function vet_theme_preprocess_page(array &$variables): void {
   $variables['vet_assets'] = base_path() . $theme_path;
   $has_uploaded_logo = is_file(DRUPAL_ROOT . '/' . $theme_path . '/images/logo.png');
   $variables['vet_real_logo'] = $has_uploaded_logo;
+  $variables['vet_logo_crop'] = FALSE;
   $variables['vet_logo'] = $variables['vet_assets'] . '/images/'
     . (is_file(DRUPAL_ROOT . '/' . $theme_path . '/images/logo.png') ? 'logo.png' : 'logo-placeholder.svg');
   $gallery = \Drupal::service('vet_api.clinic_gallery')->get();
   if (!$has_uploaded_logo && $gallery['logo']) {
-    $variables['vet_logo'] = $gallery['logo']['image_url'];
+    $variables['vet_logo'] = $gallery['logo']['original_url'];
+    $variables['vet_logo_crop'] = TRUE;
     $variables['vet_real_logo'] = TRUE;
   }
   $variables['vet_year'] = date('Y');
