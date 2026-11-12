@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-12T16:35:49.189741+00:00",
+  "url": "https://balto-veterinaria.54-236-251-160.sslip.io",
+  "provider": "sslip.io",
+  "https_valid": true,
+  "certificate_not_after": "Feb 10 15:36:34 2027 GMT",
+  "results": [
+    "DNS del nombre automático apunta a la EC2 de BALTO",
+    "Certificado TLS público validado con la cadena de confianza del sistema",
+    "HTTP redirige a HTTPS",
+    "Portada y acceso Drupal responden por el nombre nuevo",
+    "Widget configurado con webhook HTTPS del mismo origen",
+    "Chat responde en HTTPS con enlaces al dominio nuevo",
+    "Precio 12.90 y stock 24 de la demo conservados"
+  ],
+  "errors": [],
+  "elastic_ip_associated": false
+}
