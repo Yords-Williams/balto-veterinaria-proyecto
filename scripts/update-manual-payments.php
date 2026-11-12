@@ -4,7 +4,7 @@
 use Drupal\commerce_checkout\Entity\CheckoutFlow;
 use Drupal\commerce_payment\Entity\PaymentGateway;
 
-if (\Drupal::state()->get('balto.manual_payments.v2')) {
+if (\Drupal::state()->get('balto.manual_payments.v3')) {
   return;
 }
 foreach ([
@@ -12,8 +12,12 @@ foreach ([
   'yape_coordinado' => ['Yape — coordinar primero por WhatsApp', -10, 'Tu pago está pendiente. BALTO confirmará disponibilidad y monto antes de indicarte el pago. La confirmación del dinero recibido la realiza el negocio.'],
 ] as $id => [$label, $weight, $instructions]) {
   $gateway = PaymentGateway::load($id);
-  if ($gateway && $gateway->getPluginId() === 'manual') {
+  if ($gateway && in_array($gateway->getPluginId(), ['manual', 'vet_coordinated_manual'], TRUE)) {
     $gateway->setPluginId('vet_coordinated_manual');
+    $gateway->setPluginConfiguration([
+      'display_label' => $label, 'mode' => 'n/a', 'collect_billing_information' => FALSE,
+      'instructions' => ['value' => $instructions, 'format' => 'plain_text'],
+    ]);
     $gateway->save();
   }
   if (!$gateway) {
@@ -33,5 +37,5 @@ $configuration['panes']['vet_order_confirmation'] = ['step' => 'complete', 'weig
 $flow->set('label', 'Pedidos BALTO: retiro y pago coordinado');
 $flow->getPlugin()->setConfiguration($configuration);
 $flow->save();
-\Drupal::state()->set('balto.manual_payments.v2', TRUE);
+\Drupal::state()->set('balto.manual_payments.v3', TRUE);
 echo "Pagos al recoger, Yape coordinado y demostración disponibles.\n";
