@@ -1,6 +1,6 @@
 # Desplegar BALTO en una EC2
 
-**Estado: BALTO desplegado en EC2 y demo completa comprobada.** Se utiliza una EC2 nueva `t3.medium`, Ubuntu 24.04 y disco raíz de 30 GiB. La dirección actual es **https://balto-veterinaria.98-81-179-254.sslip.io**, con certificado público de HTTPS verificado. No tiene una Elastic IP asociada: podría cambiar al detener y volver a iniciar EC2, lo que obligaría a actualizar el nombre automático y la configuración. La fase 8 sigue aplazada. La instancia `roma-drupal-n8n` del hotel pertenece a otro equipo y no se modifica.
+**Estado: BALTO desplegado en EC2 y demo completa comprobada.** Se utiliza una EC2 nueva `t3.medium`, Ubuntu 24.04 y disco raíz de 30 GiB. La dirección actual es **https://balto-veterinaria.3-211-103-160.sslip.io**, con certificado público de HTTPS verificado. Tiene asociada la Elastic IP **3.211.103.160** a la instancia BALTO `i-0b34b63cdbe1fd079`, confirmada en la consola. El enlace se conserva al detener e iniciar mientras se mantenga esa asignación. La fase 8 sigue aplazada. La instancia `roma-drupal-n8n` del hotel pertenece a otro equipo y no se modifica.
 
 ## Diseño y costo mínimo
 
@@ -318,7 +318,7 @@ Docker y los servicios con política de reinicio se recuperan al arrancar, pero 
 - [ ] Cuenta o laboratorio confirmado y crédito vigente revisado.
 - [ ] Presupuesto y alertas configurados, si el tipo de cuenta lo permite.
 - [x] Una EC2 BALTO y un disco gp3 de 30 GiB; sin servicios administrados adicionales.
-- [ ] Elastic IP asignada y asociada a BALTO.
+- [x] Elastic IP 3.211.103.160 asignada y asociada a BALTO.
 - [x] SSH solo desde tu IP; 80/443 públicos, según la configuración revisada en consola.
 - [ ] CPU Standard y monitoreo detallado desactivado.
 - [x] Clave privada fuera de Git; deploy key de GitHub de solo lectura.
@@ -333,7 +333,7 @@ Docker y los servicios con política de reinicio se recuperan al arrancar, pero 
 
 Se ejecutaron [10 comprobaciones de configuración](verificacion-fase-9-config.json) y [9 comprobaciones locales de despliegue/backup](verificacion-fase-9-local.json), con secretos nuevos y volúmenes aislados. Caddy sirvió Drupal y el webhook bajo el mismo origen. El backup incluyó SQL, archivos, SQLite y entorno privado; se verificaron checksums y se restauró el SQL en una base temporal con 15 productos y 15 variaciones. La demo local principal no fue modificada por estas pruebas.
 
-`aws-setup.sh` se ejecutó correctamente en Ubuntu 24.04 de la instancia BALTO. Se repitió la compra completa desde su IP pública con resultados en el informe EC2 anterior. Siguen pendientes la Elastic IP, confirmar CPU Standard y configurar alertas si el laboratorio lo permite. Ya se emitió y verificó un certificado público para el nombre gratuito de sslip.io. El importe de la calculadora es una estimación, no una factura ni una reserva de crédito.
+`aws-setup.sh` se ejecutó correctamente en Ubuntu 24.04 de la instancia BALTO. Se repitió la compra completa desde su IP pública con resultados en el informe EC2 anterior. La Elastic IP ya está asociada. Siguen pendientes confirmar CPU Standard y configurar alertas si el laboratorio lo permite. Ya se emitió y verificó un certificado público para el nombre gratuito de sslip.io. El importe de la calculadora es una estimación, no una factura ni una reserva de crédito.
 
 ![Pedido de la demo en EC2](capturas/fase-9-ec2-confirmacion.png)
 
@@ -343,17 +343,17 @@ También se realizó un [backup en EC2 y se comprobó la recuperación del servi
 
 ## Nombre gratuito y HTTPS activos
 
-URL actual: **https://balto-veterinaria.98-81-179-254.sslip.io**. Se usa el servicio de DNS automático [sslip.io / nip.io](https://sslip.io/): la IP está incluida en el nombre y el proveedor la resuelve sin registrar una cuenta. No se creó una cuenta DuckDNS ni se compró un dominio. Este método no demuestra cómo se configuró el proyecto del hotel; su enlace no se ha proporcionado.
+URL actual: **https://balto-veterinaria.3-211-103-160.sslip.io**. Se usa el servicio de DNS automático [sslip.io / nip.io](https://sslip.io/): la IP está incluida en el nombre y el proveedor la resuelve sin registrar una cuenta. No se creó una cuenta DuckDNS ni se compró un dominio. Este método no demuestra cómo se configuró el proyecto del hotel; su enlace no se ha proporcionado.
 
 Se adaptó el entorno existente sin cambiar secretos, pedidos ni inventario:
 
 ```bash
-python3 scripts/configure-aws-env.py --host balto-veterinaria.98-81-179-254.sslip.io --https
+python3 scripts/configure-aws-env.py --host balto-veterinaria.3-211-103-160.sslip.io --https
 sudo docker compose up -d
 ```
 
 Caddy obtuvo el certificado público y redirige HTTP a HTTPS. Se comprobaron la cadena de confianza TLS, portada, acceso Drupal, enlaces de producto y el chat en el mismo origen. El precio de la pelota sigue en S/ 12.90 y su saldo en 24 tras la demo de EC2. [Informe de HTTPS](verificacion-dominio-https.json). La IP numérica anterior deja de ser la dirección de acceso configurada; utiliza el enlace HTTPS de esta sección.
 
-El nombre depende de la IP incluida: si AWS cambia esa dirección, habrá que actualizarlo. La Elastic IP continúa pendiente.
+El nombre apunta a la Elastic IP 3.211.103.160. No liberes esa IP si necesitas conservar el enlace. Una detención normal mantiene la asignación; un reinicio completo o eliminación de recursos del laboratorio puede requerir volver a configurar el despliegue.
 
 ![BALTO con nombre gratuito y HTTPS](capturas/balto-dominio-https.png)

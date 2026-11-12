@@ -165,7 +165,7 @@ docker compose up -d
 | 6 | Workflow por reglas y widget | Implementada; 58 comprobaciones del webhook y 23 del widget correctas |
 | 7 | Pruebas funcionales y móvil | Demo integrada verificada; 17 comprobaciones correctas |
 | 8 | Documentación, capturas y guion de cinco minutos | Aplazada por decisión del usuario |
-| 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Desplegada y demo verificada en EC2; Elastic IP pendiente |
+| 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Desplegada y demo verificada en EC2; Elastic IP asociada |
 
 AWS queda dentro del alcance por tu ampliación del proyecto. No hay recursos creados ni consumo de créditos. La [guía de despliegue AWS](docs/aws-deploy.md) incluye la estimación verificada en la calculadora oficial y las instrucciones de consola. No se usarán RDS, ALB ni NAT Gateway.
 
@@ -207,7 +207,7 @@ La [fase 7](docs/fase-7.md) reúne las evidencias existentes y prueba un recorri
 
 Se utilizará el crédito del profesor y una instancia nueva exclusiva para BALTO; la instancia del hotel pertenece a otro equipo y no se modifica. [Guía de despliegue](docs/aws-deploy.md): Ubuntu 24.04, t3.medium, EBS gp3 de 30 GB, Elastic IP, proxy, secretos nuevos y backups. [Estimación oficial guardada](https://calculator.aws/#/estimate?id=47d3105a56bad506b85e1e50cbc84d4a5c2808d2): USD 36.42 por 730 horas, antes de impuestos y tráfico adicional. Conviene detener EC2 al acabar cada sesión.
 
-**URL pública actual BALTO: https://balto-veterinaria.98-81-179-254.sslip.io**. La demo completa ya pasó en EC2: [informe](docs/verificacion-fase-9-ec2.json). El subdominio gratuito de sslip.io incluye la IP de EC2. Si la IP cambia al detener y reiniciar, habrá que actualizar el nombre y la configuración; sigue pendiente asociar una Elastic IP. La fase 8 sigue aplazada.
+**URL pública actual BALTO: https://balto-veterinaria.3-211-103-160.sslip.io**. La demo completa ya pasó en EC2: [informe](docs/verificacion-fase-9-ec2.json). El subdominio gratuito de sslip.io incluye la IP de EC2. La Elastic IP **3.211.103.160** está asociada a BALTO y permite conservar este enlace al detener e iniciar la instancia, mientras se mantenga asignada. La fase 8 sigue aplazada.
 
 El nombre gratuito y HTTPS ya se configuraron con sslip.io: [verificación de DNS, certificado y chat](docs/verificacion-dominio-https.json). No requiere cuenta de DNS ni compra de dominio.
 
