@@ -115,7 +115,7 @@ Comprueba la identidad del servidor al conectar. Resultado esperado: terminal de
 
 ## Autorizar el repositorio privado de GitHub
 
-El código del proyecto está en un repositorio **privado**: <https://github.com/devmijaelflores-boop/balto-veterinaria>. No contiene `.env`, bases ni claves privadas. Para clonar desde EC2 se utiliza una clave de despliegue de solo lectura, limitada a este repositorio.
+El código del proyecto está en un repositorio **privado**: <https://github.com/dimas-flores/balto-veterinaria>. No contiene `.env`, bases ni claves privadas. Para clonar desde EC2 se utiliza una clave de despliegue de solo lectura, limitada a este repositorio.
 
 1. En EC2, como usuario `ubuntu`, ejecuta:
 
@@ -158,7 +158,7 @@ En EC2 ejecuta:
 
 ```bash
 sudo bash /home/ubuntu/aws-setup.sh \
-  --repo git@github.com:devmijaelflores-boop/balto-veterinaria.git \
+  --repo git@github.com:dimas-flores/balto-veterinaria.git \
   --host TU_ELASTIC_IP
 ```
 
@@ -206,7 +206,7 @@ No hace falta comprar un dominio para completar la demo. Si ya dispones de uno:
 
    ```bash
    sudo bash /home/ubuntu/aws-setup.sh \
-     --repo git@github.com:devmijaelflores-boop/balto-veterinaria.git \
+     --repo git@github.com:dimas-flores/balto-veterinaria.git \
      --host tienda.TU_DOMINIO --https
    ```
 

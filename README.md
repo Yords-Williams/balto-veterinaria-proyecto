@@ -120,7 +120,7 @@ Los reinicios conservan los datos y no cambian la contraseña del administrador.
 
 ## Guardar los cambios con Git
 
-El repositorio local se inicializa con commits pequeños por fase. El repositorio privado está en [GitHub](https://github.com/devmijaelflores-boop/balto-veterinaria). `.env`, bases de datos y claves privadas quedan excluidos.
+El repositorio local se inicializa con commits pequeños por fase. El repositorio privado está en [GitHub](https://github.com/dimas-flores/balto-veterinaria). `.env`, bases de datos y claves privadas quedan excluidos.
 
 El remoto `origin` ya está configurado. Después de crear un nuevo commit, sincroniza los cambios con:
 
