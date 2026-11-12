@@ -44,6 +44,6 @@ Las fotos y sus pies están en Drupal, tipo de contenido **Historia y foto de BA
 
 Los estilos de imagen nativos generan versiones WebP de hasta 1000, 640 y 160 píxeles para la web. Los archivos originales siguen disponibles completos al pulsar las fotos de las historias. Se revisaron escritorio, pantalla móvil, carga de imágenes y funcionamiento del chat; no se volvieron a ejecutar las compras por tratarse de esta actualización visual.
 
-La dirección principal sigue siendo Jr. Ignacio Miranda N.º 220, según los datos confirmados previamente por el usuario. El horario del afiche de lunes a domingo de 9:00 a 20:00 continúa pendiente de confirmación; no se reemplaza automáticamente el horario marcado como ejemplo.
+La dirección principal sigue siendo Jr. Ignacio Miranda N.º 220, según los datos confirmados previamente por el usuario. El usuario confirmó el horario del afiche: lunes a domingo de 09:00 a 20:00. Se guarda como horario confirmado en Drupal; hospitalización permanece en 24 horas.
 
 La selección está publicada en la instancia AWS con HTTPS. [Comprobación visual en AWS](verificacion-galeria-balto-aws.json): fotos, logo, escritorio y móvil, chat funcionando y datos comerciales conservados.

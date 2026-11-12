@@ -63,7 +63,7 @@ _, services = request('services')
 check(len(services['data']) == 7, 'Siete servicios publicados')
 _, schedule = request('schedule')
 check(len(schedule['data']['addresses']) == 2 and '986' in schedule['data']['whatsapp'], 'Direcciones y contacto desde configuración')
-check(schedule['data']['schedule_is_example'] is True and '24' in schedule['data']['hospitalization'], 'Hospitalización continua y horario de consultorio marcado de ejemplo')
+check(schedule['data']['schedule_is_example'] is False and '24' in schedule['data']['hospitalization'], 'Hospitalización continua y horario de consultorio confirmado')
 for path, expected in [('products/NO-EXISTE', 404), ('products?species=humano', 400), ('products?category=999999', 400), ('products?q%5B%5D=hola', 400), ('products?page=-1', 400), ('products?q=' + 'a'*101, 400), ('orders', 404), ('customers', 404)]:
     status, body = request(path)
     check(status == expected and 'error' in body, 'Error JSON correcto: ' + path[:60])
