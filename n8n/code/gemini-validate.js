@@ -8,7 +8,7 @@ if (fallback.status === 200) {
     const value = JSON.parse(response.candidates[0].content.parts.map(p => p.text || '').join(''));
     const intents = ['product','category','categories','services','schedule','greeting','unknown'];
     if (!intents.includes(value.intent) || typeof value.q !== 'string' || value.q.length > 100) throw new Error('Formato no válido');
-    const q = value.q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, ' ').trim();
+    const q = value.q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, ' ').replace(/\b\d+(?:[.,]\d+)?\s*(?:kilogramos?|kilos?|kg|gramos?|gr|g|ml|litros?|l)\b/g, ' ').replace(/\bde\b/g, ' ').replace(/\s+/g, ' ').trim();
     if (value.intent === 'product' && !q) throw new Error('Falta producto');
     context = {...fallback, intent: value.intent, q, text: fallback.text + ' ' + q, engine: 'gemini'};
   } catch { /* Timeout, cuota o JSON inválido: conservar reglas existentes. */ }
