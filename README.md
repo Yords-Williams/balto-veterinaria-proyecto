@@ -2,7 +2,7 @@
 
 Proyecto académico de tienda virtual con Drupal Commerce, MariaDB y chatbot mediante n8n. Marca: **BALTO Veterinaria — Medicina para tu mascota**, Juliaca, Puno, Perú. Moneda: soles (PEN).
 
-**Estado:** Fases 1 a 5 implementadas y comprobadas con contenedores reales. Portada: <http://localhost:8080>; catálogo: <http://localhost:8080/tienda>; carrito: <http://localhost:8080/cart>. Pasaron 48 comprobaciones del sitio, 49 del catálogo y 41 del checkout, pedidos y roles. La API protegida ya consulta los datos en tiempo real; el chatbot corresponde a la fase 6.
+**Estado:** Fases 1 a 6 implementadas y comprobadas con contenedores reales. Portada: <http://localhost:8080>; catálogo: <http://localhost:8080/tienda>; carrito: <http://localhost:8080/cart>. Pasaron 48 comprobaciones del sitio, 49 del catálogo y 41 del checkout, pedidos y roles; además, 123 de la API, 58 del webhook y 23 del widget. La API protegida y el chatbot por reglas consultan los datos en tiempo real. El chat flotante permite abrir productos y pasar al carrito.
 
 En esta computadora se utiliza un motor Docker Rootless separado: consulta [cómo retomarlo sin contraseña de administrador](docs/docker-local.md).
 
@@ -17,11 +17,11 @@ flowchart LR
     Administrador -->|localhost:5678| n8n[n8n]
     n8n --> SQLite[(SQLite persistente: workflows)]
     Portada[Portada Twig BALTO] --> Drupal
-    Chat[Widget: pendiente Fase 6] -.-> n8n
+    Chat[Widget JS] -->|POST webhook/chat| n8n
     n8n -->|API + X-API-KEY| Drupal
 ```
 
-MariaDB no publica puertos. Los servicios se comunican en una red Docker compartida. n8n usa su SQLite incorporado para evitar otro servicio de base de datos; los datos del negocio permanecen en MariaDB. Las líneas discontinuas son funcionalidades pendientes.
+MariaDB no publica puertos. Los servicios se comunican en una red Docker compartida. n8n usa su SQLite incorporado para evitar otro servicio de base de datos; los datos del negocio permanecen en MariaDB. El chat llama a n8n, que consulta la API interna de Drupal con una credencial de cabecera.
 
 ## Requisitos
 
@@ -82,7 +82,7 @@ Tras esta preparación, el comando de arranque diario es únicamente `docker com
 
 **Resultado esperado:** acceso al panel de Commerce. El generador crea una contraseña distinta por instalación. No existe una contraseña pública compartida ni se guarda una contraseña real en este README.
 
-En n8n, crea la cuenta propietaria desde la pantalla inicial. Se conserva en su volumen; la creación de esta cuenta no es necesaria para que Drupal arranque. El workflow se entregará e importará en Fase 6; la carpeta actual está reservada y no contiene un workflow ficticio.
+En n8n, crea la cuenta propietaria desde la pantalla inicial. Se conserva en su volumen; la creación de esta cuenta no es necesaria para que Drupal arranque. El workflow se importa y publica automáticamente al arrancar. La cuenta propietaria permite revisarlo y editarlo, pero no es necesaria para que el chat responda. Consulta la [guía del chatbot](docs/fase-6.md).
 
 ## Datos reales y datos pendientes
 
@@ -163,7 +163,7 @@ docker compose up -d
 | 3 | Quince productos de ejemplo, imágenes, catálogo, filtros y stock | Implementada; 49 comprobaciones de navegador correctas |
 | 4 | Carrito, pago simulado, pedidos y roles | Implementada; 41 comprobaciones de navegador correctas |
 | 5 | API protegida para n8n | Implementada; 123 comprobaciones HTTP correctas |
-| 6 | Workflow por reglas y widget | Pendiente |
+| 6 | Workflow por reglas y widget | Implementada; 58 comprobaciones del webhook y 23 del widget correctas |
 | 7 | Pruebas funcionales y móvil | Pendiente |
 | 8 | Documentación, capturas y guion de cinco minutos | Pendiente |
 | 9 | EC2, aprovisionamiento, backups y presupuesto AWS | Pendiente |
@@ -193,3 +193,9 @@ Consulta la [guía de compra y pedidos de fase 4](docs/fase-4.md), con credencia
 La [guía de fase 5](docs/fase-5.md) describe los cinco endpoints GET de productos, categorías, servicios y horarios. Requieren la cabecera `X-API-KEY` con `VET_API_KEY` de `.env`; la clave no se incluye en el navegador ni en Git. La API no publica pedidos ni datos de clientes.
 
 Ejecuta `python3 tests/phase5-api.py` para comprobarla; la prueba edita temporalmente precio y publicación de Dog Chow y los restaura. Usa una demo sin ediciones concurrentes. [Informe HTTP](docs/verificacion-fase-5.json).
+
+## Conversar con el asistente
+
+Abre <http://localhost:8080> y pulsa **Conversemos**. Prueba «precio de Dog Chow», «disponibilidad de BAL-ALI-004», «servicios» u «horarios». Funciona sin IA externa y señala los productos y horarios de ejemplo. [Guía, importación, URL, privacidad y capturas de fase 6](docs/fase-6.md).
+
+![Chat de BALTO](docs/capturas/fase-6-chat-escritorio.png)

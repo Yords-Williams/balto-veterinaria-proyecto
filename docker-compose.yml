@@ -91,6 +91,7 @@ services:
 
   n8n:
     image: docker.n8n.io/n8nio/n8n:2.47.4
+    entrypoint: ['/bin/sh', '/opt/balto/n8n-start.sh']
     restart: unless-stopped
     ports:
       - '${BIND_ADDRESS:-127.0.0.1}:${N8N_PORT:-5678}:5678'
@@ -100,6 +101,7 @@ services:
       N8N_PROTOCOL: ${N8N_PROTOCOL:-http}
       N8N_EDITOR_BASE_URL: ${N8N_EDITOR_BASE_URL:-http://localhost:5678}
       WEBHOOK_URL: ${WEBHOOK_URL:-http://localhost:5678/}
+      N8N_WEBHOOK_URL: ${WEBHOOK_URL:-http://localhost:5678/}
       N8N_SECURE_COOKIE: ${N8N_SECURE_COOKIE:-false}
       N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Falta N8N_ENCRYPTION_KEY}
       N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: 'true'
@@ -110,12 +112,18 @@ services:
       TZ: ${TZ:-America/Lima}
       EXECUTIONS_DATA_PRUNE: 'true'
       EXECUTIONS_DATA_MAX_AGE: '168'
+      DRUPAL_BASE_URL: ${DRUPAL_BASE_URL:-http://localhost:8080}
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: 'true'
+      EXECUTIONS_DATA_SAVE_ON_SUCCESS: none
+      EXECUTIONS_DATA_SAVE_ON_ERROR: none
       DRUPAL_INTERNAL_URL: http://drupal
       VET_API_KEY: ${VET_API_KEY:?Falta VET_API_KEY}
       CHAT_ALLOWED_ORIGIN: ${CHAT_ALLOWED_ORIGIN:-http://localhost:8080}
     volumes:
       - n8n_data:/home/node/.n8n
       - ./n8n/workflows:/workflows:ro
+      - ./scripts/n8n-start.sh:/opt/balto/n8n-start.sh:ro
+      - ./scripts/n8n-prepare.cjs:/opt/balto/n8n-prepare.cjs:ro
     networks: [backend]
     healthcheck:
       test: ['CMD', 'node', '-e', 'fetch("http://127.0.0.1:5678/healthz").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))']

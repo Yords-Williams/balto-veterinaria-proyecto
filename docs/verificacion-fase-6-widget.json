@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-12T15:16:25.469Z",
+  "results": [
+    "Chat cerrado inicialmente",
+    "Estado accesible inicial del botón",
+    "Abrir chat enfoca el campo de mensaje",
+    "Saludo local visible",
+    "Respuesta real n8n con precio, stock y aviso de ejemplo",
+    "Enlace de producto utilizable",
+    "Escape cierra el chat",
+    "Al cerrar vuelve el foco al botón",
+    "Historial conservado al navegar dentro de la pestaña",
+    "Desde el chat se abre el detalle nativo de Commerce",
+    "Producto consultado en chat se puede agregar al carrito",
+    "Ventana de chat dentro de la pantalla móvil",
+    "Página móvil sin desbordamiento horizontal",
+    "Consulta sugerida de horarios obtiene hospitalización real",
+    "Indicador de escritura y bloqueo de envíos duplicados",
+    "Respuesta remota renderizada como texto sin ejecutar HTML",
+    "Enlaces peligrosos descartados",
+    "Error de red con mensaje comprensible y alternativa de contacto",
+    "Borrar conversación elimina el historial y deja el saludo",
+    "Borrado reflejado en almacenamiento de sesión",
+    "Otra sesión no recibe el historial anterior",
+    "API key ausente del HTML y drupalSettings",
+    "Sin errores JavaScript del widget"
+  ],
+  "errors": []
+}

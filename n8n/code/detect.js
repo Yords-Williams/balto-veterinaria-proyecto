@@ -1,0 +1,20 @@
+// Reglas deterministas: no se envían mensajes a proveedores externos.
+const input = $input.first().json;
+const allowedOrigin = 'http://localhost:8080'; // El instalador adapta esta URL.
+const origin = input.headers?.origin;
+const message = input.body?.message;
+const normalize = value => value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+let status = 200;
+if (origin && origin !== allowedOrigin) status = 403;
+else if (typeof message !== 'string' || !message.trim() || message.length > 500) status = 400;
+const text = status === 200 ? normalize(message.trim()) : '';
+let intent = 'unknown';
+if (/\b(horario|horarios|ubicacion|direccion|direcciones|donde|contacto|telefono|whatsapp|cita|citas|atienden|atencion|abren|cierran|hospitalizacion|24 horas)\b/.test(text)) intent = 'schedule';
+else if (/\b(servicio|servicios|rayos|ecografia|ecografias|cirugia|cirugias|laboratorio|internamiento|medicina veterinaria)\b/.test(text)) intent = 'services';
+else if (/\b(categoria|categorias)\b/.test(text)) intent = 'categories';
+else if (/\b(alimento|alimentos|accesorio|accesorios|higiene|juguete|juguetes|salud|medicamento|medicamentos)\b/.test(text) && !/\b(precio|cuesta|cuestan|stock|disponible|disponibilidad)\b/.test(text)) intent = 'category';
+else if (/\b(precio|precios|cuesta|cuestan|vale|valen|stock|disponible|disponibles|disponibilidad|producto|productos|tienen|venden|busco|quiero|chow|whiskas|purina|pelota|collar|correa|shampoo|heno|arena|rascador|comedero|cepillo|suplemento|bal-)\b/.test(text)) intent = 'product';
+else if (/^(hola|buenas|buenos dias|buenas tardes|buenas noches|hola balto|gracias)[!?.\s]*$/.test(text)) intent = 'greeting';
+const stop = new Set('hola por favor cuanto cuesta cuestan vale valen precio precios del de la el los las un una unos unas para y o hay tienen teneis venden disponible disponibles disponibilidad stock producto productos busco quiero saber me puedes decir cual es son en balto veterinaria perro perros gato gatos alimento alimentos'.split(' '));
+const q = text.replace(/[^a-z0-9\s-]/g, ' ').split(/\s+/).filter(w => w && !stop.has(w)).join(' ').slice(0, 100);
+return [{ json: { intent, text, q, status } }];

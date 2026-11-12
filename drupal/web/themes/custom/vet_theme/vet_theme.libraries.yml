@@ -4,6 +4,8 @@ global:
       css/style.css: {}
   js:
     js/site.js: {}
+    js/chat.js: {}
   dependencies:
     - core/drupal
+    - core/drupalSettings
     - core/once

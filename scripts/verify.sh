@@ -20,4 +20,16 @@ fetch("http://127.0.0.1:5678/healthz").then(r=>{
   console.log("OK: salud de n8n.");
 }).catch(()=>process.exit(1));
 '
-echo 'Verificación de Fases 1, 2, 3 y 4 terminada correctamente.'
+docker compose exec -T n8n node -e '
+fetch("http://127.0.0.1:5678/webhook/chat", {
+  method: "POST",
+  headers: {"Content-Type": "application/json", "Origin": process.env.CHAT_ALLOWED_ORIGIN},
+  body: JSON.stringify({message: "hola"}),
+  signal: AbortSignal.timeout(30000)
+}).then(async r=>{
+  const data = await r.json();
+  if (!r.ok || data.intent !== "greeting" || typeof data.reply !== "string") process.exit(1);
+  console.log("OK: webhook publicado y consulta de n8n a Drupal.");
+}).catch(()=>process.exit(1));
+'
+echo 'Verificación de integración de Fases 1 a 6 terminada correctamente.'

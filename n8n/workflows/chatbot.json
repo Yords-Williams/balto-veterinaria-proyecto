@@ -1,0 +1,271 @@
+{
+  "id": "baltoChatbot",
+  "name": "BALTO · Asistente por reglas",
+  "active": false,
+  "nodes": [
+    {
+      "id": "Recibir chat",
+      "name": "Recibir chat",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "http://localhost:8080"
+        }
+      },
+      "webhookId": "balto-chat-webhook"
+    },
+    {
+      "id": "Detectar intención",
+      "name": "Detectar intención",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        300
+      ],
+      "parameters": {
+        "jsCode": "// Reglas deterministas: no se envían mensajes a proveedores externos.\nconst input = $input.first().json;\nconst allowedOrigin = 'http://localhost:8080'; // El instalador adapta esta URL.\nconst origin = input.headers?.origin;\nconst message = input.body?.message;\nconst normalize = value => value.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');\nlet status = 200;\nif (origin && origin !== allowedOrigin) status = 403;\nelse if (typeof message !== 'string' || !message.trim() || message.length > 500) status = 400;\nconst text = status === 200 ? normalize(message.trim()) : '';\nlet intent = 'unknown';\nif (/\\b(horario|horarios|ubicacion|direccion|direcciones|donde|contacto|telefono|whatsapp|cita|citas|atienden|atencion|abren|cierran|hospitalizacion|24 horas)\\b/.test(text)) intent = 'schedule';\nelse if (/\\b(servicio|servicios|rayos|ecografia|ecografias|cirugia|cirugias|laboratorio|internamiento|medicina veterinaria)\\b/.test(text)) intent = 'services';\nelse if (/\\b(categoria|categorias)\\b/.test(text)) intent = 'categories';\nelse if (/\\b(alimento|alimentos|accesorio|accesorios|higiene|juguete|juguetes|salud|medicamento|medicamentos)\\b/.test(text) && !/\\b(precio|cuesta|cuestan|stock|disponible|disponibilidad)\\b/.test(text)) intent = 'category';\nelse if (/\\b(precio|precios|cuesta|cuestan|vale|valen|stock|disponible|disponibles|disponibilidad|producto|productos|tienen|venden|busco|quiero|chow|whiskas|purina|pelota|collar|correa|shampoo|heno|arena|rascador|comedero|cepillo|suplemento|bal-)\\b/.test(text)) intent = 'product';\nelse if (/^(hola|buenas|buenos dias|buenas tardes|buenas noches|hola balto|gracias)[!?.\\s]*$/.test(text)) intent = 'greeting';\nconst stop = new Set('hola por favor cuanto cuesta cuestan vale valen precio precios del de la el los las un una unos unas para y o hay tienen teneis venden disponible disponibles disponibilidad stock producto productos busco quiero saber me puedes decir cual es son en balto veterinaria perro perros gato gatos alimento alimentos'.split(' '));\nconst q = text.replace(/[^a-z0-9\\s-]/g, ' ').split(/\\s+/).filter(w => w && !stop.has(w)).join(' ').slice(0, 100);\nreturn [{ json: { intent, text, q, status } }];\n"
+      }
+    },
+    {
+      "id": "Leer contacto",
+      "name": "Leer contacto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        300
+      ],
+      "parameters": {
+        "url": "http://drupal/api/vet/schedule",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 8000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "baltoDrupalApi",
+          "name": "BALTO API interna"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "Leer categorías",
+      "name": "Leer categorías",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        300
+      ],
+      "parameters": {
+        "url": "http://drupal/api/vet/categories",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 8000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "baltoDrupalApi",
+          "name": "BALTO API interna"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "Preparar consulta",
+      "name": "Preparar consulta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const context = $('Detectar intención').first().json;\nconst categories = Array.isArray($input.first().json.data) ? $input.first().json.data : [];\nconst normalize = s => s.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');\nlet path = '/api/vet/schedule';\nif (context.intent === 'services') path = '/api/vet/services';\nelse if (context.intent === 'categories') path = '/api/vet/categories';\nelse if (context.intent === 'category') {\n  // El identificador se obtiene de Drupal, nunca se presupone el ID de taxonomía.\n  const category = categories.find(c => normalize(c.name).split(/[^a-z]+/).filter(w => w.length > 4).some(w => context.text.includes(w) || context.text.includes(w.replace(/s$/, ''))));\n  path = category ? '/api/vet/products?category=' + encodeURIComponent(category.id) : '/api/vet/products';\n}\nelse if (context.intent === 'product') path = '/api/vet/products?q=' + encodeURIComponent(context.q);\nreturn [{ json: { ...context, path } }];\n"
+      }
+    },
+    {
+      "id": "Consultar Drupal",
+      "name": "Consultar Drupal",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1300,
+        300
+      ],
+      "parameters": {
+        "url": "={{ 'http://drupal' + $json.path }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 8000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "baltoDrupalApi",
+          "name": "BALTO API interna"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "Responder en español",
+      "name": "Responder en español",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        300
+      ],
+      "parameters": {
+        "jsCode": "const context = $('Detectar intención').first().json;\nconst business = $('Leer contacto').first().json.data;\nconst response = $input.first().json;\nconst publicBase = 'http://localhost:8080'; // El instalador adapta esta URL.\nlet status = context.status;\nlet reply = '';\nlet links = [];\nconst contact = business?.whatsapp ? `Puedes escribirnos al WhatsApp ${business.whatsapp} para consultas o citas.` : '';\nconst cleanUrl = (url, allowedExternal = false) => {\n  if (typeof url !== 'string') return '';\n  if (url.startsWith('/') && !url.startsWith('//')) return publicBase + url;\n  if (allowedExternal && /^https:\\/\\/wa\\.me\\/[0-9]+(?:\\?|$)/.test(url)) return url;\n  return '';\n};\nif (status === 403) reply = 'Este chat solo está habilitado desde la página de BALTO.';\nelse if (status === 400) reply = 'Escribe un mensaje de entre 1 y 500 caracteres.';\nelse if (!business || !response.data) {\n  status = 503;\n  reply = 'No puedo consultar los datos de BALTO en este momento. Inténtalo de nuevo en unos minutos.';\n}\nelse if (context.intent === 'greeting') reply = `¡Hola! Soy el asistente de ${business.name}. Puedo consultar productos, precios, disponibilidad, servicios, horarios y direcciones. ¿Qué necesitas?`;\nelse if (context.intent === 'schedule') {\n  reply = `Hospitalización: ${business.hospitalization}.\\nAtención en tienda/consultorio: ${business.consultation_schedule}${business.schedule_is_example && !/ejemplo/i.test(business.consultation_schedule) ? ' (horario de ejemplo, pendiente de confirmar)' : ''}\\nSedes:\\n${(business.addresses || []).map(a => '• ' + a).join('\\n')}\\n${contact}`;\n}\nelse if (context.intent === 'services') reply = `Nuestros servicios:\\n${response.data.map(s => '• ' + s.title).join('\\n')}\\n${contact}`;\nelse if (context.intent === 'categories') reply = `Categorías de la tienda:\\n${response.data.map(c => '• ' + c.name).join('\\n')}\\nDime el nombre de una categoría o de un producto para consultar precios y existencias.`;\nelse if (context.intent === 'product' || context.intent === 'category') {\n  const products = response.data;\n  if (!products.length) reply = `No encontré productos que coincidan. Puedes consultar por nombre o SKU, o preguntar por las categorías. ${contact}`;\n  else {\n    reply = products.slice(0, 5).map(p => p.available ? `• ${p.name} cuesta ${p.price} y hay ${p.stock} ${p.stock === 1 ? 'unidad disponible' : 'unidades disponibles'}.` : `• ${p.name}: ese producto está agotado por ahora. Su precio de referencia es ${p.price}.`).join('\\n');\n    if (products.length > 5 || (response.meta?.total || 0) > 5) reply += '\\nTe muestro hasta cinco opciones. Escribe un nombre más específico para afinar la búsqueda.';\n    if (response.meta?.catalog_is_example) reply += '\\nProductos, precios y existencias de ejemplo; pendientes del inventario real de BALTO.';\n    links = products.slice(0, 5).map(p => ({ label: 'Ver ' + p.name, url: cleanUrl(p.url) })).filter(l => l.url);\n  }\n}\nelse reply = `No entendí tu consulta. Prueba con «precio de Dog Chow», «juguetes», «servicios» u «horarios». ${contact}`;\nif (business && status === 200) {\n  const url = cleanUrl(business.appointment_url || business.whatsapp_url, true);\n  if (url) links.push({ label: 'Consultar por WhatsApp', url });\n}\nreturn [{ json: { status, body: { reply, intent: context.intent, links } } }];\n"
+      }
+    },
+    {
+      "id": "Enviar respuesta",
+      "name": "Enviar respuesta",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1820,
+        300
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.body }}",
+        "options": {
+          "responseCode": "={{ $json.status }}",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              },
+              {
+                "name": "X-Content-Type-Options",
+                "value": "nosniff"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Recibir chat": {
+      "main": [
+        [
+          {
+            "node": "Detectar intención",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar intención": {
+      "main": [
+        [
+          {
+            "node": "Leer contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer contacto": {
+      "main": [
+        [
+          {
+            "node": "Leer categorías",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer categorías": {
+      "main": [
+        [
+          {
+            "node": "Preparar consulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar consulta": {
+      "main": [
+        [
+          {
+            "node": "Consultar Drupal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar Drupal": {
+      "main": [
+        [
+          {
+            "node": "Responder en español",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Responder en español": {
+      "main": [
+        [
+          {
+            "node": "Enviar respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "saveManualExecutions": false,
+    "executionTimeout": 45
+  },
+  "tags": []
+}
