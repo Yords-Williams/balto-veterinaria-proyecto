@@ -349,3 +349,8 @@ em{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.
 
 /* Pie de portada horizontal, alineado con la foto y fuera de su recorte. */
 .hero-tag{display:flex;position:static;writing-mode:horizontal-tb;transform:none;justify-content:flex-end;align-items:center;gap:8px;margin:17px 4px 0;font-size:12px;line-height:1.5;color:#677650;text-align:right}.hero-tag>span{font-size:18px;line-height:1}
+
+/* La foto cuadrada del gatito necesita un marco más alto: así no se cortan
+   las orejas y la cara queda completa en escritorio y celular. */
+.hero-image-clinic{aspect-ratio:0.9}
+.hero-image-clinic img{object-position:center top}
