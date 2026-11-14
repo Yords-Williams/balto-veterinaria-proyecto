@@ -1,0 +1,8 @@
+<?php
+
+/** @file Integración opcional; no habilita un medio de pago por sí sola. */
+
+/** Implements hook_cron(). */
+function balto_payments_cron(): void {
+  \Drupal::service('balto_payments.orders')->reconcile();
+}

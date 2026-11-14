@@ -1,0 +1,10 @@
+[Unit]
+Description=Conciliar pagos pendientes de BALTO
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/balto-veterinaria
+Environment=BALTO_PROJECT_DIR=/opt/balto-veterinaria
+ExecStart=/usr/bin/bash /opt/balto-veterinaria/scripts/reconcile-automatic-payments.sh
+TimeoutStartSec=480

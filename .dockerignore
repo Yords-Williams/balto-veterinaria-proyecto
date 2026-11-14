@@ -9,3 +9,6 @@ drupal/web/modules/contrib
 drupal/web/themes/contrib
 drupal/web/sites
 **/*.log
+
+.agents
+.impeccable

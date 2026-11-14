@@ -1,0 +1,14 @@
+checkout:
+  js:
+    https://js.culqi.com/checkout-js: { type: external, minified: true }
+    js/checkout.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+status:
+  js:
+    js/status.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

@@ -24,6 +24,22 @@ final class OrderConfirmation extends CheckoutPaneBase {
     $formatted_total = \Drupal::service('commerce_price.currency_formatter')->format($total->getNumber(), $total->getCurrencyCode());
     $pane_form['#attributes']['class'][] = 'order-confirmation';
     $pane_form['#cache']['max-age'] = 0;
+    if ($this->order->get('payment_gateway')->entity?->getPluginId() === 'balto_culqi_orders') {
+      $paid = $this->order->isPaid();
+      $pane_form['#attributes']['data-balto-payment-state'] = $cancelled ? 'canceled' : ($paid ? 'paid' : 'pending');
+      $pane_form['#attached']['library'][] = 'balto_payments/status';
+      $pane_form['title'] = ['#type' => 'html_tag', '#tag' => 'h2', '#value' => $paid ? $this->t('Pago confirmado') : $this->t('Pedido registrado, pago pendiente')];
+      $pane_form['number'] = ['#plain_text' => $this->t('Pedido @number · Total @total', ['@number' => $number, '@total' => $formatted_total])];
+      $pane_form['status'] = ['#type' => 'html_tag', '#tag' => 'p', '#value' => $cancelled ? $this->t('El pedido está cancelado. No realices pagos.') : ($paid ? $this->t('Culqi confirmó tu pago automáticamente. BALTO preparará tu pedido para retiro.') : $this->t('Esperamos la confirmación de Culqi. El pedido se actualizará cuando el proveedor confirme el dinero recibido.'))];
+      if (!$paid && !$cancelled && !$this->order->getData('balto_culqi_creation_started')) {
+        $pane_form['resume'] = ['#type' => 'link', '#title' => $this->t('Continuar el pago pendiente'), '#url' => Url::fromRoute('commerce_checkout.form', ['commerce_order' => $this->order->id(), 'step' => 'payment']), '#attributes' => ['class' => ['button']]];
+      }
+      $pane_form['refresh'] = ['#type' => 'link', '#title' => $this->t('Actualizar estado del pedido'), '#url' => Url::fromRoute('commerce_checkout.form', ['commerce_order' => $this->order->id(), 'step' => 'complete']), '#attributes' => ['class' => ['text-link']]];
+      if ($this->order->get('payment_gateway')->entity->getPlugin()->getMode() === 'test') {
+        $pane_form['test'] = ['#type' => 'html_tag', '#tag' => 'p', '#value' => $this->t('Prueba de integración. No se ha realizado ningún cobro real.')];
+      }
+      return $pane_form;
+    }
     $pane_form['title'] = ['#type' => 'html_tag', '#tag' => 'h2', '#value' => $simulated ? $this->t('¡Pedido de demostración registrado!') : $this->t('¡Recibimos tu solicitud de pedido!')];
     $pane_form['number'] = ['#plain_text' => $this->t('Pedido @number · Total @total', ['@number' => $number, '@total' => $formatted_total])];
     $pane_form['status'] = ['#type' => 'html_tag', '#tag' => 'p', '#value' => $cancelled ? $this->t('Pedido cancelado. No realices pagos para este pedido.') : ($simulated ? $this->t('Pago simulado – No se realiza ningún cobro real.') : ($this->order->isPaid() ? $this->t('Pago registrado por el establecimiento. Coordina el retiro con BALTO.') : $this->t('Pendiente de confirmación y pago. BALTO debe confirmar la disponibilidad y el total antes de que pagues.')))];

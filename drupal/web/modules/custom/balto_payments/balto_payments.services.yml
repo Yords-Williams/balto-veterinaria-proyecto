@@ -1,0 +1,10 @@
+services:
+  balto_payments.orders:
+    class: Drupal\balto_payments\Service\CulqiOrders
+    arguments: ['@http_client', '@entity_type.manager', '@lock', '@database', '@logger.factory', '@config.factory']
+
+  balto_payments.gateway_availability:
+    class: Drupal\balto_payments\EventSubscriber\GatewayAvailability
+    arguments: ['@balto_payments.orders']
+    tags:
+      - { name: event_subscriber }

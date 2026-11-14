@@ -42,6 +42,13 @@ try {
   for (const width of [1440, 1024, 768, 390, 360]) {
     await page.setViewport({ width, height: width < 620 ? 844 : 1000 });
     const response = await page.goto(base, { waitUntil: 'networkidle0' });
+    // Cargar también las fotos diferidas antes de medir imágenes y capturar.
+    await page.evaluate(async () => {
+      await Promise.all([...document.images].map(image => {
+        image.loading = 'eager';
+        return image.decode().catch(() => {});
+      }));
+    });
     const state = await page.evaluate(() => ({
       overflow: document.documentElement.scrollWidth - innerWidth,
       h1: document.querySelectorAll('h1').length,

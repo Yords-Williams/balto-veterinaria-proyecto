@@ -1,0 +1,3 @@
+commerce_payment.commerce_payment_gateway.plugin.balto_culqi_orders:
+  type: commerce_payment_gateway_configuration
+  label: 'Culqi: billeteras y PagoEfectivo'

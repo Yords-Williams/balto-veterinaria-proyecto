@@ -399,3 +399,39 @@ em{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.
 
 /* Confirmación accesible del retiro: pago pendiente y coordinación explícita. */
 .order-confirmation{padding:24px;background:#f8faf4;border:1px solid #d8e2d0;border-radius:16px;line-height:1.8}.order-confirmation h2{font-size:27px;line-height:1.25;color:var(--green);margin:0 0 18px}.order-confirmation p{font-size:14px;margin:16px 0}.order-confirmation .order-whatsapp{display:inline-flex;margin:16px 0;padding:14px 20px}.order-confirmation .form-item{margin-block:17px}.order-confirmation .form-item__label{font-weight:700}@media(max-width:600px){.order-confirmation{padding:18px}.order-confirmation h2{font-size:23px}.order-confirmation .order-whatsapp{font-size:12px;width:100%;justify-content:center}}
+
+/* Catálogo: filtros compactos y lectura cómoda en pantallas pequeñas. */
+.catalog-filter-field{display:grid;gap:8px;min-width:0}
+.interior-page .catalog-filter-field label{margin:0}
+.search-input>span{top:0;right:11px;height:100%;display:flex;align-items:center}
+.search-input .icon{width:20px;height:20px}
+.catalog-filters input::placeholder{color:#647166;opacity:1}
+.product-price-row>strong{font-variant-numeric:tabular-nums}
+.product-image-link:focus-visible{outline-offset:-4px}
+.product-card:focus-within{border-color:#6a855f}
+.product-card h3{letter-spacing:-.025em}
+.product-card .product-category{font-size:11px;letter-spacing:.04em}
+.product-card .product-species,.product-card .stock-label{font-size:12px}
+.product-card .product-detail-link{font-size:13px}
+@media(max-width:849px){
+  .catalog-filters{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;padding:18px}
+  .catalog-filters>h2,.catalog-filter-search,.catalog-filters>.button,.catalog-filters>.clear-filters{grid-column:1/-1}
+  .catalog-filters>h2{margin-bottom:0}
+  .interior-page .catalog-filter-field label{font-size:12px}
+  .interior-page .catalog-filter-field input,.interior-page .catalog-filter-field select{font-size:14px;min-height:44px;padding:10px 8px}
+  .catalog-filters>.button{font-size:13px;margin-top:0}
+  .product-card h3{font-size:15px;line-height:1.45}
+  .product-card .product-category{font-size:10px}
+  .catalog-results-heading{align-items:flex-start;flex-wrap:wrap;gap:8px}
+  .catalog-results-heading p{font-size:12px}
+}
+@media(max-width:599px){
+  .catalog-filter-field{grid-column:1/-1;grid-template-columns:90px minmax(0,1fr);align-items:center}
+  .catalog-filter-search{grid-template-columns:minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){
+  .product-card,.product-image img{transition:none}
+  .product-image-link:hover img{transform:none}
+}
+/* Stronger gold accent for the BALTO wordmark against the light header. */
+.brand-dot{color:#8a7000}

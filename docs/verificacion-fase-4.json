@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-12T14:39:22.159Z",
+  "date": "2026-11-14T18:19:43.993Z",
   "results": [
     "Hay existencias suficientes para las compras de prueba",
     "El carrito muestra el nombre del producto",
@@ -46,10 +46,10 @@
   "errors": [],
   "orders": [
     {
-      "stock": 23,
+      "stock": 19,
       "unit": "12.900000",
-      "id": 6,
-      "number": "1",
+      "id": 28,
+      "number": "4",
       "state": "validation",
       "customer": 0,
       "total": "25.800000",
@@ -65,10 +65,10 @@
       ]
     },
     {
-      "stock": 22,
+      "stock": 18,
       "unit": "12.900000",
-      "id": 7,
-      "number": "2",
+      "id": 29,
+      "number": "5",
       "state": "validation",
       "customer": 3,
       "total": "12.900000",
@@ -83,5 +83,6 @@
         }
       ]
     }
-  ]
+  ],
+  "cleanup": "Se cancelaron exclusivamente los dos pedidos técnicos de esta ejecución y se revirtieron sus pagos simulados. El stock volvió al saldo anterior a las pruebas."
 }

@@ -13,7 +13,7 @@
         let index = 0, timer, paused = motion.matches, hovered = false;
         const schedule = () => {
           window.clearTimeout(timer);
-          if (!paused && !hovered && !document.hidden && !motion.matches) timer = window.setTimeout(() => show(index + 1, false), 3000);
+          if (!paused && !hovered && !document.hidden && !motion.matches) timer = window.setTimeout(() => show(index + 1, false), 6500);
         };
         const updatePause = () => {
           pause.setAttribute('aria-label', paused ? 'Reanudar carrusel' : 'Pausar carrusel');
@@ -33,6 +33,8 @@
           schedule();
         };
         dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+        root.querySelector('[data-carousel-prev]')?.addEventListener('click', () => show(index - 1));
+        root.querySelector('[data-carousel-next]')?.addEventListener('click', () => show(index + 1));
         pause.addEventListener('click', () => { paused = !paused; updatePause(); schedule(); });
         root.addEventListener('mouseenter', () => { hovered = true; schedule(); });
         root.addEventListener('mouseleave', () => { hovered = false; schedule(); });

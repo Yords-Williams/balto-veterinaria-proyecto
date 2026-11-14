@@ -6,6 +6,12 @@ Proyecto académico de tienda virtual con Drupal Commerce, MariaDB y chatbot med
 
 En esta computadora se utiliza un motor Docker Rootless separado: consulta [cómo retomarlo sin contraseña de administrador](docs/docker-local.md).
 
+## Diseño de tienda y pagos automáticos preparados
+
+La portada incluye búsqueda, navegación por mascota y productos cargados desde Commerce. Referencias y recursos en [diseño](docs/recursos-diseno.md).
+
+La integración opcional de Culqi para billeteras por QR y banca móvil/PagoEfectivo está desarrollada y verificada con HTTP simulado; **la pasarela permanece desactivada, sin credenciales y sin cobros reales**. Faltan cuenta de comercio, prueba con el proveedor, webhook HTTPS público y programación de conciliación. Estado y alcance en [pagos automáticos](docs/pagos-automaticos.md).
+
 ## Arquitectura
 
 ```mermaid

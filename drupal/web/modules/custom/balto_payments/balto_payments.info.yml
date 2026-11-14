@@ -1,0 +1,8 @@
+name: BALTO Pagos automáticos
+type: module
+description: Órdenes Culqi para billeteras y PagoEfectivo, con verificación del proveedor.
+core_version_requirement: ^11
+package: BALTO
+dependencies:
+  - vet_api:vet_api
+  - commerce:commerce_payment

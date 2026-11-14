@@ -1,0 +1,11 @@
+[Unit]
+Description=Revisar pagos BALTO cada minuto
+
+[Timer]
+OnBootSec=60
+OnUnitInactiveSec=60
+Persistent=true
+Unit=balto-payments.service
+
+[Install]
+WantedBy=timers.target
