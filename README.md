@@ -2,9 +2,9 @@
 
 Proyecto académico de tienda virtual con Drupal Commerce, MariaDB y chatbot mediante n8n. Marca: **BALTO Veterinaria — Medicina para tu mascota**, Juliaca, Puno, Perú. Moneda: soles (PEN).
 
-**Estado:** Fases 1 a 7 implementadas y comprobadas con contenedores reales. Portada: <http://localhost:8080>; catálogo: <http://localhost:8080/tienda>; carrito: <http://localhost:8080/cart>. Pasaron 48 comprobaciones del sitio, 49 del catálogo y 41 del checkout, pedidos y roles; además, 123 de la API, 58 del webhook y 23 del widget. La API protegida y el chatbot por reglas consultan los datos en tiempo real. El chat flotante permite abrir productos y pasar al carrito.
+Este proyecto académico documenta el análisis, diseño e implementación de una tienda virtual para BALTO Veterinaria. Integra catálogo y pedidos con Drupal Commerce, almacenamiento en MariaDB y un chatbot conectado mediante n8n. La tienda permite explorar productos, filtrar por mascota y continuar al carrito; las funciones implementadas y su verificación se describen en las guías de cada fase.
 
-En esta computadora se utiliza un motor Docker Rootless separado: consulta [cómo retomarlo sin contraseña de administrador](docs/docker-local.md).
+Para ejecutar la demostración en una computadora local, consulta la [guía de instalación y ejecución](#preparar-y-levantar-la-demo).
 
 ## Diseño de tienda y pagos automáticos preparados
 
