@@ -1,0 +1,28 @@
+digraph n8n {
+  graph [rankdir=LR, bgcolor="white", pad=.15, nodesep=.28, ranksep=.30, dpi=170];
+  node [shape=box, style="rounded,filled", fillcolor="#EFF6F0", color="#45745C", fontname="DejaVu Sans", fontsize=11, margin=".12,.09"];
+  edge [color="#407058", arrowsize=.7];
+  subgraph cluster_chat {
+    label="1. Chatbot web"; labeljust=l; fontname="DejaVu Sans"; color="#B7CFC0";
+    chat [label="Pregunta en BALTO"];
+    classify [label="n8n valida y\nclasifica la consulta"];
+    api [label="Consulta Drupal\nsegún la pregunta"];
+    answer [label="Respuesta en\nel chat web"];
+    chat -> classify -> api -> answer;
+  }
+  subgraph cluster_orders {
+    label="2. Pedidos y stock bajo"; labeljust=l; fontname="DejaVu Sans"; color="#B7CFC0";
+    order [label="Evento de Drupal\no revisión diaria"];
+    review [label="n8n prepara aviso\no revisa existencias"];
+    alert [label="Aviso al dueño\nen Telegram"];
+    order -> review -> alert;
+  }
+  subgraph cluster_bot {
+    label="3. Bot privado"; labeljust=l; fontname="DejaVu Sans"; color="#B7CFC0";
+    button [label="Comando o botón\nen Telegram"];
+    owner [label="n8n verifica el\nchat autorizado"];
+    action [label="Drupal consulta datos\no registra el pago"];
+    reply [label="Resultado en\nTelegram"];
+    button -> owner -> action -> reply;
+  }
+}

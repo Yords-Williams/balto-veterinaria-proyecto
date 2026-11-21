@@ -1,4 +1,5 @@
 # BALTO Veterinaria
+**¿Vas a replicar BALTO en otra laptop?** Empieza por la [guía de reproducción local y en AWS](docs/replicar-balto.md).
 
 Proyecto académico de tienda virtual con Drupal Commerce, MariaDB y chatbot mediante n8n. Marca: **BALTO Veterinaria — Medicina para tu mascota**, Juliaca, Puno, Perú. Moneda: soles (PEN).
 
