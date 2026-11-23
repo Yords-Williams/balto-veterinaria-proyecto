@@ -5,7 +5,7 @@ services:
 
   balto_automation.order_notifier:
     class: Drupal\balto_automation\EventSubscriber\OrderPlacedNotifier
-    arguments: ['@balto_automation.notifier']
+    arguments: ['@balto_automation.notifier', '@entity_type.manager']
     tags:
       - { name: event_subscriber }
 

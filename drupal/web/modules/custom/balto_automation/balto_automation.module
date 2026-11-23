@@ -30,8 +30,10 @@ function _balto_automation_payment_paid(PaymentInterface $payment): void {
   if (\Drupal::request()->attributes->get('_balto_telegram_confirmed_payment') === (string) $payment->id()) {
     return;
   }
-  $order = $payment->getOrder();
-  if ($order) {
+  // El pago puede conservar una referencia al pedido antes de numerarse.
+  $order_id = $payment->getOrderId();
+  $order = $order_id ? \Drupal::entityTypeManager()->getStorage('commerce_order')->loadUnchanged($order_id) : NULL;
+  if ($order && $order->getState()->getId() !== 'draft' && $order->getOrderNumber()) {
     \Drupal::service('balto_automation.notifier')->order($order, 'paid');
   }
 }
