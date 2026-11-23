@@ -21,6 +21,9 @@ if (!business || !response.data) {
   reply = 'No puedo consultar los datos de BALTO en este momento. Inténtalo de nuevo en unos minutos.';
 }
 else if (context.intent === 'greeting') reply = `¡Hola! Soy el asistente de ${business.name}. Puedo consultar productos, precios, disponibilidad, servicios, horarios y direcciones. ¿Qué necesitas?`;
+else if (context.intent === 'clinical') {
+  reply = `Para evaluar los síntomas o indicar un tratamiento, tu mascota necesita atención veterinaria. Si parece una urgencia, llama a BALTO o acude a un centro veterinario. ${contact}`;
+}
 else if (context.intent === 'parasite_care') {
   reply = 'Si tu mascota tiene pulgas o garrapatas, el equipo de BALTO puede orientarte sobre qué producto es adecuado según su especie, edad y peso. Escríbenos por WhatsApp y cuéntanos qué encontraste. Si está decaída o se siente mal, solicita una evaluación veterinaria.';
 }
