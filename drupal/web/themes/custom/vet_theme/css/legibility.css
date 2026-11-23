@@ -53,3 +53,22 @@
 /* Fotos de producto de borde a borde (el marco y la mezcla eran para ilustraciones). */
 .product-image img,.catalog-results .product-image img{padding:0!important;mix-blend-mode:normal!important;width:100%;height:100%;object-fit:cover}
 .product-detail-image>img,.product-detail .product-detail-image>img{padding:0!important;mix-blend-mode:normal!important;width:100%;height:auto;aspect-ratio:720/660;object-fit:cover;display:block}
+
+/* Asistente BALTO. */
+.chat-history { background: var(--soft); padding: 16px; }
+.chat-message-assistant { border-bottom-left-radius: 4px; }
+.chat-message-user { width: fit-content; border-bottom-right-radius: 4px; }
+.chat-links a {
+  width: fit-content;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 10px;
+  text-underline-offset: 3px;
+}
+.chat-links a:hover, .chat-prompts button:hover { background: var(--soft); }
+.chat-prompts { padding: 10px 12px; }
+.chat-form input { background: var(--cream); color: var(--green); }
+@media (max-height: 520px) {
+  .chat-panel { min-height: 0; }
+  .chat-history { min-height: 0; }
+}

@@ -21,6 +21,10 @@ if (!business || !response.data) {
   reply = 'No puedo consultar los datos de BALTO en este momento. Inténtalo de nuevo en unos minutos.';
 }
 else if (context.intent === 'greeting') reply = `¡Hola! Soy el asistente de ${business.name}. Puedo consultar productos, precios, disponibilidad, servicios, horarios y direcciones. ¿Qué necesitas?`;
+else if (context.intent === 'purchase') {
+  reply = `Abre la tienda, elige un producto y agrégalo al carrito. Desde el carrito puedes continuar al pedido y revisar las opciones de retiro y pago. ${contact}`;
+  links.push({label: 'Ir a la tienda', url: cleanUrl('/tienda')});
+}
 else if (context.intent === 'clinical') {
   reply = `Para evaluar los síntomas o indicar un tratamiento, tu mascota necesita atención veterinaria. Si parece una urgencia, llama a BALTO o acude a un centro veterinario. ${contact}`;
 }
