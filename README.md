@@ -1,8 +1,10 @@
 # BALTO Veterinaria
 
-Tienda virtual para una clínica veterinaria de Juliaca, Puno. Los clientes pueden explorar el catálogo, consultar precios y existencias en el chat y hacer pedidos para recoger en tienda. El equipo de BALTO gestiona el catálogo y los pedidos desde Drupal.
+**¿Vas a instalar BALTO en tu laptop?** [Sigue la guía paso a paso](docs/replicar-balto.md).
 
-[Ver la demo en AWS](https://balto-veterinaria.3-211-103-160.sslip.io/) · [Instalar en otra laptop](docs/replicar-balto.md) · [Desplegar en AWS](docs/aws-deploy.md)
+Hicimos una tienda de prueba para BALTO Veterinaria, en Juliaca. Puedes abrir el catálogo, preguntarle al chat por un producto y hacer un pedido para recogerlo en el local.
+
+[Ver la demo en AWS](https://balto-veterinaria.3-211-103-160.sslip.io/) · [Guía de despliegue](docs/aws-deploy.md)
 
 ![Portada de BALTO Veterinaria con acceso a la tienda y a citas por WhatsApp](docs/capturas/fase-2-portada.png)
 

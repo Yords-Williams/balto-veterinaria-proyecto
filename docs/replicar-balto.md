@@ -1,6 +1,8 @@
 # Replicar BALTO desde otra laptop
 
-Esta guía lleva desde un clon limpio hasta una tienda de prueba funcional. Para publicar una copia independiente, sigue después el recorrido de AWS. El repositorio trae el código y los datos de demostración. Los pedidos, las cuentas y la configuración de una instalación existente se trasladan mediante un respaldo autorizado.
+Empieza por los pasos 1 y 2 para levantar BALTO en tu laptop. En los pasos 3 y 4 verás cómo entrar al administrador, abrir n8n y hacer un pedido de prueba.
+
+El repositorio trae un catálogo y datos de demostración. Si te toca desplegar la tienda en AWS, continúa desde el paso 5.
 
 ## 1. Preparar la laptop
 
@@ -14,7 +16,7 @@ Esta guía lleva desde un clon limpio hasta una tienda de prueba funcional. Para
    docker compose version
    ```
 
-3. Clona el repositorio y entra en su carpeta. Si GitHub solicita acceso, usa tu propia cuenta con permiso sobre el proyecto.
+3. Clona el repositorio y entra en su carpeta.
 
    ```bash
    git clone https://github.com/dimas-flores/balto-veterinaria-proyecto.git
