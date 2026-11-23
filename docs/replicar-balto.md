@@ -72,7 +72,7 @@ Abre el [inicio de sesión de Drupal](http://localhost:8080/user/login). Consult
 |---|---|---|
 | Telegram | Bot y chat autorizados, credenciales privadas en `.env`, HTTPS y registro seguro del webhook. Consulta [la configuración del webhook](aws-deploy.md#mercado-pago-checkout-pro-de-prueba). | Recibe el aviso de un pedido de prueba y revisa el botón de Yape. |
 | Mercado Pago | Token del vendedor de prueba y ID del comprador de prueba. Sigue [Checkout Pro de prueba](aws-deploy.md#mercado-pago-checkout-pro-de-prueba). | Selecciona **Tarjeta (simulado)**, usa la cuenta compradora de prueba y vuelve a BALTO después de la aprobación. Comprueba el número público y el pago en Drupal. |
-| Gemini | Clave propia si quieres habilitarlo. Consulta [el README](../README.md) y ejecuta el configurador de Gemini que trae el repositorio. | Comprueba una consulta del catálogo con la configuración elegida. El modo por reglas se puede probar sin clave. |
+| Gemini | Clave propia si quieres habilitarlo. Sigue los [pasos del configurador de Gemini](../README.md#gemini-opcional-en-el-chat). | Comprueba una consulta del catálogo con la configuración elegida. El modo por reglas se puede probar sin clave. |
 
 Usa integraciones de prueba y datos ficticios. Si Mercado Pago aprueba la operación y el navegador no vuelve a la confirmación, busca primero el estado en Drupal y sigue la [recuperación del pago aprobado](aws-deploy.md#mercado-pago-checkout-pro-de-prueba) antes de intentar otra compra.
 

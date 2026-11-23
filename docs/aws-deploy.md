@@ -113,9 +113,13 @@ ssh -i balto-demo.pem ubuntu@TU_ELASTIC_IP
 
 Comprueba la identidad del servidor al conectar. Resultado esperado: terminal de Ubuntu en EC2. Los marcadores `TU_ELASTIC_IP` no son direcciones reales. Si falla, revisa que la IP esté asociada, la instancia esté ejecutándose y SSH permita tu IP actual.
 
-## Autorizar el repositorio privado de GitHub
+## Obtener el repositorio desde EC2
 
-El código del proyecto está en un repositorio **privado**: <https://github.com/dimas-flores/balto-veterinaria>. No contiene `.env`, bases ni claves privadas. Para clonar desde EC2 se utiliza una clave de despliegue de solo lectura, limitada a este repositorio.
+El [repositorio de BALTO](https://github.com/dimas-flores/balto-veterinaria-proyecto) se puede clonar por HTTPS. Para instalar desde ese repositorio, pasa directamente a [Aprovisionar y levantar la tienda](#aprovisionar-y-levantar-la-tienda).
+
+### Si usas una copia privada
+
+Configura una clave de despliegue de solo lectura para ese repositorio y usa su URL SSH en `--repo`.
 
 1. En EC2, como usuario `ubuntu`, ejecuta:
 
@@ -158,7 +162,7 @@ En EC2 ejecuta:
 
 ```bash
 sudo bash /home/ubuntu/aws-setup.sh \
-  --repo git@github.com:dimas-flores/balto-veterinaria-proyecto.git \
+  --repo https://github.com/dimas-flores/balto-veterinaria-proyecto.git \
   --host TU_ELASTIC_IP
 ```
 
@@ -206,7 +210,7 @@ No hace falta comprar un dominio para completar la demo. Si ya dispones de uno:
 
    ```bash
    sudo bash /home/ubuntu/aws-setup.sh \
-     --repo git@github.com:dimas-flores/balto-veterinaria-proyecto.git \
+     --repo https://github.com/dimas-flores/balto-veterinaria-proyecto.git \
      --host tienda.TU_DOMINIO --https
    ```
 
