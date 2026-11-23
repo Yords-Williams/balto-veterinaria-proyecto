@@ -17,8 +17,8 @@ Esta guía lleva desde un clon limpio hasta una tienda de prueba funcional. Para
 3. Clona el repositorio y entra en su carpeta. Si GitHub solicita acceso, usa tu propia cuenta con permiso sobre el proyecto.
 
    ```bash
-   git clone https://github.com/dimas-flores/balto-veterinaria.git
-   cd balto-veterinaria
+   git clone https://github.com/dimas-flores/balto-veterinaria-proyecto.git
+   cd balto-veterinaria-proyecto
    git switch main
    git rev-parse --short HEAD
    ```
@@ -101,7 +101,7 @@ Usa integraciones de prueba y datos ficticios. Si Mercado Pago aprueba la operac
 
 | Flujo | Entrada | Resultado |
 |---|---|---|
-| [Chatbot](../n8n/workflows/chatbot.json) | Una pregunta desde el widget de BALTO | n8n valida y clasifica el mensaje, consulta Drupal cuando corresponde y devuelve la respuesta al widget. Gemini se puede habilitar para interpretar o redactar consultas. |
+| [Chatbot](../n8n/workflows/chatbot.json) | Una pregunta desde el widget de BALTO | n8n valida y clasifica el mensaje, consulta Drupal cuando corresponde y devuelve la respuesta al widget. Gemini ayuda a clasificar las preguntas que las reglas no reconocen. n8n arma la respuesta con los datos de Drupal. |
 | [Avisos de pedidos](../n8n/workflows/pedidos.json) | Un evento de Drupal o la revisión diaria programada | n8n avisa al dueño por Telegram de los pedidos, pagos o existencias bajas. |
 | [Bot de Telegram](../n8n/workflows/bot.json) | Un comando o clic del dueño | n8n verifica el chat autorizado, consulta Drupal o solicita el registro del pago, y devuelve el resultado a Telegram. |
 

@@ -1,5 +1,5 @@
 // La IA solo puede seleccionar consultas de lectura predefinidas.
-const fallback = $('Detectar intención').first().json;
+const fallback = $('¿Qué pregunta el cliente?').first().json;
 let context = {...fallback, engine: 'rules'};
 if (fallback.status === 200) {
   try {

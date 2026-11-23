@@ -243,12 +243,11 @@ El nombre gratuito y HTTPS ya se configuraron con sslip.io: [verificación de DN
 
 ### Gemini opcional en el chat
 
-El workflow admite Gemini para interpretar preguntas y redactar respuestas cercanas con los datos consultados en Drupal. Los
-precios, existencias, servicios y contactos se consultan en Drupal; Gemini no
-escribe pedidos ni modifica el inventario. Se envían a Google el mensaje actual y los datos públicos consultados en Drupal,
-sin historial, credenciales ni datos de pedidos. Las respuestas conservan los botones
-y se rechazan si añaden cifras ausentes en los datos de referencia. Si no hay clave o la
-API falla, se usan las reglas originales.
+n8n clasifica primero la pregunta con reglas. Si no reconoce la intención y
+Gemini está habilitado, envía el mensaje actual al nodo nativo de Google Gemini
+para clasificarlo. Drupal aporta los precios, existencias, servicios y
+contactos. n8n arma la respuesta con esos datos. Si Gemini falla, n8n conserva
+el resultado de las reglas.
 
 En el servidor, desde el repositorio, ejecuta
 `python3 scripts/configure-gemini.py --env .env` y pega la clave en el prompt
@@ -256,7 +255,7 @@ oculto. Después ejecuta `sudo docker compose up -d --force-recreate n8n`.
 El modelo predeterminado es `gemini-3.5-flash-lite`; se puede cambiar con
 `--model`. Para desactivarlo, configura `GEMINI_ENABLED=false` y recrea n8n.
 La respuesta JSON del webhook incluye `engine: gemini` cuando la clasificación
-fue validada y `engine: rules` cuando se utilizó el respaldo. Una llamada real
+fue validada y `engine: rules` cuando se aplicaron las reglas. Una llamada real
 con `engine: gemini` es necesaria para dar por comprobada la conexión.
 
 Crea tu clave en [Google AI Studio](https://aistudio.google.com/api-keys).

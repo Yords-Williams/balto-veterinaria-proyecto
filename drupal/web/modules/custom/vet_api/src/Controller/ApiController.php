@@ -44,7 +44,12 @@ final class ApiController extends ControllerBase {
     $query = $storage->getQuery()->condition('type', 'vet_variation')->condition('status', 1)
       ->condition('product_id.entity.status', 1)->accessCheck(TRUE)->sort('variation_id');
     if ($q !== '') {
-      $query->condition($query->orConditionGroup()->condition('sku', $q, 'CONTAINS')->condition('product_id.entity.title', $q, 'CONTAINS'));
+      // El chat omite conectores como «de» al extraer el nombre del producto.
+      $title = $query->andConditionGroup();
+      foreach (preg_split('/\s+/', $q, -1, PREG_SPLIT_NO_EMPTY) as $word) {
+        $title->condition('product_id.entity.title', $word, 'CONTAINS');
+      }
+      $query->condition($query->orConditionGroup()->condition('sku', $q, 'CONTAINS')->condition($title));
     }
     if ($category !== '') {
       $query->condition('product_id.entity.field_category.target_id', $category);

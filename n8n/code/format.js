@@ -1,7 +1,7 @@
-const context = $('Validar interpretación').first().json;
-const contactResponse = $('Leer contacto').first().json;
+const context = $('Revisar qué pide el cliente').first().json;
+const contactResponse = $('Ver horarios y contacto').first().json;
 const business = contactResponse.data;
-const response = $('Preparar consulta').first().json.path === '/api/vet/schedule'
+const response = $('Elegir qué buscar').first().json.path === '/api/vet/schedule'
   ? contactResponse
   : $input.first().json;
 const publicBase = 'http://localhost:8080'; // El instalador adapta esta URL.

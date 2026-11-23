@@ -1,4 +1,4 @@
-const context = $('Validar interpretación').first().json;
+const context = $('Revisar qué pide el cliente').first().json;
 const normalize = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 let path = '/api/vet/schedule';
 if (['services', 'overview'].includes(context.intent)) path = '/api/vet/services';

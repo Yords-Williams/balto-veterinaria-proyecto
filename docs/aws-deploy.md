@@ -158,7 +158,7 @@ En EC2 ejecuta:
 
 ```bash
 sudo bash /home/ubuntu/aws-setup.sh \
-  --repo git@github.com:dimas-flores/balto-veterinaria.git \
+  --repo git@github.com:dimas-flores/balto-veterinaria-proyecto.git \
   --host TU_ELASTIC_IP
 ```
 
@@ -206,7 +206,7 @@ No hace falta comprar un dominio para completar la demo. Si ya dispones de uno:
 
    ```bash
    sudo bash /home/ubuntu/aws-setup.sh \
-     --repo git@github.com:dimas-flores/balto-veterinaria.git \
+     --repo git@github.com:dimas-flores/balto-veterinaria-proyecto.git \
      --host tienda.TU_DOMINIO --https
    ```
 
