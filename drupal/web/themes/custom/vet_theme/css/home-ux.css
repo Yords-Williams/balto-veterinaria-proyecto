@@ -380,3 +380,257 @@ a.map-caption:focus-visible {
   align-items: center;
   gap: 12px 24px;
 }
+
+/* Respuesta visual de los accesos principales de BALTO. */
+@media (prefers-reduced-motion: no-preference) {
+  .balto-hero .hero-actions > .button {
+    transition: scale 140ms ease-out, background-color 140ms ease-out;
+  }
+  .balto-hero .hero-actions > .button:active {
+    scale: .97;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .balto-hero .hero-actions > .button:hover {
+    background-color: color-mix(in srgb, var(--green) 88%, var(--cream));
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .catalog-pet-shortcuts a img {
+    transition: scale 220ms ease-out;
+  }
+  .catalog-pet-shortcuts a > span > span {
+    transition: translate 180ms ease-out;
+  }
+  .catalog-pet-shortcuts a:hover img {
+    scale: 1.035;
+  }
+  .catalog-pet-shortcuts a:hover > span > span {
+    translate: 3px 0;
+  }
+}
+
+/* El panel aparece desde el lado del botón que lo abre. */
+@media (prefers-reduced-motion: no-preference) {
+  .balto-chat .chat-panel:not([hidden]) {
+    transform-origin: right bottom;
+    animation: balto-chat-enter 180ms ease-out;
+  }
+}
+@keyframes balto-chat-enter {
+  from { opacity: 0; transform: translateY(8px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Ubicación: los cuatro bloques de la columna izquierda (sedes, horarios y pagos)
+   comparten alineación, título, texto y separador. */
+.location-grid { align-items: stretch; }
+.locations-info { display: flex; flex-direction: column; justify-content: space-between; }
+.locations-info .address-row,
+.locations-info .schedule-panel,
+.locations-info .local-payments { display: block; margin: 0; padding: 0 0 24px; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+.locations-info > * + * { padding-top: 24px; }
+.locations-info > *:last-child { border-bottom: 0; padding-bottom: 0; }
+.locations-info .address-row h3,
+.locations-info .schedule-panel h3,
+.locations-info .local-payments h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 18px; letter-spacing: -.02em; color: var(--green); }
+.locations-info .address-row p,
+.locations-info .consultation-hours p,
+.locations-info .local-payments p { max-width: 42ch; margin: 0 0 8px; font-size: 15px !important; line-height: 1.6 !important; color: var(--muted); }
+.locations-info .local-payments p strong { color: var(--green); }
+.locations-info .schedule-hospital { padding-bottom: 12px; }
+.locations-info .consultation-hours { padding-top: 12px; }
+.locations-info .consultation-hours > strong { margin-bottom: 4px; }
+.locations-info .address-row .text-link { display: inline-block; margin-top: 4px; }
+
+
+/* Pie: «Acceso a mi cuenta» y «Administración» juntos, a la derecha de la línea legal. */
+.footer-bottom { flex-wrap: wrap; }
+.footer-bottom > a + a { margin-left: 16px; }
+
+/* ---------------------------------------------------------------
+   Toques modernos, solo CSS (sin JavaScript ni librerías):
+   1) transición suave entre páginas,
+   2) secciones que aparecen al hacer scroll.
+   Todo se apaga solo si el visitante reduce el movimiento o si su
+   navegador no lo soporta: la página se ve igual que antes.
+   --------------------------------------------------------------- */
+
+/* Curva compartida por todas las animaciones: arranca rápido y frena suave. */
+:root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); }
+
+/* 1) Entre páginas el contenido se funde; el encabezado, el chat y la barra
+   móvil se quedan quietos para que se sienta como una app. */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: balto-header; }
+.balto-chat { view-transition-name: balto-chat; }
+.mobile-action-bar { view-transition-name: balto-action-bar; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .2s; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+/* 2) Las tarjetas y bloques de la portada suben y se funden al entrar en pantalla. */
+@keyframes balto-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .services-section .service-card,
+    .clinic-work-card,
+    .retail-pets > a,
+    .about-grid > *,
+    .story-card,
+    .location-grid > *,
+    .contact-inner > * {
+      animation: balto-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+/* Animaciones de la portada. Se apagan con "reducir movimiento". */
+@keyframes balto-hero-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+/* Anillo mostaza que sale de la cruz del aviso de urgencias: solo transform y opacity,
+   y solo 3 veces al cargar. */
+.care-badge-icon { position: relative; isolation: isolate; }
+.care-badge-icon::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 50%; background: var(--mustard); opacity: 0; pointer-events: none; }
+@keyframes balto-ring {
+  from { opacity: .55; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.9); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Entrada rápida (0,3 s) y escalonado corto para no retrasar el título. */
+  /* La foto no se anima: es la imagen principal y debe pintarse al instante. */
+  .balto-hero .hero-description { animation: balto-hero-in .3s var(--ease-out) both; }
+  .balto-hero .hero-actions { animation: balto-hero-in .3s 50ms var(--ease-out) both; }
+  .care-badge-icon::after { animation: balto-ring 1.8s 1s var(--ease-out) 3 both; }
+  /* Navegadores sin animación por scroll: aparición con un observador mínimo (site.js). */
+  @supports not (animation-timeline: view()) {
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .3s var(--ease-out), transform .3s var(--ease-out); }
+    .reveal.is-in { opacity: 1; transform: none; }
+  }
+}
+
+/* Título de la portada: cada línea sube desde detrás de una máscara. */
+.balto-hero h1 .hl { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.balto-hero h1 .hl > span { display: block; }
+@keyframes balto-line {
+  from { transform: translateY(108%); }
+  to { transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .balto-hero h1 .hl > span { animation: balto-line .5s var(--ease-out) both; }
+  .balto-hero h1 .hl:nth-child(2) > span { animation-delay: .1s; }
+}
+
+/* Títulos de sección con un barrido de izquierda a derecha, y fotos que se
+   asientan con un leve acercamiento. Chrome/Edge usan animación por scroll;
+   el resto, la clase .reveal-* que pone site.js. Se apagan con "reducir movimiento". */
+.clinic-work-card img, .story-photo img, .about-photo img { clip-path: inset(0); }
+@keyframes balto-title-wipe {
+  from { clip-path: inset(-20% 100% -20% -5%); opacity: .2; }
+  to { clip-path: inset(-20% -5% -20% -5%); opacity: 1; }
+}
+@keyframes balto-img-settle {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section-heading h2, .retail-heading h2 {
+      animation: balto-title-wipe linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+    .clinic-work-card img, .story-photo img, .about-photo img {
+      animation: balto-img-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 80%;
+    }
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports not (animation-timeline: view()) {
+    .reveal-title { clip-path: inset(-20% 100% -20% -5%); opacity: .2; transition: clip-path .5s var(--ease-out), opacity .5s var(--ease-out); }
+    .reveal-title.is-in { clip-path: inset(-20% -5% -20% -5%); opacity: 1; }
+    .reveal-img { transform: scale(1.12); transition: transform .6s var(--ease-out); }
+    .reveal-img.is-in { transform: scale(1); }
+  }
+}
+
+/* Encabezado: al bajar gana una sombra fina y el logo se encoge un poco.
+   No cambia su altura, para que el contenido no dé saltos. */
+.site-header { transition: box-shadow .25s var(--ease-out); }
+.site-header .brand { transition: transform .25s var(--ease-out); transform-origin: left center; }
+.site-header.is-scrolled { box-shadow: 0 6px 20px color-mix(in srgb, var(--green) 10%, transparent); }
+.site-header.is-scrolled .brand { transform: scale(.92); }
+@media (prefers-reduced-motion: reduce) {
+  .site-header, .site-header .brand { transition: none; }
+}
+
+/* Asistente BALTO: la burbuja del chat da dos tandas de saltitos al cargar
+   (el lobo del logo ya está en el encabezado y en el pie, no se repite aquí).
+   Se queda quieta con el chat abierto o si el visitante reduce el movimiento. */
+.chat-launcher { transition: transform 160ms var(--ease-out); }
+.chat-launcher:active { transform: scale(.97); }
+.chat-launcher .icon-chat { transform-origin: 50% 90%; }
+@keyframes balto-chat-dance {
+  0%, 38%, 100% { transform: none; }
+  4% { transform: translateY(-4px) rotate(-12deg); }
+  10% { transform: translateY(0) rotate(10deg); }
+  16% { transform: translateY(-4px) rotate(-10deg); }
+  22% { transform: translateY(0) rotate(8deg); }
+  30% { transform: translateY(-2px) rotate(-5deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Dos tandas de saltitos al cargar y luego se queda quieta. */
+  .chat-launcher .icon-chat { animation: balto-chat-dance 6s 2s ease-in-out 2; }
+  .chat-launcher[aria-expanded="true"] .icon-chat { animation: none; }
+}
+
+
+/* Huecos: el pie ya no tiene columna de logo ni frase (repetía el título de
+   contacto), las columnas van pegadas a la izquierda y el medio de pago ocupa
+   solo lo que necesita; contacto y pie quedan más juntos. */
+.footer-top { display: flex; flex-wrap: wrap; gap: 28px 96px; }
+.footer-top > div { min-width: 190px; }
+.payment-strip-list { display: flex; flex-wrap: wrap; }
+.payment-chip { width: fit-content; max-width: 100%; }
+.contact-section { padding-bottom: calc(var(--space-section) * .6); }
+.site-footer { padding-top: 40px; }
+@media (min-width: 850px) { .site-footer { padding-top: 44px; } }
+
+/* Reseñas de Google: mismo bloque que sedes y horarios, estrellas en mostaza. */
+.locations-info .local-reviews { display: block; margin: 0; padding: 24px 0 0; }
+.locations-info .local-reviews h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 18px; letter-spacing: -.02em; color: var(--green); }
+.locations-info .local-reviews .stars { color: #d9a521; letter-spacing: 2px; font-size: 17px; }
+.locations-info .local-reviews p { margin: 0 0 8px; font-size: 15px !important; line-height: 1.6 !important; color: var(--muted); }
+.locations-info .local-reviews p strong { color: var(--green); }
+.locations-info .local-reviews .text-link { display: inline-block; }
+/* El bloque de horarios deja de ser el último: vuelve a llevar su línea. */
+.locations-info .schedule-panel { border-bottom: 1px solid var(--line) !important; padding-bottom: 24px !important; }
+
+/* Respuesta al toque: los botones se hunden un poco al presionarlos (sin movimiento al pasar el mouse). */
+.site-header .button, .contact-inner .button, .mobile-action { transition: transform 160ms var(--ease-out); }
+.site-header .button:active, .contact-inner .button:active, .mobile-action:active { transform: scale(.97); }
+@media (prefers-reduced-motion: reduce) {
+  .chat-launcher, .site-header .button, .contact-inner .button, .mobile-action { transition: none; }
+}
+
+/* Fotos nuevas: la fachada abre la sección de ubicación y «Hospitalización» pasa
+   a ser la quinta tarjeta de «Así trabajamos» (5 columnas; en celular la última
+   ocupa el ancho completo para no dejar un hueco). */
+.clinic-work-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 900px) {
+  .clinic-work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .clinic-work-grid > .clinic-work-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+.locations-info .local-facade { display: block; margin: 0; padding: 0 0 24px; border: 0; background: none; border-bottom: 1px solid var(--line); }
+.locations-info .local-facade img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 50%; border-radius: 14px; }
+.locations-info > .local-facade + .address-row { padding-top: 24px; }

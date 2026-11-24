@@ -3,7 +3,6 @@
   <div class="utility-bar" role="region" aria-label="Contacto y ubicación">
     <div class="container utility-inner">
       <span class="utility-place">{% include '@vet_theme/templates/icon.html.twig' with {icon: 'pin'} only %} {{ business.city }}</span>
-      <a href="{{ root }}#horarios"><span class="status-dot"></span> Hospitalización {{ business.hospitalization }}</a>
       <a class="utility-phone" href="{{ business.phone_url }}">{{ business.whatsapp }}</a>
     </div>
   </div>
@@ -37,10 +36,9 @@
   </main>
   <footer class="site-footer">
     <div class="container footer-top">
-      <div class="footer-brand"><a class="brand{% if vet_real_logo %} brand-real{% endif %}" href="{{ root }}"><span class="brand-symbol{% if vet_logo_crop %} brand-symbol-wolf{% endif %}"><img src="{{ vet_logo }}" width="48" height="52" alt="" /></span><span><strong>BALTO<span class="brand-dot">.</span></strong><small>VETERINARIA</small></span></a><p>{{ business.slogan }}.<br />Cerca de ti, en Juliaca.</p></div>
-      <div><h2>Hablemos</h2><a href="{{ business.appointment_url }}" target="_blank" rel="noopener noreferrer">WhatsApp: {{ business.whatsapp }}</a><a href="{{ business.phone_url }}">Llámanos: {{ business.whatsapp }}</a>{% if business.phone_secondary_url %}<a href="{{ business.phone_secondary_url }}">También: {{ business.phone_secondary }}</a>{% endif %}{% if business.email %}<a href="mailto:{{ business.email }}">{{ business.email }}</a>{% endif %}</div>
-      <div><h2>Visítanos</h2>{% for address in business.addresses %}<p>{{ address }}</p>{% endfor %}</div>
-      <div><h2>Sigamos cerca</h2>{% if business.facebook_url %}<a href="{{ business.facebook_url }}" target="_blank" rel="noopener noreferrer">{{ business.facebook_name }} en Facebook</a>{% else %}<p>Encuéntranos en Facebook como<br /><strong>{{ business.facebook_name }}</strong>.</p>{% endif %}{% if business.instagram_url %}<a href="{{ business.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram: @{{ business.instagram_user }}</a>{% endif %}{% if business.tiktok_name %}<p>TikTok: <strong>{{ business.tiktok_name }}</strong></p>{% endif %}<a href="{{ path('user.login') }}">Acceso a mi cuenta</a></div>
+      <div><h2>Hablemos</h2><a href="{{ business.appointment_url }}" target="_blank" rel="noopener noreferrer">WhatsApp y llamadas: {{ business.whatsapp }}</a>{% if business.yape_number %}{% set yape = business.yape_number|replace({' ': ''}) %}<p>Yape: {{ yape|slice(0, 3) }} {{ yape|slice(3, 3) }} {{ yape|slice(6) }}</p>{% endif %}{% if business.email %}<a href="mailto:{{ business.email }}">{{ business.email }}</a>{% endif %}</div>
+      {% if not is_home %}<div><h2>Visítanos</h2>{% for address in business.addresses %}<p>{{ address }}</p>{% endfor %}</div>{% endif %}
+      <div><h2>Sigamos cerca</h2>{% if business.facebook_url %}<a href="{{ business.facebook_url }}" target="_blank" rel="noopener noreferrer">{{ business.facebook_name }} en Facebook</a>{% else %}<p>Encuéntranos en Facebook como<br /><strong>{{ business.facebook_name }}</strong>.</p>{% endif %}{% if business.instagram_url %}<a href="{{ business.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram: @{{ business.instagram_user }}</a>{% endif %}{% if business.tiktok_name %}<p>TikTok: <strong>{{ business.tiktok_name }}</strong></p>{% endif %}</div>
     </div>
     <div class="container payment-strip" role="region" aria-label="Medios de pago aceptados">
       <h2>Medios de pago</h2>
@@ -62,7 +60,7 @@
       <a href="{{ path('vet_api.privacy') }}">Privacidad</a>
       <a href="{{ path('vet_api.purchase_terms') }}">Condiciones de compra</a>
       {% if vet_complaints_book_url %}<a href="{{ vet_complaints_book_url }}">Libro de Reclamaciones</a>{% endif %}
-    </nav><a href="{{ path('system.admin') }}">Administración</a></div>
+    </nav><a href="{{ path('user.login') }}">Acceso a mi cuenta</a><a href="{{ path('system.admin') }}">Administración</a></div>
   </footer>
 </div>
 {% if show_action_bar %}
