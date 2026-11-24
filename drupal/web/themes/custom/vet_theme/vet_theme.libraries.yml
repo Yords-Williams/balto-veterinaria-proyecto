@@ -1,5 +1,5 @@
 global:
-  version: 2026.11.24.34.mejoras
+  version: 2026.11.24.35.mapa
   css:
     theme:
       css/fonts.css: {}

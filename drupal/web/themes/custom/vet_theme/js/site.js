@@ -26,6 +26,21 @@
       });
     },
   };
+  Drupal.behaviors.baltoLocationMap = {
+    attach(context) {
+      once('balto-location-map', '.location-map-details', context).forEach((details) => {
+        const frame = details.querySelector('.location-map-frame');
+        const template = details.querySelector('template');
+        const loadMap = () => {
+          if (details.open && !frame.hasChildNodes()) {
+            frame.append(template.content.cloneNode(true));
+          }
+        };
+        details.addEventListener('toggle', loadMap);
+        loadMap();
+      });
+    },
+  };
 })(Drupal, once);
 
 /* Aparición de secciones al hacer scroll en navegadores sin animation-timeline. */

@@ -184,17 +184,20 @@ a.map-caption:focus-visible {
   outline: 3px solid var(--green);
   outline-offset: 3px;
 }
-.map-wrap::before {
-  content: "Cargando mapa…";
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--green);
-  font-size: 15px;
+.location-grid .location-map {
+  min-height: 0;
+  align-self: start;
+  padding: 18px;
 }
-.map-wrap iframe {
-  position: relative;
+.location-map-details summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding-block: 8px;
+}
+.location-map-frame iframe {
+  height: clamp(340px, 60vh, 560px);
+  margin-block: 8px 14px;
+  border-radius: 12px;
 }
 
 /* "Para tu perro / gato" en celular: el título usa todo el ancho y no se parte
