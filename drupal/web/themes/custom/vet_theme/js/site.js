@@ -28,16 +28,19 @@
   };
   Drupal.behaviors.baltoLocationMap = {
     attach(context) {
-      once('balto-location-map', '.location-map-details', context).forEach((details) => {
-        const frame = details.querySelector('.location-map-frame');
-        const template = details.querySelector('template');
-        const loadMap = () => {
-          if (details.open && !frame.hasChildNodes()) {
-            frame.append(template.content.cloneNode(true));
+      once('balto-location-map', 'iframe[data-map-src]', context).forEach((frame) => {
+        const load = () => { frame.src = frame.dataset.mapSrc; };
+        if (!('IntersectionObserver' in window)) {
+          load();
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            load();
+            observer.disconnect();
           }
-        };
-        details.addEventListener('toggle', loadMap);
-        loadMap();
+        }, {rootMargin: '600px 0px'});
+        observer.observe(frame);
       });
     },
   };
