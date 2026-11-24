@@ -1,6 +1,6 @@
 # Desplegar BALTO en una EC2
 
-**Estado: BALTO desplegado en EC2 y demo completa comprobada.** Se utiliza una EC2 nueva `t3.medium`, Ubuntu 24.04 y disco raíz de 30 GiB. La dirección actual es **https://balto-veterinaria.3-211-103-160.sslip.io**, con certificado público de HTTPS verificado. Tiene asociada la Elastic IP **3.211.103.160** a la instancia BALTO `i-0b34b63cdbe1fd079`, confirmada en la consola. El enlace se conserva al detener e iniciar mientras se mantenga esa asignación. La fase 8 sigue aplazada. La instancia `roma-drupal-n8n` del hotel pertenece a otro equipo y no se modifica.
+**Despliegue actual:** tienda y chat web en **http://3.211.103.160/** (instancia EC2 `BALTO-veterinaria`, región `us-east-1`). Telegram recibe eventos por HTTPS en `baltovet.mooo.com`. Los informes de pruebas anteriores conservan las direcciones usadas en su momento.
 
 ## Diseño y costo mínimo
 
@@ -345,9 +345,9 @@ Se ejecutaron [10 comprobaciones de configuración](verificacion-fase-9-config.j
 
 También se realizó un [backup en EC2 y se comprobó la recuperación del servicio](verificacion-fase-9-backup.json). Los checksums fueron correctos y estaban presentes SQL, archivos Drupal y SQLite n8n. Se verificó que los secretos del servidor eran distintos de los locales y que `.env` tenía permisos `0600`. La copia permanece privada en `/opt/balto-veterinaria/backups/`; se descargó también una copia privada fuera de EC2, en `.local/share/balto-dev/aws-backups/` de esta computadora.
 
-## Nombre gratuito y HTTPS activos
+## Configuración anterior de HTTPS (histórico)
 
-URL actual: **https://balto-veterinaria.3-211-103-160.sslip.io**. Se usa el servicio de DNS automático [sslip.io / nip.io](https://sslip.io/): la IP está incluida en el nombre y el proveedor la resuelve sin registrar una cuenta. No se creó una cuenta DuckDNS ni se compró un dominio. Este método no demuestra cómo se configuró el proyecto del hotel; su enlace no se ha proporcionado.
+URL usada en esa prueba: **https://balto-veterinaria.3-211-103-160.sslip.io**. Se usa el servicio de DNS automático [sslip.io / nip.io](https://sslip.io/): la IP está incluida en el nombre y el proveedor la resuelve sin registrar una cuenta. No se creó una cuenta DuckDNS ni se compró un dominio. Este método no demuestra cómo se configuró el proyecto del hotel; su enlace no se ha proporcionado.
 
 Se adaptó el entorno existente sin cambiar secretos, pedidos ni inventario:
 
@@ -356,7 +356,7 @@ python3 scripts/configure-aws-env.py --host balto-veterinaria.3-211-103-160.ssli
 sudo docker compose up -d
 ```
 
-Caddy obtuvo el certificado público y redirige HTTP a HTTPS. Se comprobaron la cadena de confianza TLS, portada, acceso Drupal, enlaces de producto y el chat en el mismo origen. El precio de la pelota sigue en S/ 12.90 y su saldo en 24 tras la demo de EC2. [Informe de HTTPS](verificacion-dominio-https.json). La IP numérica anterior deja de ser la dirección de acceso configurada; utiliza el enlace HTTPS de esta sección.
+Caddy obtuvo el certificado público y redirige HTTP a HTTPS. Se comprobaron la cadena de confianza TLS, portada, acceso Drupal, enlaces de producto y el chat en el mismo origen. El precio de la pelota sigue en S/ 12.90 y su saldo en 24 tras la demo de EC2. [Informe de HTTPS](verificacion-dominio-https.json). Este resultado corresponde a la configuración de esa prueba.
 
 El nombre apunta a la Elastic IP 3.211.103.160. No liberes esa IP si necesitas conservar el enlace. Una detención normal mantiene la asignación; un reinicio completo o eliminación de recursos del laboratorio puede requerir volver a configurar el despliegue.
 
@@ -382,7 +382,17 @@ El comando comprueba la referencia, el importe, la moneda y ambas cuentas
 antes de registrar el pago. Se puede volver a ejecutar para verificar el mismo
 pedido. Esta recuperación es manual y está limitada al ambiente de pruebas.
 
+## Tienda por IP y webhook HTTPS para Telegram
+
+- Mantén el sitio de Caddy y `DRUPAL_BASE_URL` en `http://3.211.103.160`. Usa ese origen también para `CHAT_ALLOWED_ORIGIN` y agrega `/webhook/chat` para `CHAT_WEBHOOK_URL`.
+- Apunta el registro A de `baltovet.mooo.com` a la IP elástica. En el Caddyfile, mueve los bloques `@telegram_bot` y `handle @telegram_bot` al sitio independiente `baltovet.mooo.com`. Conserva la respuesta 403 en el sitio por IP para la ruta del bot. Dentro del sitio HTTPS, rechaza con 403 el webhook sin su cabecera válida y responde 404 para el resto de rutas.
+- Configura `WEBHOOK_URL=https://baltovet.mooo.com/` para n8n. Valida y recarga Caddy, luego recrea n8n para que publique `baltoBot`.
+
 Para publicar el webhook de Telegram en EC2, configura
 `BALTO_TELEGRAM_WEBHOOK_SECRET` con 64 caracteres hexadecimales aleatorios y
 registra ese mismo secreto en Telegram para los tipos de evento `message` y
 `callback_query`. Caddy verifica ese secreto antes de reenviar la petición a n8n.
+
+En `setWebhook`, usa la URL `https://baltovet.mooo.com/webhook/balto-bot-webhook/webhook` y el secreto como `secret_token`. Confirma con `getWebhookInfo` y envía `/start` al bot. No publiques el token del bot ni el secreto de Caddy.
+
+El repositorio incluye la variante del mapa con carga diferida. En EC2 se conservó el mapa anterior por decisión de la revisión visual.
